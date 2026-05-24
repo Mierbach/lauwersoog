@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lauwersoog 2026 — Reise-Guide</title>
+  <link rel="icon" type="image/png" href="lauwer.png">
   <meta name="description" content="Vier Tagesausflüge ab Lauwersoog: die Festungsstadt Dokkum, das Adelsgut Verhildersum, die Wattinsel Schiermonnikoog und die Hansestadt Groningen.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230c1e3e'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Inter,sans-serif' font-size='52' font-weight='700' fill='%23f97357'%3EL%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
 /* Lauwersoog 2026 — Coastal Premium */
@@ -53,17 +54,17 @@ body {
 img { max-width: 100%; display: block; }
 
 h1, h2, h3, h4 {
-  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  font-family: "Caveat Brush", "Space Grotesk", "Inter", system-ui, sans-serif;
   color: var(--navy);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0;
+  font-weight: 400;
   margin: 0 0 .5em;
 }
-h1 { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 500; letter-spacing: -0.035em; }
-h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
-h3 { font-size: 1.35rem; }
-h4 { font-size: 1.05rem; font-weight: 600; }
+h1 { font-size: clamp(3.2rem, 7.4vw, 6rem); font-weight: 400; letter-spacing: 0; }
+h2 { font-size: clamp(2.2rem, 4.2vw, 3.4rem); }
+h3 { font-size: 1.7rem; }
+h4 { font-size: 1.3rem; font-weight: 400; }
 
 p { margin: 0 0 1em; color: var(--ink-2); }
 
@@ -106,7 +107,7 @@ a:hover { color: var(--coral-deep); text-decoration-color: var(--coral); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem var(--gutter);
+  padding: .15rem var(--gutter);
 }
 .brand {
   font-family: "Space Grotesk", sans-serif;
@@ -118,13 +119,10 @@ a:hover { color: var(--coral-deep); text-decoration-color: var(--coral); }
   display: inline-flex; align-items: center; gap: .65rem;
 }
 .brand-mark {
-  width: 28px; height: 28px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--coral) 100%);
-  display: inline-flex; align-items: center; justify-content: center;
-  color: #fff;
-  font-size: .8rem;
-  font-weight: 700;
+  width: 160px; height: 160px;
+  display: block;
+  margin: -16px 0;
+  background: transparent;
 }
 .nav-links { display: flex; gap: .25rem; flex-wrap: wrap; }
 .nav-links a {
@@ -138,6 +136,100 @@ a:hover { color: var(--coral-deep); text-decoration-color: var(--coral); }
 }
 .nav-links a:hover { background: rgba(12, 30, 62, .06); color: var(--navy); }
 .nav-links a.active { background: var(--navy); color: #fff; }
+
+/* Dropdown / Submenu */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-item > a::after {
+  content: "▾";
+  font-size: .65rem;
+  margin-left: .25rem;
+  opacity: .55;
+  transition: transform .18s ease;
+  display: inline-block;
+}
+.nav-item:hover > a::after,
+.nav-item:focus-within > a::after { transform: rotate(180deg); opacity: 1; }
+.submenu {
+  position: absolute;
+  top: 100%; left: 0;
+  min-width: 220px;
+  margin-top: .35rem;
+  background: rgba(250, 247, 241, .98);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid rgba(15, 23, 42, .06);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -18px rgba(12, 30, 62, .28);
+  padding: .35rem;
+  display: flex; flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+  z-index: 60;
+}
+.nav-item:hover .submenu,
+.nav-item:focus-within .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear 0s;
+}
+.submenu a {
+  padding: .5rem .85rem;
+  border-radius: 8px;
+  font-size: .9rem;
+  white-space: nowrap;
+  color: var(--ink-2);
+}
+.submenu a::after { display: none; }
+.submenu a:hover { background: rgba(12, 30, 62, .06); color: var(--navy); }
+
+/* Icon-Button (Siblu Camping) */
+.nav-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  margin-left: .35rem;
+  padding: 0 !important;
+  background: var(--coral);
+  color: #fff !important;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 6px 14px -6px rgba(249,115,87,.55);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.nav-icon-link:hover {
+  background: #e3582d;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px -8px rgba(249,115,87,.7);
+}
+.nav-icon-link svg { width: 20px; height: 20px; }
+
+/* Menü-Icons (monochrome SVG vor Link-Text) */
+.nav-ico {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: .55rem;
+  vertical-align: -3px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .72;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.nav-links a:hover .nav-ico,
+.nav-links a.active .nav-ico,
+.submenu a:hover .nav-ico { opacity: 1; }
+.submenu .nav-ico { width: 15px; height: 15px; margin-right: .5rem; opacity: .6; }
 
 /* Burger toggle (mobile only) */
 .nav-toggle { display: none; }
@@ -208,6 +300,49 @@ a:hover { color: var(--coral-deep); text-decoration-color: var(--coral); }
     visibility: visible;
     transform: translateY(0);
     transition: opacity .22s ease, transform .22s ease, visibility 0s linear 0s;
+  }
+
+  /* Submenu inline auf Mobile */
+  .nav-item {
+    display: block;
+    width: 100%;
+  }
+  .nav-item > a {
+    display: block;
+    padding: .95rem .25rem;
+    font-size: 1.05rem;
+    color: var(--navy);
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+  }
+  .nav-item > a::after { display: none; }
+  .submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    transition: none;
+  }
+  .submenu a {
+    padding: .7rem .25rem .7rem 1.5rem;
+    font-size: .95rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(15, 23, 42, .04);
+  }
+  .submenu a::before {
+    content: "↳ ";
+    opacity: .55;
+    margin-right: .25rem;
+  }
+  .nav-icon-link {
+    margin: .75rem .25rem .25rem;
+    width: 48px; height: 48px;
   }
 }
 
@@ -439,6 +574,16 @@ section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
   box-shadow: var(--shadow-sm);
   transition: transform .25s, box-shadow .25s, border-color .25s;
 }
+.feature-card:has(.card-img) { overflow: hidden; }
+.feature-card .card-img {
+  display: block;
+  width: calc(100% + 3rem);
+  max-width: none;
+  height: 200px;
+  margin: -1.6rem -1.5rem 1.2rem;
+  object-fit: cover;
+  background: var(--cream);
+}
 .feature-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow);
@@ -622,6 +767,83 @@ a.feature-card:hover h4 { color: var(--navy); }
   color: #fff;
 }
 .btn.dark:hover { background: #000; transform: translateY(-1px); }
+
+/* ---------- Quick-Links Menüleiste ---------- */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .9rem;
+  margin: 0 0 3rem;
+  padding: .9rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--shadow-sm);
+}
+.quick-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius);
+  background: #fbfaf7;
+  border: 1px solid transparent;
+  color: var(--navy);
+  text-decoration: none;
+  transition: background .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.quick-link:hover {
+  background: #fff;
+  border-color: var(--line);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -10px rgba(20, 25, 40, .35);
+}
+.quick-link__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  transition: background .25s ease;
+}
+.quick-link:hover .quick-link__icon { background: #000; }
+.quick-link__icon svg { width: 20px; height: 20px; }
+.quick-link__label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+.quick-link__kicker {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.quick-link__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -.005em;
+  color: var(--navy);
+}
+@media (max-width: 900px) {
+  .quick-links { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .quick-links { grid-template-columns: 1fr; }
+}
 
 /* ---------- Footer ---------- */
 footer {
@@ -846,38 +1068,120 @@ footer a { color: var(--sand); }
   .birds-filter { padding: 1.1rem; }
 }
   </style>
-  <noscript>
-    <style>
-      /* Ohne JavaScript: alle Seiten sichtbar, kein Router noetig. */
-      .page { display: block !important; }
-      .nav-links a.is-active { color: inherit; }
-    </style>
-  </noscript>
 </head>
 <body>
 
 <nav class="nav">
   <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
   <div class="nav-inner">
-    <a class="brand" href="#trips"><span class="brand-mark">L</span> Lauwersoog ’26</a>
+    <a class="brand" href="#trips" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="lauwer.png" alt="Lauwersoog Logo"></a>
     <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen"><span></span></label>
     <div class="nav-links">
-      <a href="#trips">Übersicht</a>
-      <a href="#dokkum">Dokkum</a>
-      <a href="#verhildersum">Verhildersum</a>
-      <a href="#schiermonnikoog">Schiermonnikoog</a>
-      <a href="#groningen">Groningen</a>
-      <a href="#voegel">Vögel</a>
+      <a href="#trips"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Übersicht</a>
+
+      <div class="nav-item">
+        <a href="#dokkum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><path d="M12 2 4 7v3h16V7z"/></svg>Dokkum</a>
+        <div class="submenu">
+          <a href="#dokkum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#dokkum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="#dokkum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#dokkum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#dokkum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#dokkum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="#verhildersum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M18 11V4h-3v3h-2V2h-2v5H9V4H6v7"/><path d="M10 22v-5h4v5"/></svg>Verhildersum</a>
+        <div class="submenu">
+          <a href="#verhildersum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#verhildersum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="#verhildersum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#verhildersum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#verhildersum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#verhildersum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="#schiermonnikoog"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>Schiermonnikoog</a>
+        <div class="submenu">
+          <a href="#schiermonnikoog"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#schiermonnikoog-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Auf der Insel</a>
+          <a href="#schiermonnikoog-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#schiermonnikoog-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#schiermonnikoog-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#schiermonnikoog-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="#groningen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>Groningen</a>
+        <div class="submenu">
+          <a href="#groningen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#groningen-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>In der Stadt</a>
+          <a href="#groningen-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#groningen-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#groningen-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#groningen-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <a href="#voegel"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>Vögel</a>
+
+      <a class="nav-icon-link" href="https://www.google.com/maps/search/Siblu+Camping+Lauwersoog" target="_blank" rel="noopener" title="Siblu Camping Lauwersoog auf Google Maps" aria-label="Siblu Camping Lauwersoog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M12 3 3 21"/><path d="M12 3l9 18"/><path d="M12 3v18"/></svg>
+      </a>
     </div>
   </div>
 </nav>
 
 <main>
 
-  <div class="page is-active" id="trips">
+  <div class="page" id="trips">
   <!-- ============================== ÜBERSICHT ============================== -->
   <section>
     <div class="container">
+
+      <nav class="quick-links" aria-label="Wichtige Orte vor Ort">
+        <a class="quick-link" href="https://www.google.com/maps/place/Siblu+Lauwersoog/@53.4039842,6.2085761,904m/data=!3m2!1e3!4b1!4m9!3m8!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Unterkunft</span>
+            <span class="quick-link__title">Home</span>
+          </span>
+        </a>
+        <a class="quick-link" href="https://www.google.com/maps/place/Restaurette+Schierzicht/@53.4067485,6.2052351,901m/data=!3m2!1e3!5s0x47c9ba9f3a1da82f:0x975819080d6d5217!4m17!1m10!3m9!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!2sSiblu+Lauwersoog!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc!3m5!1s0x47c9ba9f3af24ddb:0xb1c19cc2930e4edf!8m2!3d53.40744!4d6.200537!16s%2Fg%2F1t_wnlp8" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M17 10h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M7 5c.5-1 .5-2 0-3"/><path d="M11 5c.5-1 .5-2 0-3"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Restaurette Schierzicht</span>
+            <span class="quick-link__title">Frühstück</span>
+          </span>
+        </a>
+        <a class="quick-link" href="https://www.google.com/maps/place/Plus+Supermarket/@53.3779042,6.127964,2146m/data=!3m1!1e3!4m17!1m10!3m9!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!2sSiblu+Lauwersoog!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc!3m5!1s0x47c9afba49a8638f:0xb0695e7077edf4f6!8m2!3d53.3765874!4d6.1257124!16s%2Fg%2F1thx38xh" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.5L21 8H6"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Plus Anjum</span>
+            <span class="quick-link__title">Supermarkt</span>
+          </span>
+        </a>
+        <a class="quick-link" href="https://www.fietsnetwerk.nl/de/ladestationen/" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Fietsnetwerk</span>
+            <span class="quick-link__title">E-Bike Ladestationen</span>
+          </span>
+        </a>
+      </nav>
+
       <div class="section-head">
         <span class="eyebrow">Die Auswahl</span>
         <h2>Vier Tage, vier sehr unterschiedliche Stimmungen.</h2>
@@ -936,50 +1240,6 @@ footer a { color: var(--sand); }
           </div>
         </a>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== PRAKTISCHES ============================== -->
-  <section class="section-dark">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Praktisches</span>
-        <h2>Damit die Woche leicht läuft.</h2>
-        <p>Ein paar Dinge, die vorher gut zu wissen sind — Fähre, Räder, Wetter, Pausen.</p>
-      </div>
-
-      <div class="tips">
-        <div class="tip">
-          <span class="tip-icon">⛵</span>
-          <strong>Fähre Wagenborg</strong>
-          <p>Lauwersoog → Schiermonnikoog. Tickets online vorab. Letzte Rückfahrt typisch um 19:30.</p>
-        </div>
-        <div class="tip">
-          <span class="tip-icon">🚲</span>
-          <strong>Fahrradverleih</strong>
-          <p>Im Hafen Lauwersoog und direkt am Fähranleger auf Schiermonnikoog.</p>
-        </div>
-        <div class="tip">
-          <span class="tip-icon">🌦</span>
-          <strong>Wechselhaftes Wetter</strong>
-          <p>Nordseeküste = Schichten. Wind- und Regenjacke gehören in die Lenkertasche.</p>
-        </div>
-        <div class="tip">
-          <span class="tip-icon">🦭</span>
-          <strong>Seehunde</strong>
-          <p>Mit Geduld am Deich des Lauwersmeers und entlang des Wattenmeers sichtbar.</p>
-        </div>
-        <div class="tip">
-          <span class="tip-icon">🍰</span>
-          <strong>Koffie met appeltaart</strong>
-          <p>In Dokkum &amp; auf Schiermonnikoog: kleine Cafés, exzellente Apfeltorten — Pflichtprogramm.</p>
-        </div>
-        <div class="tip">
-          <span class="tip-icon">🗺</span>
-          <strong>Komoot offline</strong>
-          <p>GPX-Tracks vorher offline speichern — Mobilfunknetz an der Küste ist lückenhaft.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -1045,18 +1305,18 @@ footer a { color: var(--sand); }
       </div>
     </header>
 
-    <div class="container">
+    <div class="container" id="dokkum-vor-ort">
       <div class="section-head">
-        <span class="eyebrow">Vor Ort</span>
+        <span class="eyebrow">Sehenswürdigkeiten</span>
         <h2>Sechs Stationen, die du nicht verpassen solltest.</h2>
       </div>
       <div class="grid">
-        <div class="feature-card"><span class="num">01 · Bolwerken</span><h4>Grachten &amp; Bastionen</h4><p>Die sternförmigen Festungswälle aus dem 16. Jh. sind nahezu vollständig erhalten — ein Spaziergang darauf gehört zum Pflichtprogramm.</p></div>
-        <div class="feature-card"><span class="num">02 · Mühle</span><h4>Zeldenrust</h4><p>Klassische Kappenmühle direkt am Wasser — eines der meistfotografierten Motive der Stadt. Besichtigung nach Voranmeldung möglich.</p></div>
-        <div class="feature-card"><span class="num">03 · Mühle</span><h4>De Hoop</h4><p>Zweite, ebenso fotogene Kappenmühle am Stadtrand. Die Lichtstimmung am späten Nachmittag ist besonders schön.</p></div>
-        <div class="feature-card"><span class="num">04 · Pilgerort</span><h4>Bonifatiuskapelle &amp; Park</h4><p>Ruhige Anlage von 1923 mit Brouwersbron-Quelle, Kreuzweg und Kapelle (1934). Erinnerung an die Ermordung des Missionars 754.</p></div>
-        <div class="feature-card"><span class="num">05 · Architektur</span><h4>Altstadt &amp; Stadhuis</h4><p>Verwinkelte Gassen, zahllose Fußgängerbrücken, das Rathaus von 1610 und die spätgotische Sint-Martinuskerk.</p></div>
-        <div class="feature-card"><span class="num">06 · Genuss</span><h4>Markt &amp; Diepswal</h4><p>Die besten Adressen für eine entspannte Mittagspause oder <em>koffie met appeltaart</em> mit Blick auf die Gracht.</p></div>
+        <a class="feature-card" href="https://www.google.com/maps/search/Bolwerken+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Bastion_IV_met_gracht%2C_Dokkum.JPG?width=640" alt="Bastionen in Dokkum"><span class="num">01 · Bolwerken</span><h4>Grachten &amp; Bastionen</h4><p>Die sternförmigen Festungswälle aus dem 16. Jh. sind nahezu vollständig erhalten — ein Spaziergang darauf gehört zum Pflichtprogramm.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Molen+Zeldenrust+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Zeldenrust_Dokkum_-_Full.jpg?width=640" alt="Mole Zeldenrust"><span class="num">02 · Mühle</span><h4>Zeldenrust</h4><p>Klassische Kappenmühle direkt am Wasser — eines der meistfotografierten Motive der Stadt. Besichtigung nach Voranmeldung möglich.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Molen+De+Hoop+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_molen_de_Hoop_foto4_2009-09-19_12.39.JPG?width=640" alt="Mühle De Hoop"><span class="num">03 · Mühle</span><h4>De Hoop</h4><p>Zweite, ebenso fotogene Kappenmühle am Stadtrand. Die Lichtstimmung am späten Nachmittag ist besonders schön.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Bonifatiuskapel+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/20200612_Bonifatiuskapel_Dokkum.jpg?width=640" alt="Bonifatiuskapelle Dokkum"><span class="num">04 · Pilgerort</span><h4>Bonifatiuskapelle &amp; Park</h4><p>Ruhige Anlage von 1923 mit Brouwersbron-Quelle, Kreuzweg und Kapelle (1934). Erinnerung an die Ermordung des Missionars 754.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Stadhuis+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_stadhuis.jpg?width=640" alt="Stadhuis Dokkum"><span class="num">05 · Architektur</span><h4>Altstadt &amp; Stadhuis</h4><p>Verwinkelte Gassen, zahllose Fußgängerbrücken, das Rathaus von 1610 und die spätgotische Sint-Martinuskerk.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Markt+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_Grootdiep._20-09-2021._%28actm.%29.jpg?width=640" alt="Markt und Gracht in Dokkum"><span class="num">06 · Genuss</span><h4>Markt &amp; Diepswal</h4><p>Die besten Adressen für eine entspannte Mittagspause oder <em>koffie met appeltaart</em> mit Blick auf die Gracht.</p></a>
       </div>
     </div>
   </section>
@@ -1075,7 +1335,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-dark">
+  <section class="section-dark" id="dokkum-wissenswert">
     <div class="container">
       <div class="split">
         <div class="prose">
@@ -1100,9 +1360,9 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section>
+  <section id="dokkum-praxis">
     <div class="container">
-      <div class="section-head"><span class="eyebrow">Praxis</span><h2>Kleine Tipps für den Tag.</h2></div>
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Kleine Tipps für den Tag.</h2></div>
       <div class="tips">
         <div class="tip"><span class="tip-icon">🚲</span><strong>Fahrradschloss mit</strong><p>In der Altstadt gibt es ausgewiesene Abstellbereiche — abschließen ist Pflicht.</p></div>
         <div class="tip"><span class="tip-icon">📅</span><strong>Markttage</strong><p>Mittwoch- und Samstagvormittag — am lebendigsten direkt am Markt.</p></div>
@@ -1112,7 +1372,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-cream">
+  <section class="section-cream" id="dokkum-essen">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Essen &amp; Trinken</span>
@@ -1159,18 +1419,18 @@ footer a { color: var(--sand); }
       </div>
     </header>
 
-    <div class="container">
+    <div class="container" id="verhildersum-vor-ort">
       <div class="section-head">
-        <span class="eyebrow">Vor Ort</span>
+        <span class="eyebrow">Sehenswürdigkeiten</span>
         <h2>Was dich auf dem Borg-Gelände erwartet.</h2>
       </div>
       <div class="grid">
-        <div class="feature-card"><span class="num">01 · Herrenhaus</span><h4>Voll möbliertes Adelshaus</h4><p>Zeigt den Lebensstil der Groninger <em>jonkers</em> im 19. Jahrhundert — vom Empfangssalon bis zur Küche, durchgehend möbliert.</p></div>
-        <div class="feature-card"><span class="num">02 · Schaaperij</span><h4>Schafstall &amp; Pachthof</h4><p>Pachthof aus dem 19. Jh. mit lebenden Tieren und Living-History-Vorführungen rund ums Bauernjahr.</p></div>
-        <div class="feature-card"><span class="num">03 · Gärten</span><h4>Obst, Kräuter, Bauerngarten</h4><p>Angelegt nach alten Plänen, mit alten niederländischen Obstsorten und einer Kräuter-Sammlung.</p></div>
-        <div class="feature-card"><span class="num">04 · Kunst</span><h4>Wechselausstellungen</h4><p>Im Kutscherhaus laufen wechselnde Ausstellungen zu Kunst, Mode oder Regionalgeschichte.</p></div>
-        <div class="feature-card"><span class="num">05 · Genuss</span><h4>Tea Garden</h4><p>Stille Einkehr im historischen Garten — Hausgebackenes, frischer Kaffee, viel Grün.</p></div>
-        <div class="feature-card"><span class="num">06 · Landschaft</span><h4>Wierden-Land</h4><p>Die Anreise führt durch typisches Groninger Marschland mit alten Warften (<em>wierden</em>) und offenen Horizonten.</p></div>
+        <a class="feature-card" href="https://www.google.com/maps/search/Museum+Borg+Verhildersum+Leens" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_voorzijde.jpg?width=640" alt="Borg Verhildersum"><span class="num">01 · Herrenhaus</span><h4>Voll möbliertes Adelshaus</h4><p>Zeigt den Lebensstil der Groninger <em>jonkers</em> im 19. Jahrhundert — vom Empfangssalon bis zur Küche, durchgehend möbliert.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Schaaperij+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Boerderij_Saaxumaborg_-_Leens_-_20129804_-_RCE.jpg?width=640" alt="Schaaperij"><span class="num">02 · Schaaperij</span><h4>Schafstall &amp; Pachthof</h4><p>Pachthof aus dem 19. Jh. mit lebenden Tieren und Living-History-Vorführungen rund ums Bauernjahr.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Tuinen+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_tuin_1.jpg?width=640" alt="Gärten Borg Verhildersum"><span class="num">03 · Gärten</span><h4>Obst, Kräuter, Bauerngarten</h4><p>Angelegt nach alten Plänen, mit alten niederländischen Obstsorten und einer Kräuter-Sammlung.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Koetshuis+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_ingang.jpg?width=640" alt="Wechselausstellung Kutscherhaus"><span class="num">04 · Kunst</span><h4>Wechselausstellungen</h4><p>Im Kutscherhaus laufen wechselnde Ausstellungen zu Kunst, Mode oder Regionalgeschichte.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Theetuin+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_tuin_4.jpg?width=640" alt="Tea Garden Verhildersum"><span class="num">05 · Genuss</span><h4>Tea Garden</h4><p>Stille Einkehr im historischen Garten — Hausgebackenes, frischer Kaffee, viel Grün.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Leens+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Kerk_van_Leens.jpg?width=640" alt="Wierden-Landschaft"><span class="num">06 · Landschaft</span><h4>Wierden-Land</h4><p>Die Anreise führt durch typisches Groninger Marschland mit alten Warften (<em>wierden</em>) und offenen Horizonten.</p></a>
       </div>
     </div>
   </section>
@@ -1189,7 +1449,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-dark">
+  <section class="section-dark" id="verhildersum-wissenswert">
     <div class="container">
       <div class="split">
         <div class="prose">
@@ -1214,9 +1474,9 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section>
+  <section id="verhildersum-praxis">
     <div class="container">
-      <div class="section-head"><span class="eyebrow">Praxis</span><h2>Kleine Tipps für den Tag.</h2></div>
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Kleine Tipps für den Tag.</h2></div>
       <div class="tips">
         <div class="tip"><span class="tip-icon">🎫</span><strong>Kombiticket</strong><p>Ein Ticket deckt Herrenhaus, Schaaperij und Gärten ab — spart Wege.</p></div>
         <div class="tip"><span class="tip-icon">📷</span><strong>Foto-Spot</strong><p>Spiegelung des Borg-Hauses im umgebenden Wassergraben — am schönsten morgens.</p></div>
@@ -1226,7 +1486,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-cream">
+  <section class="section-cream" id="verhildersum-essen">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Essen &amp; Trinken</span>
@@ -1274,18 +1534,18 @@ footer a { color: var(--sand); }
       </div>
     </header>
 
-    <div class="container">
+    <div class="container" id="schiermonnikoog-vor-ort">
       <div class="section-head">
         <span class="eyebrow">Auf der Insel</span>
         <h2>Sechs Orte, die einen Tagestrip lohnen.</h2>
       </div>
       <div class="grid">
-        <div class="feature-card"><span class="num">01 · Leuchtturm</span><h4>Vuurtoren</h4><p>Der markante rot-weiße Leuchtturm von 1854 — bei klarer Sicht eines der schönsten Panoramen des Wattenmeers.</p></div>
-        <div class="feature-card"><span class="num">02 · Strand</span><h4>Het Rif &amp; Nordstrand</h4><p>Einer der breitesten Strände Europas — gefühlt endlos. Perfekt für Spaziergänge, Drachen steigen lassen oder einfach Weite genießen.</p></div>
-        <div class="feature-card"><span class="num">03 · Natur</span><h4>Nationaal Park</h4><p>Der erste Nationalpark der Niederlande (seit 1989). Dünen, Salzwiesen, Wälder, Kobbeduinen — Vogelparadies.</p></div>
-        <div class="feature-card"><span class="num">04 · Dorf</span><h4>Inseldorf Schiermonnikoog</h4><p>Charmante Langestreek mit Cafés, Galerien und Läden — Zentrum des Insellebens.</p></div>
-        <div class="feature-card"><span class="num">05 · Vögel</span><h4>Westerplas</h4><p>Beliebter Vogelbeobachtungspunkt am westlichen Inselrand — mit etwas Glück Löffler und Säbelschnäbler.</p></div>
-        <div class="feature-card"><span class="num">06 · Mobilität</span><h4>Fahrradparadies</h4><p>Rund 5.000 Leihräder warten an der Fähre. Das Wegenetz ist flach, übersichtlich und führt zu jedem Strand.</p></div>
+        <a class="feature-card" href="https://www.google.com/maps/search/Vuurtoren+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Vuurtorenschiermonnikoog.jpg?width=640" alt="Leuchtturm Schiermonnikoog"><span class="num">01 · Leuchtturm</span><h4>Vuurtoren</h4><p>Der markante rot-weiße Leuchtturm von 1854 — bei klarer Sicht eines der schönsten Panoramen des Wattenmeers.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Het+Rif+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_-_Meeuwen_op_het_strand.jpg?width=640" alt="Strand Het Rif"><span class="num">02 · Strand</span><h4>Het Rif &amp; Nordstrand</h4><p>Einer der breitesten Strände Europas — gefühlt endlos. Perfekt für Spaziergänge, Drachen steigen lassen oder einfach Weite genießen.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Nationaal+Park+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Duinen_Schiermonnikoog.JPG?width=640" alt="Dünen Schiermonnikoog"><span class="num">03 · Natur</span><h4>Nationaal Park</h4><p>Der erste Nationalpark der Niederlande (seit 1989). Dünen, Salzwiesen, Wälder, Kobbeduinen — Vogelparadies.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Langestreek+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Overzicht_dorp_-_Schiermonnikoog_-_20197250_-_RCE.jpg?width=640" alt="Inseldorf Schiermonnikoog"><span class="num">04 · Dorf</span><h4>Inseldorf Schiermonnikoog</h4><p>Charmante Langestreek mit Cafés, Galerien und Läden — Zentrum des Insellebens.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Westerplas+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_-_Westerplas_02.jpg?width=640" alt="Vögel am Westerplas"><span class="num">05 · Vögel</span><h4>Westerplas</h4><p>Beliebter Vogelbeobachtungspunkt am westlichen Inselrand — mit etwas Glück Löffler und Säbelschnäbler.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/fietsverhuur+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Fietsen_in_de_duinen_van_Schiermonnikoog.jpg?width=640" alt="Leihfahrräder"><span class="num">06 · Mobilität</span><h4>Fahrradparadies</h4><p>Rund 5.000 Leihräder warten an der Fähre. Das Wegenetz ist flach, übersichtlich und führt zu jedem Strand.</p></a>
       </div>
     </div>
   </section>
@@ -1304,7 +1564,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-dark">
+  <section class="section-dark" id="schiermonnikoog-wissenswert">
     <div class="container">
       <div class="split">
         <div class="prose">
@@ -1330,9 +1590,9 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section>
+  <section id="schiermonnikoog-praxis">
     <div class="container">
-      <div class="section-head"><span class="eyebrow">Praxis</span><h2>Was den Tag entspannt macht.</h2></div>
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Was den Tag entspannt macht.</h2></div>
       <div class="tips">
         <div class="tip"><span class="tip-icon">🎫</span><strong>Fähre &amp; Rad-Paket</strong><p>Wagenborg bietet Kombi-Tickets mit Fahrradverleih — spart Zeit am Anleger.</p></div>
         <div class="tip"><span class="tip-icon">⏰</span><strong>Früh starten</strong><p>Die ersten Fähren am Morgen sind ruhiger; Tagesgäste werden ab 11 Uhr deutlich mehr.</p></div>
@@ -1344,7 +1604,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-cream">
+  <section class="section-cream" id="schiermonnikoog-essen">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Essen &amp; Trinken</span>
@@ -1391,15 +1651,15 @@ footer a { color: var(--sand); }
       </div>
     </header>
 
-    <div class="container">
+    <div class="container" id="groningen-vor-ort">
       <div class="section-head"><span class="eyebrow">In der Stadt</span><h2>Sechs Orte, die einen Tagestrip lohnen.</h2></div>
       <div class="grid">
-        <div class="feature-card"><span class="num">01 · Wahrzeichen</span><h4>Martinitoren</h4><p>Der „Olle Grieze" — 97 m hoher Backsteinturm aus dem 15. Jh. Aufstieg über 260 Stufen mit Blick weit über Stadt und Provinz.</p></div>
-        <div class="feature-card"><span class="num">02 · Platz</span><h4>Grote Markt &amp; Vismarkt</h4><p>Die beiden zentralen Plätze — Cafés, Markttage, Stadtwaag und das prächtige Rathaus bilden das pulsierende Herz Groningens.</p></div>
-        <div class="feature-card"><span class="num">03 · Kunst</span><h4>Groninger Museum</h4><p>Spektakuläres Museumsgebäude in der Grachten zwischen Bahnhof und Innenstadt — Kunst, Design und Wechselausstellungen von Weltrang.</p></div>
-        <div class="feature-card"><span class="num">04 · Garten</span><h4>Prinsenhoftuin</h4><p>Versteckter Renaissance-Garten hinter dem Prinsenhof mit Kräuter- und Rosenbeeten und einer eigenen Teestube.</p></div>
-        <div class="feature-card"><span class="num">05 · Wissen</span><h4>Forum Groningen</h4><p>Markantes Kulturzentrum am Grote Markt — Bibliothek, Kino, Ausstellungen und Dachterrasse mit grandiosem Stadtblick.</p></div>
-        <div class="feature-card"><span class="num">06 · Hafen</span><h4>Noorderhaven</h4><p>Historischer Stadthafen mit Hausbooten, Werften und schönen Kneipen — abends besonders stimmungsvoll.</p></div>
+        <a class="feature-card" href="https://www.google.com/maps/search/Martinitoren+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Martini_Toren.JPG?width=640" alt="Martinitoren Groningen"><span class="num">01 · Wahrzeichen</span><h4>Martinitoren</h4><p>Der „Olle Grieze" — 97 m hoher Backsteinturm aus dem 15. Jh. Aufstieg über 260 Stufen mit Blick weit über Stadt und Provinz.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Grote+Markt+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Grote_Markt_Groningen.jpg?width=640" alt="Grote Markt Groningen"><span class="num">02 · Platz</span><h4>Grote Markt &amp; Vismarkt</h4><p>Die beiden zentralen Plätze — Cafés, Markttage, Stadtwaag und das prächtige Rathaus bilden das pulsierende Herz Groningens.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Groninger+Museum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Groningermuseum.JPG?width=640" alt="Groninger Museum"><span class="num">03 · Kunst</span><h4>Groninger Museum</h4><p>Spektakuläres Museumsgebäude in der Grachten zwischen Bahnhof und Innenstadt — Kunst, Design und Wechselausstellungen von Weltrang.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Prinsenhoftuin+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Prinsenhof_Groningen%2C_now_a_restaurant_-_panoramio.jpg?width=640" alt="Prinsenhoftuin Groningen"><span class="num">04 · Garten</span><h4>Prinsenhoftuin</h4><p>Versteckter Renaissance-Garten hinter dem Prinsenhof mit Kräuter- und Rosenbeeten und einer eigenen Teestube.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Forum+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Forum_Groningen.jpg?width=640" alt="Forum Groningen"><span class="num">05 · Wissen</span><h4>Forum Groningen</h4><p>Markantes Kulturzentrum am Grote Markt — Bibliothek, Kino, Ausstellungen und Dachterrasse mit grandiosem Stadtblick.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Noorderhaven+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Groningen_Noorderhaven_HDR.jpg?width=640" alt="Noorderhaven Groningen"><span class="num">06 · Hafen</span><h4>Noorderhaven</h4><p>Historischer Stadthafen mit Hausbooten, Werften und schönen Kneipen — abends besonders stimmungsvoll.</p></a>
       </div>
     </div>
   </section>
@@ -1418,7 +1678,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-dark">
+  <section class="section-dark" id="groningen-wissenswert">
     <div class="container">
       <div class="split">
         <div class="prose">
@@ -1443,9 +1703,9 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section>
+  <section id="groningen-praxis">
     <div class="container">
-      <div class="section-head"><span class="eyebrow">Praxis</span><h2>Damit der Stadttag entspannt bleibt.</h2></div>
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Damit der Stadttag entspannt bleibt.</h2></div>
       <div class="tips">
         <div class="tip"><span class="tip-icon">🅿️</span><strong>P+R nutzen</strong><p>Parken am Stadtrand (z.&nbsp;B. P+R Hoogkerk, Reitdiep, Kardinge) + Bus für 1&nbsp;€/Tag pro Person.</p></div>
         <div class="tip"><span class="tip-icon">🚲</span><strong>Fahrräder beachten</strong><p>Im Zentrum dominiert das Rad. Beim Überqueren der Straße immer in beide Richtungen schauen.</p></div>
@@ -1455,7 +1715,7 @@ footer a { color: var(--sand); }
     </div>
   </section>
 
-  <section class="section-cream">
+  <section class="section-cream" id="groningen-essen">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Essen &amp; Trinken</span>
@@ -2399,8 +2659,7 @@ footer a { color: var(--sand); }
 </main>
 
 <footer>
-  <a class="brand" href="#trips"><span class="brand-mark">L</span> Lauwersoog ’26</a>
-  <p><a href="#trips">↑ Zur Übersicht</a></p>
+  <a class="brand" href="#trips" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="lauwer.png" alt="Lauwersoog Logo"></a>
   <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
 </footer>
 
