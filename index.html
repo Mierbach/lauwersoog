@@ -1,0 +1,2924 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lauwersoog 2026 — Reise-Guide</title>
+  <link rel="icon" type="image/png" href="lauwer.png">
+  <meta name="description" content="Vier Tagesausflüge ab Lauwersoog: die Festungsstadt Dokkum, das Adelsgut Verhildersum, die Wattinsel Schiermonnikoog und die Hansestadt Groningen.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230c1e3e'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Inter,sans-serif' font-size='52' font-weight='700' fill='%23f97357'%3EL%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+/* Lauwersoog 2026 — Coastal Premium */
+:root {
+  --navy: #0c1e3e;
+  --navy-2: #14305f;
+  --ink: #0f172a;
+  --ink-2: #334155;
+  --muted: #64748b;
+  --line: #e5e7eb;
+  --cream: #faf7f1;
+  --cream-2: #f3ede1;
+  --sand: #e8dcc0;
+  --coral: #f97357;
+  --coral-deep: #c94a30;
+  --sage: #6b9080;
+  --gold: #c8a55b;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06), 0 4px 12px rgba(15, 23, 42, .06);
+  --shadow: 0 8px 30px -8px rgba(15, 23, 42, .18);
+  --shadow-lg: 0 30px 70px -30px rgba(12, 30, 62, .55);
+  --radius: 18px;
+  --radius-lg: 28px;
+  --radius-sm: 10px;
+  --container: 1180px;
+  --gutter: clamp(1rem, 3vw, 2rem);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+.trip-section { scroll-margin-top: 70px; }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+h1, h2, h3, h4 {
+  font-family: "Caveat Brush", "Space Grotesk", "Inter", system-ui, sans-serif;
+  color: var(--navy);
+  line-height: 1.05;
+  letter-spacing: 0;
+  font-weight: 400;
+  margin: 0 0 .5em;
+}
+h1 { font-size: clamp(3.2rem, 7.4vw, 6rem); font-weight: 400; letter-spacing: 0; }
+h2 { font-size: clamp(2.2rem, 4.2vw, 3.4rem); }
+h3 { font-size: 1.7rem; }
+h4 { font-size: 1.3rem; font-weight: 400; }
+
+p { margin: 0 0 1em; color: var(--ink-2); }
+
+a { color: var(--navy); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(12, 30, 62, .25); transition: text-decoration-color .2s, color .2s; }
+a:hover { color: var(--coral-deep); text-decoration-color: var(--coral); }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--coral-deep);
+}
+.eyebrow::before {
+  content: "";
+  width: 28px; height: 1px;
+  background: currentColor;
+}
+
+/* ---------- Top nav ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(250, 247, 241, .85);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid rgba(15, 23, 42, .06);
+}
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .15rem var(--gutter);
+}
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+  color: var(--navy);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: .65rem;
+}
+.brand-mark {
+  width: 160px; height: 160px;
+  display: block;
+  margin: -16px 0;
+  background: transparent;
+}
+.nav-links { display: flex; gap: .25rem; flex-wrap: wrap; }
+.nav-links a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: .94rem;
+  color: var(--ink-2);
+  padding: .5rem .85rem;
+  border-radius: 999px;
+  transition: background .2s, color .2s;
+}
+.nav-links a:hover { background: rgba(12, 30, 62, .06); color: var(--navy); }
+.nav-links a.active { background: var(--navy); color: #fff; }
+
+/* Dropdown / Submenu */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-item > a::after {
+  content: "▾";
+  font-size: .65rem;
+  margin-left: .25rem;
+  opacity: .55;
+  transition: transform .18s ease;
+  display: inline-block;
+}
+.nav-item:hover > a::after,
+.nav-item:focus-within > a::after { transform: rotate(180deg); opacity: 1; }
+.submenu {
+  position: absolute;
+  top: 100%; left: 0;
+  min-width: 220px;
+  margin-top: .35rem;
+  background: rgba(250, 247, 241, .98);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid rgba(15, 23, 42, .06);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -18px rgba(12, 30, 62, .28);
+  padding: .35rem;
+  display: flex; flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+  z-index: 60;
+}
+.nav-item:hover .submenu,
+.nav-item:focus-within .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear 0s;
+}
+.submenu a {
+  padding: .5rem .85rem;
+  border-radius: 8px;
+  font-size: .9rem;
+  white-space: nowrap;
+  color: var(--ink-2);
+}
+.submenu a::after { display: none; }
+.submenu a:hover { background: rgba(12, 30, 62, .06); color: var(--navy); }
+
+/* Icon-Button (Siblu Camping) */
+.nav-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  margin-left: .35rem;
+  padding: 0 !important;
+  background: var(--coral);
+  color: #fff !important;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 6px 14px -6px rgba(249,115,87,.55);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.nav-icon-link:hover {
+  background: #e3582d;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px -8px rgba(249,115,87,.7);
+}
+.nav-icon-link svg { width: 20px; height: 20px; }
+
+/* Menü-Icons (monochrome SVG vor Link-Text) */
+.nav-ico {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: .55rem;
+  vertical-align: -3px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .72;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.nav-links a:hover .nav-ico,
+.nav-links a.active .nav-ico,
+.submenu a:hover .nav-ico { opacity: 1; }
+.submenu .nav-ico { width: 15px; height: 15px; margin-right: .5rem; opacity: .6; }
+
+/* Burger toggle (mobile only) */
+.nav-toggle { display: none; }
+.nav-burger {
+  display: none;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  cursor: pointer;
+  align-items: center; justify-content: center;
+  background: rgba(12, 30, 62, .04);
+  border: 1px solid rgba(12, 30, 62, .08);
+  transition: background .2s;
+}
+.nav-burger:hover { background: rgba(12, 30, 62, .08); }
+.nav-burger span {
+  position: relative;
+  display: block;
+  width: 18px; height: 2px;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease;
+}
+.nav-burger span::before,
+.nav-burger span::after {
+  content: "";
+  position: absolute; left: 0;
+  width: 18px; height: 2px;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: transform .25s ease, top .25s ease;
+}
+.nav-burger span::before { top: -6px; }
+.nav-burger span::after  { top:  6px; }
+.nav-toggle:checked ~ .nav-inner .nav-burger span { background: transparent; }
+.nav-toggle:checked ~ .nav-inner .nav-burger span::before { top: 0; transform: rotate(45deg); }
+.nav-toggle:checked ~ .nav-inner .nav-burger span::after  { top: 0; transform: rotate(-45deg); }
+
+@media (max-width: 760px) {
+  .nav-inner { padding: .85rem var(--gutter); }
+  .nav-burger { display: inline-flex; }
+  .nav-links {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: .4rem var(--gutter) 1rem;
+    background: rgba(250, 247, 241, .98);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+    box-shadow: 0 16px 40px -20px rgba(12, 30, 62, .25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
+  }
+  .nav-links a {
+    padding: .95rem .25rem;
+    font-size: 1.05rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+    color: var(--navy);
+  }
+  .nav-links a:last-child { border-bottom: 0; }
+  .nav-links a:hover { background: transparent; color: var(--coral-deep); }
+  .nav-toggle:checked ~ .nav-inner .nav-links {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity .22s ease, transform .22s ease, visibility 0s linear 0s;
+  }
+
+  /* Submenu inline auf Mobile */
+  .nav-item {
+    display: block;
+    width: 100%;
+  }
+  .nav-item > a {
+    display: block;
+    padding: .95rem .25rem;
+    font-size: 1.05rem;
+    color: var(--navy);
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+  }
+  .nav-item > a::after { display: none; }
+  .submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    transition: none;
+  }
+  .submenu a {
+    padding: .7rem .25rem .7rem 1.5rem;
+    font-size: .95rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(15, 23, 42, .04);
+  }
+  .submenu a::before {
+    content: "↳ ";
+    opacity: .55;
+    margin-right: .25rem;
+  }
+  .nav-icon-link {
+    margin: .75rem .25rem .25rem;
+    width: 48px; height: 48px;
+  }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 30, 62, .15) 0%, rgba(12, 30, 62, .55) 60%, rgba(12, 30, 62, .92) 100%),
+    var(--hero-img, linear-gradient(135deg, #0c1e3e, #14305f 55%, #1e3a8a));
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+.hero-inner {
+  max-width: var(--container);
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 7rem) var(--gutter) clamp(2.5rem, 6vw, 5rem);
+}
+.hero h1 {
+  color: #fff;
+  max-width: 18ch;
+  margin-bottom: .35em;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--sand);
+}
+.hero-lead {
+  color: rgba(255, 255, 255, .85);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  max-width: 58ch;
+  margin-bottom: 1.6rem;
+}
+.hero .eyebrow {
+  color: var(--sand);
+  margin-bottom: 1.4rem;
+}
+.hero .eyebrow::before { background: var(--sand); }
+
+.hero-meta {
+  display: flex; gap: 2rem; flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(255, 255, 255, .18);
+  max-width: 720px;
+}
+.hero-meta div {
+  display: flex; flex-direction: column;
+  font-size: .9rem;
+  color: rgba(255, 255, 255, .7);
+}
+.hero-meta strong {
+  color: #fff;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  margin-bottom: .15rem;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, .65);
+  font-size: .78rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  animation: float 2.4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 6px); }
+}
+
+/* ---------- Sections ---------- */
+section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
+.section-head { max-width: 720px; margin-bottom: 3rem; }
+.section-head .eyebrow { margin-bottom: 1rem; }
+.section-head h2 { margin-bottom: .4rem; }
+.section-head p { color: var(--muted); font-size: 1.05rem; }
+
+.section-dark {
+  background: var(--navy);
+  color: #fff;
+}
+.section-dark h2, .section-dark h3, .section-dark h4 { color: #fff; }
+.section-dark p { color: rgba(255,255,255,.75); }
+.section-dark .prose p { color: rgba(255,255,255,.92); }
+.section-dark .prose p strong { color: #fff; }
+.section-dark .prose p:first-of-type::first-letter { color: var(--sand); }
+.section-dark .eyebrow { color: var(--sand); }
+.section-dark a { color: var(--sand); text-decoration-color: rgba(232, 220, 192, .35); }
+.section-dark a:hover { color: var(--coral); }
+
+.section-cream { background: var(--cream-2); }
+
+/* ---------- Overview: Bento tiles ---------- */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(220px, auto);
+  gap: 1.2rem;
+}
+.bento .tile { grid-column: span 2; }
+.bento .tile.feature { grid-column: span 4; grid-row: span 2; }
+@media (max-width: 900px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .bento .tile, .bento .tile.feature { grid-column: span 2; grid-row: span 1; min-height: 280px; }
+}
+
+.tile {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  border-radius: var(--radius-lg);
+  padding: 1.6rem;
+  text-decoration: none;
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 280px;
+  box-shadow: var(--shadow);
+  transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s;
+}
+.tile::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 30, 62, 0) 30%, rgba(12, 30, 62, .85) 100%),
+    var(--tile-img, linear-gradient(135deg, var(--navy-2), var(--navy)));
+  background-size: cover;
+  background-position: center;
+  transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  z-index: -1;
+}
+.tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.tile:hover::before { transform: scale(1.06); }
+
+.tile .tile-num {
+  position: absolute;
+  top: 1.3rem; left: 1.6rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .78rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.85);
+}
+.tile h3 {
+  color: #fff;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  margin-bottom: .25rem;
+  letter-spacing: -.02em;
+}
+.tile.feature h3 { font-size: clamp(2rem, 3.6vw, 3rem); }
+.tile p {
+  color: rgba(255,255,255,.85);
+  margin: .3rem 0 1rem;
+  max-width: 42ch;
+}
+.tile-meta {
+  display: flex; gap: .4rem; flex-wrap: wrap;
+  margin-top: .2rem;
+}
+.tag {
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: #fff;
+  padding: .3rem .65rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.22);
+}
+.tile-cta {
+  position: absolute;
+  top: 1.3rem; right: 1.3rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: background .25s, transform .25s;
+}
+.tile:hover .tile-cta { background: var(--coral); border-color: var(--coral); transform: rotate(-45deg); }
+
+/* ---------- Detail page hero (image-led) ---------- */
+.detail-hero { min-height: 72vh; }
+.detail-hero .back {
+  display: inline-flex; align-items: center; gap: .4rem;
+  color: rgba(255,255,255,.8);
+  text-decoration: none;
+  font-size: .92rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+.detail-hero .back:hover { color: var(--sand); }
+
+/* ---------- Highlights grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+.feature-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 1.6rem 1.5rem;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.feature-card:has(.card-img) { overflow: hidden; }
+.feature-card .card-img {
+  display: block;
+  width: calc(100% + 3rem);
+  max-width: none;
+  height: 200px;
+  margin: -1.6rem -1.5rem 1.2rem;
+  object-fit: cover;
+  background: var(--cream);
+}
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: rgba(12, 30, 62, .15);
+}
+a.feature-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+a.feature-card::after {
+  content: "↗";
+  position: absolute;
+  top: 1.2rem;
+  right: 1.3rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .95rem;
+  transition: background .25s, transform .25s;
+}
+a.feature-card:hover::after {
+  background: var(--coral);
+  transform: translate(2px, -2px);
+}
+a.feature-card:hover h4 { color: var(--navy); }
+.feature-card .num {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .78rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--coral-deep);
+  margin-bottom: .8rem;
+  display: block;
+}
+.feature-card h4 {
+  margin-bottom: .35rem;
+  font-size: 1.2rem;
+  letter-spacing: -.01em;
+}
+.feature-card p { margin: 0; font-size: .96rem; }
+
+/* ---------- Two-col info ---------- */
+.split {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+.prose { font-size: 1.05rem; }
+.prose p { color: var(--ink-2); margin-bottom: 1.2em; }
+.prose p:first-of-type::first-letter {
+  font-family: "Space Grotesk", serif;
+  font-size: 3.4rem;
+  float: left;
+  line-height: .9;
+  padding: .15rem .55rem 0 0;
+  color: var(--coral-deep);
+  font-weight: 500;
+}
+
+.facts {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  box-shadow: var(--shadow-sm);
+}
+.facts h3 {
+  font-size: .82rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+.facts ul { list-style: none; padding: 0; margin: 0; }
+.facts li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: .95rem;
+}
+.facts li:last-child { border-bottom: 0; }
+.facts .k { color: var(--muted); }
+.facts .v { color: var(--navy); font-weight: 500; text-align: right; }
+
+/* ---------- Map ---------- */
+.map-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: #e0f2fe;
+}
+#map, .leaflet-map { width: 100%; height: 480px; }
+.map-caption {
+  font-size: .85rem;
+  color: var(--muted);
+  margin: .8rem 0 0;
+}
+
+/* ---------- Tips list ---------- */
+.tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.tip {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.3rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+}
+.tip-icon {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cream-2);
+  border-radius: 10px;
+  margin-bottom: .8rem;
+  font-size: 1.15rem;
+}
+.tip strong {
+  display: block;
+  color: var(--navy);
+  margin-bottom: .15rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  font-size: 1.02rem;
+  letter-spacing: -.005em;
+}
+.tip p { margin: 0; font-size: .92rem; color: var(--ink-2); }
+
+.section-dark .tip {
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.12);
+  box-shadow: none;
+}
+.section-dark .tip strong { color: #fff; }
+.section-dark .tip p { color: rgba(255,255,255,.75); }
+.section-dark .tip-icon { background: rgba(255,255,255,.1); }
+.section-dark .facts { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.12); }
+.section-dark .facts .k { color: rgba(255,255,255,.6); }
+.section-dark .facts .v { color: #fff; }
+.section-dark .facts li { border-bottom-color: rgba(255,255,255,.1); }
+
+/* ---------- Buttons ---------- */
+.btn-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .85rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: .95rem;
+  text-decoration: none;
+  transition: transform .2s, background .2s, color .2s, border-color .2s;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -.005em;
+}
+.btn.primary {
+  background: var(--coral);
+  color: #fff;
+}
+.btn.primary:hover { background: var(--coral-deep); transform: translateY(-1px); }
+.btn.ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.4);
+}
+.btn.ghost:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.7); }
+.btn.dark {
+  background: var(--navy);
+  color: #fff;
+}
+.btn.dark:hover { background: #000; transform: translateY(-1px); }
+
+/* ---------- Quick-Links Menüleiste ---------- */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .9rem;
+  margin: 0 0 3rem;
+  padding: .9rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--shadow-sm);
+}
+.quick-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius);
+  background: #fbfaf7;
+  border: 1px solid transparent;
+  color: var(--navy);
+  text-decoration: none;
+  transition: background .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.quick-link:hover {
+  background: #fff;
+  border-color: var(--line);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -10px rgba(20, 25, 40, .35);
+}
+.quick-link__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  transition: background .25s ease;
+}
+.quick-link:hover .quick-link__icon { background: #000; }
+.quick-link__icon svg { width: 20px; height: 20px; }
+.quick-link__label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+.quick-link__kicker {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.quick-link__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -.005em;
+  color: var(--navy);
+}
+@media (max-width: 900px) {
+  .quick-links { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .quick-links { grid-template-columns: 1fr; }
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,.7);
+  padding: 4rem var(--gutter) 2.5rem;
+  text-align: center;
+}
+footer .brand { color: #fff; margin-bottom: 1.5rem; }
+footer p { color: rgba(255,255,255,.6); font-size: .92rem; margin: .3rem 0; }
+footer a { color: var(--sand); }
+
+/* ---------- SPA Pages ---------- */
+.page { display: none; }
+.page.is-active { display: block; animation: page-fade .35s ease; }
+@keyframes page-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nav-links a.is-active {
+  color: var(--coral);
+}
+.nav-links a.is-active::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--coral);
+  margin: 4px auto 0;
+  border-radius: 2px;
+}
+@media (max-width: 760px) {
+  .nav-links a.is-active::after { display: none; }
+  .nav-links a.is-active { background: rgba(249,115,87,.08); }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .nav, .btn, #map, .leaflet-map, .map-wrap, .scroll-hint, footer { display: none !important; }
+  body { background: #fff; color: #000; }
+  .hero, .detail-hero { min-height: auto; color: #000; }
+  .hero::before { display: none; }
+  .hero h1, .hero h1 em, .hero-lead, .hero-meta strong { color: #000 !important; }
+  .tile { color: #000; background: #fff !important; border: 1px solid #ccc; box-shadow: none; }
+  .tile::before { display: none; }
+  .feature-card, .tip, .facts { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+  section { padding: 1.5rem 0; }
+}
+
+/* ---------- Vögel ---------- */
+.birds-section { background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%); }
+.birds-section .section-intro { max-width: 62ch; }
+
+.birds-filter {
+  display: flex; flex-wrap: wrap; gap: 1.4rem 2rem;
+  margin: 2.4rem 0 2rem;
+  padding: 1.4rem 1.6rem;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  align-items: flex-end;
+}
+.birds-filter .filter-group { display: flex; flex-direction: column; gap: .55rem; }
+.birds-filter .filter-group > label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.birds-search {
+  flex: 1 1 240px;
+}
+.birds-search input {
+  width: 100%;
+  padding: .75rem 1rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.birds-search input:focus { border-color: var(--navy-2); background: #fff; }
+.birds-filter .pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+.birds-filter .pill {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .8rem;
+  font-weight: 500;
+  padding: .42rem .85rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all .2s;
+  user-select: none;
+}
+.birds-filter .pill:hover { border-color: var(--navy-2); color: var(--navy); }
+.birds-filter .pill.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.birds-filter .pill[data-season="fruehjahr"].active { background: #5b8a3a; border-color: #5b8a3a; }
+.birds-filter .pill[data-season="sommer"].active   { background: var(--coral); border-color: var(--coral); }
+.birds-filter .pill[data-season="herbst"].active   { background: #b87a2e; border-color: #b87a2e; }
+.birds-filter .pill[data-season="winter"].active   { background: #4a6a8a; border-color: #4a6a8a; }
+.birds-filter .pill[data-season="ganzjaehrig"].active { background: var(--sage); border-color: var(--sage); }
+
+.birds-count {
+  margin: 0 0 1.4rem;
+  font-size: .92rem;
+  color: var(--muted);
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: .04em;
+}
+
+.birds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.4rem;
+}
+.bird-card {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column;
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+}
+.bird-card.hidden { display: none; }
+.bird-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.bird-card .bird-img {
+  position: relative;
+  width: 100%; aspect-ratio: 4 / 3;
+  background:
+    linear-gradient(135deg, #d8e1ec 0%, #c0cedb 100%);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+.bird-card .bird-img::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(12,30,62,.35) 100%);
+  pointer-events: none;
+}
+.bird-card .bird-body {
+  padding: 1rem 1.1rem 1.2rem;
+  display: flex; flex-direction: column; gap: .55rem;
+  flex: 1;
+}
+.bird-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -.01em;
+  color: var(--navy);
+}
+.bird-card .bird-sci {
+  font-style: italic;
+  color: var(--muted);
+  font-size: .85rem;
+  margin: -.45rem 0 .15rem;
+}
+.bird-card .bird-desc {
+  margin: 0;
+  font-size: .92rem;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.bird-card .bird-tags {
+  display: flex; flex-wrap: wrap; gap: .35rem;
+  margin-top: auto;
+  padding-top: .6rem;
+}
+.bird-card .bird-tag {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .7rem;
+  letter-spacing: .06em;
+  padding: .22rem .55rem;
+  border-radius: 999px;
+  background: var(--cream-2);
+  color: var(--ink-2);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.bird-card .bird-tag.season-fruehjahr { background: #e3edd1; color: #3d5a1f; }
+.bird-card .bird-tag.season-sommer    { background: #fde2da; color: #8b3a22; }
+.bird-card .bird-tag.season-herbst    { background: #f3dfb8; color: #7a4e16; }
+.bird-card .bird-tag.season-winter    { background: #d8e2ec; color: #2c4866; }
+.bird-card .bird-tag.season-ganzjaehrig { background: #d9e8e0; color: #2f5544; }
+
+.bird-card .bird-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--navy);
+  text-decoration: none;
+  margin-top: .3rem;
+  align-self: flex-start;
+}
+.bird-card .bird-link:hover { color: var(--coral); }
+.bird-card .bird-link::after { content: "↗"; font-size: .9em; }
+
+.birds-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+  font-style: italic;
+  display: none;
+}
+.birds-empty.show { display: block; }
+
+@media (max-width: 560px) {
+  .birds-filter { padding: 1.1rem; }
+}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <div class="nav-inner">
+    <a class="brand" href="#trips" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="lauwer.png" alt="Lauwersoog Logo"></a>
+    <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen"><span></span></label>
+    <div class="nav-links">
+      <a href="#trips"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Übersicht</a>
+
+      <div class="nav-item">
+        <a href="#dokkum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><path d="M12 2 4 7v3h16V7z"/></svg>Dokkum</a>
+        <div class="submenu">
+          <a href="#dokkum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#dokkum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="#dokkum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#dokkum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#dokkum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#dokkum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="#verhildersum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M18 11V4h-3v3h-2V2h-2v5H9V4H6v7"/><path d="M10 22v-5h4v5"/></svg>Verhildersum</a>
+        <div class="submenu">
+          <a href="#verhildersum"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#verhildersum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="#verhildersum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#verhildersum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#verhildersum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#verhildersum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="#schiermonnikoog"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>Schiermonnikoog</a>
+        <div class="submenu">
+          <a href="#schiermonnikoog"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#schiermonnikoog-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Auf der Insel</a>
+          <a href="#schiermonnikoog-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#schiermonnikoog-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#schiermonnikoog-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#schiermonnikoog-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="#groningen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>Groningen</a>
+        <div class="submenu">
+          <a href="#groningen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="#groningen-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>In der Stadt</a>
+          <a href="#groningen-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="#groningen-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="#groningen-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="#groningen-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <a href="#voegel"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>Vögel</a>
+
+      <a class="nav-icon-link" href="https://www.google.com/maps/search/Siblu+Camping+Lauwersoog" target="_blank" rel="noopener" title="Siblu Camping Lauwersoog auf Google Maps" aria-label="Siblu Camping Lauwersoog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M12 3 3 21"/><path d="M12 3l9 18"/><path d="M12 3v18"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page" id="trips">
+  <!-- ============================== ÜBERSICHT ============================== -->
+  <section>
+    <div class="container">
+
+      <nav class="quick-links" aria-label="Wichtige Orte vor Ort">
+        <a class="quick-link" href="https://www.google.com/maps/place/Siblu+Lauwersoog/@53.4039842,6.2085761,904m/data=!3m2!1e3!4b1!4m9!3m8!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Unterkunft</span>
+            <span class="quick-link__title">Home</span>
+          </span>
+        </a>
+        <a class="quick-link" href="https://www.google.com/maps/place/Restaurette+Schierzicht/@53.4067485,6.2052351,901m/data=!3m2!1e3!5s0x47c9ba9f3a1da82f:0x975819080d6d5217!4m17!1m10!3m9!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!2sSiblu+Lauwersoog!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc!3m5!1s0x47c9ba9f3af24ddb:0xb1c19cc2930e4edf!8m2!3d53.40744!4d6.200537!16s%2Fg%2F1t_wnlp8" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M17 10h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M7 5c.5-1 .5-2 0-3"/><path d="M11 5c.5-1 .5-2 0-3"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Restaurette Schierzicht</span>
+            <span class="quick-link__title">Frühstück</span>
+          </span>
+        </a>
+        <a class="quick-link" href="https://www.google.com/maps/place/Plus+Supermarket/@53.3779042,6.127964,2146m/data=!3m1!1e3!4m17!1m10!3m9!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!2sSiblu+Lauwersoog!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc!3m5!1s0x47c9afba49a8638f:0xb0695e7077edf4f6!8m2!3d53.3765874!4d6.1257124!16s%2Fg%2F1thx38xh" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.5L21 8H6"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Plus Anjum</span>
+            <span class="quick-link__title">Supermarkt</span>
+          </span>
+        </a>
+        <a class="quick-link" href="https://www.fietsnetwerk.nl/de/ladestationen/" target="_blank" rel="noopener">
+          <span class="quick-link__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+          </span>
+          <span class="quick-link__label">
+            <span class="quick-link__kicker">Fietsnetwerk</span>
+            <span class="quick-link__title">E-Bike Ladestationen</span>
+          </span>
+        </a>
+      </nav>
+
+      <div class="section-head">
+        <span class="eyebrow">Die Auswahl</span>
+        <h2>Vier Tage, vier sehr unterschiedliche Stimmungen.</h2>
+        <p>Von der Festungsstadt über das stille Wierdenland und die autofreie Wattinsel
+        bis zur lebendigen Hansestadt — klick dich in jedes Ziel für Karte, Highlights und Hintergründe.</p>
+      </div>
+
+      <div class="bento">
+
+        <a class="tile feature" href="#schiermonnikoog"
+           style="--tile-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_island_%284036567957%29.jpg?width=1600'), linear-gradient(135deg, #1d3a64 0%, #2a6c7d 60%, #6b9080 100%);">
+          <span class="tile-num">Ausflug 03 · Insel</span>
+          <span class="tile-cta">→</span>
+          <h3>Schiermonnikoog</h3>
+          <p>Autofreie Wattinsel mit endlosen Stränden, Dünen und dem ersten Nationalpark der Niederlande. Anreise per Fähre.</p>
+          <div class="tile-meta">
+            <span class="tag">Fähre 45 Min.</span>
+            <span class="tag">Nationalpark</span>
+            <span class="tag">Strände</span>
+          </div>
+        </a>
+
+        <a class="tile" href="#dokkum"
+           style="--tile-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/De_Zijl_over_the_Dokkumer_Grootdiep.jpg?width=1600'), linear-gradient(160deg, #3a2a1a 0%, #6b3e2a 50%, #c8a55b 110%);">
+          <span class="tile-num">Ausflug 01 · Stadt</span>
+          <span class="tile-cta">→</span>
+          <h3>Dokkum</h3>
+          <p>Friesische Festungsstadt mit Grachten, Bastionen und zwei Windmühlen.</p>
+          <div class="tile-meta">
+            <span class="tag">~20 km</span>
+            <span class="tag">Fahrrad</span>
+          </div>
+        </a>
+
+        <a class="tile" href="#verhildersum"
+           style="--tile-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_voorzijde.jpg?width=1600'), linear-gradient(160deg, #3d4d2e 0%, #6b8055 55%, #c8b478 110%);">
+          <span class="tile-num">Ausflug 02 · Museum</span>
+          <span class="tile-cta">→</span>
+          <h3>Borg Verhildersum</h3>
+          <p>Das einzige bewohnbare Adelsgut Groningens — Living-History um 1860.</p>
+          <div class="tile-meta">
+            <span class="tag">~16 km</span>
+            <span class="tag">Fahrrad</span>
+          </div>
+        </a>
+
+        <a class="tile" href="#groningen"
+           style="--tile-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Martini2.jpg?width=1600'), linear-gradient(160deg, #2a0f0a 0%, #6a2a1f 55%, #b35a3a 110%);">
+          <span class="tile-num">Ausflug 04 · Stadt</span>
+          <span class="tile-cta">→</span>
+          <h3>Groningen</h3>
+          <p>Hansestadt &amp; Universitätsmetropole — Martinitoren, Museen, Grachten.</p>
+          <div class="tile-meta">
+            <span class="tag">~40 km</span>
+            <span class="tag">Auto</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ÜBER LAUWERSOOG ============================== -->
+  <section>
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Über Lauwersoog</span>
+          <h2 style="margin-top:.6rem;">Ein kleiner Hafen am Tor zum Wattenmeer.</h2>
+          <p>Lauwersoog liegt an der Grenze von Friesland und Groningen, dort wo der Lauwers
+          ins Wattenmeer mündet. Seit der Schließung des Lauwerszee-Damms 1969 ist aus der
+          Meeresbucht der Süßwasser-Nationalpark <em>Lauwersmeer</em> geworden — heute eines
+          der dunkelsten und stillsten Naturreservate der Niederlande.</p>
+          <p>Der Hafen ist Ausgangspunkt für die Fähre nach Schiermonnikoog, beheimatet eine
+          aktive Fischerflotte und steht im Sommer ganz im Zeichen langsamer Tage:
+          Radtouren, Spaziergänge am Deich, Sonnenuntergänge über dem Watt.</p>
+        </div>
+        <div class="facts">
+          <h3>Eckdaten</h3>
+          <ul>
+            <li><span class="k">Region</span><span class="v">Groningen / Friesland</span></li>
+            <li><span class="k">Nationalpark</span><span class="v">Lauwersmeer</span></li>
+            <li><span class="k">UNESCO</span><span class="v">Wattenmeer-Welterbe</span></li>
+            <li><span class="k">Fähre nach</span><span class="v">Schiermonnikoog</span></li>
+            <li><span class="k">Nächste Stadt</span><span class="v">Dokkum (~20 km)</span></li>
+            <li><span class="k">Beste Saison</span><span class="v">Mai – September</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  </div><!-- /.page #trips -->
+
+  <div class="page" id="dokkum">
+  <!-- ====================================================================== -->
+  <!-- ============================== DOKKUM ================================ -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/De_Zijl_over_the_Dokkumer_Grootdiep.jpg?width=2000'), radial-gradient(120% 80% at 70% 25%, #6b3e2a 0%, #3a2a1a 60%, #1d1208 100%);">
+      <div class="hero-inner">
+        <a href="#trips" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 01 · Fahrradtour</span>
+        <h1>Dokkum — <em>1300 Jahre Geschichte auf wenigen Quadratkilometern.</em></h1>
+        <p class="hero-lead">
+          Grachten, Bastionen, zwei Windmühlen und ein Park, in dem 754 der Missionar
+          Bonifatius sein Leben ließ. Heute ist Dokkum ein lebendiger Marktort mit
+          sternförmigen <em>bolwerken</em> und unzähligen kleinen Cafés.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~20 km</strong>pro Richtung</div>
+          <div><strong>Halb– Ganztag</strong>Aufenthalt</div>
+          <div><strong>1298</strong>Stadtrechte</div>
+          <div><strong>2</strong>Windmühlen</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.komoot.com/tour/2980560412?share_token=aSwsShJZj1IIqwHDxj3Gj42JBCvj2XiQjFqIsJtlsM45COg9CH&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=5781661722538" target="_blank" rel="noopener">🗺 Komoot-Route öffnen</a>
+          <a class="btn ghost" href="#dokkum-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="dokkum-vor-ort">
+      <div class="section-head">
+        <span class="eyebrow">Sehenswürdigkeiten</span>
+        <h2>Sechs Stationen, die du nicht verpassen solltest.</h2>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Bolwerken+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Bastion_IV_met_gracht%2C_Dokkum.JPG?width=640" alt="Bastionen in Dokkum"><span class="num">01 · Bolwerken</span><h4>Grachten &amp; Bastionen</h4><p>Die sternförmigen Festungswälle aus dem 16. Jh. sind nahezu vollständig erhalten — ein Spaziergang darauf gehört zum Pflichtprogramm.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Molen+Zeldenrust+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Zeldenrust_Dokkum_-_Full.jpg?width=640" alt="Mole Zeldenrust"><span class="num">02 · Mühle</span><h4>Zeldenrust</h4><p>Klassische Kappenmühle direkt am Wasser — eines der meistfotografierten Motive der Stadt. Besichtigung nach Voranmeldung möglich.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Molen+De+Hoop+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_molen_de_Hoop_foto4_2009-09-19_12.39.JPG?width=640" alt="Mühle De Hoop"><span class="num">03 · Mühle</span><h4>De Hoop</h4><p>Zweite, ebenso fotogene Kappenmühle am Stadtrand. Die Lichtstimmung am späten Nachmittag ist besonders schön.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Bonifatiuskapel+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/20200612_Bonifatiuskapel_Dokkum.jpg?width=640" alt="Bonifatiuskapelle Dokkum"><span class="num">04 · Pilgerort</span><h4>Bonifatiuskapelle &amp; Park</h4><p>Ruhige Anlage von 1923 mit Brouwersbron-Quelle, Kreuzweg und Kapelle (1934). Erinnerung an die Ermordung des Missionars 754.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Stadhuis+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_stadhuis.jpg?width=640" alt="Stadhuis Dokkum"><span class="num">05 · Architektur</span><h4>Altstadt &amp; Stadhuis</h4><p>Verwinkelte Gassen, zahllose Fußgängerbrücken, das Rathaus von 1610 und die spätgotische Sint-Martinuskerk.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Markt+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_Grootdiep._20-09-2021._%28actm.%29.jpg?width=640" alt="Markt und Gracht in Dokkum"><span class="num">06 · Genuss</span><h4>Markt &amp; Diepswal</h4><p>Die besten Adressen für eine entspannte Mittagspause oder <em>koffie met appeltaart</em> mit Blick auf die Gracht.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="dokkum-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Route</span>
+        <h2>Von Lauwersoog nach Dokkum.</h2>
+        <p>Eine schematische Übersicht — die exakte Navigation läuft über die Komoot-Tour.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.3269,5.9981" data-end-label="Dokkum" data-route="53.3956,6.1660;53.3742,6.0900;53.3500,6.0300"></div>
+      </div>
+      <p class="map-caption">Routenverlauf schematisch · exakte GPX-Navigation über die Komoot-Tour.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="dokkum-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Eine Stadt mit Kreuzzügen, Märtyrern und Eis­schnell­läufern.</h2>
+          <p>Dokkum erhielt bereits <strong>1298 die Stadtrechte</strong>. Berühmt wurde der Ort durch das Martyrium des Angelsachsen <strong>Bonifatius im Jahr 754</strong> — der Halbmond im Stadtwappen erinnert übrigens an die Teilnahme Dokkums am Fünften Kreuzzug 1214.</p>
+          <p>In den 1640er Jahren saß hier sogar die <em>Admiralität von Friesland</em>. Heute ist Dokkum der <strong>Wendepunkt der legendären Elfstedentocht</strong> — jenes 200-km-Eisschnelllauf-Marathons, der die elf Städte Frieslands verbindet, sofern die Grachten zufrieren.</p>
+          <p>Die beiden erhaltenen <strong>Kappenmühlen Zeldenrust und De Hoop</strong> gehören zu den besterhaltenen Mühlen der Niederlande und sind nach Voranmeldung zu besichtigen.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Distanz</span><span class="v">~20 km pro Richtung</span></li>
+            <li><span class="k">Dauer</span><span class="v">Halb- bis Ganztag</span></li>
+            <li><span class="k">Anreise</span><span class="v">Fahrrad ab Lauwersoog</span></li>
+            <li><span class="k">Stadtrechte</span><span class="v">1298</span></li>
+            <li><span class="k">Einwohner</span><span class="v">~12.700</span></li>
+            <li><span class="k">Foto-Tipp</span><span class="v">Bolwerken, tiefer Sonnenstand</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dokkum-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Kleine Tipps für den Tag.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🚲</span><strong>Fahrradschloss mit</strong><p>In der Altstadt gibt es ausgewiesene Abstellbereiche — abschließen ist Pflicht.</p></div>
+        <div class="tip"><span class="tip-icon">📅</span><strong>Markttage</strong><p>Mittwoch- und Samstagvormittag — am lebendigsten direkt am Markt.</p></div>
+        <div class="tip"><span class="tip-icon">🌬</span><strong>Mühlen-Besuch</strong><p>Zeldenrust &amp; De Hoop: vorab anfragen, ob geöffnet — die Mühlen werden ehrenamtlich betreut.</p></div>
+        <div class="tip"><span class="tip-icon">🥖</span><strong>Picknick-Idee</strong><p>Bäcker in der Altstadt, dann auf den Bolwerken Pause machen — Top-Ausblick auf die Stadt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="dokkum-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Pause in Dokkum.</h2>
+        <p>Cafés, Bistros und eine echte friesische Snackbar — alles in Laufnähe vom Markt.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Dokkum" target="_blank" rel="noopener"><span class="num">Restaurants</span><h4>Restaurants in Dokkum</h4><p>Bistros, Brasserien und Restaurants in der historischen Innenstadt — große Auswahl rund um Markt und Bolwerken.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/cafe+lunchroom+Dokkum" target="_blank" rel="noopener"><span class="num">Cafés</span><h4>Cafés &amp; Lunchrooms</h4><p>Gemütliche Adressen für Kaffee, Kuchen oder einen schnellen Lunch zwischen den Bolwerken.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/cafetaria+snackbar+Dokkum" target="_blank" rel="noopener"><span class="num">Imbiss</span><h4>Cafetaria &amp; Snackbars</h4><p>Friesische Klassiker — Frikandel, Kibbeling, Patat speciaal. Mehrere Adressen in der Innenstadt.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/visboer+vishandel+Dokkum" target="_blank" rel="noopener"><span class="num">Fisch</span><h4>Fisch &amp; Meeresfrüchte</h4><p>Frischer Hering, Kibbeling und Lekkerbekjes — friesische Fischimbisse vor Ort.</p></a>
+      </div>
+    </div>
+  </section>
+
+
+  </div><!-- /.page #dokkum -->
+
+  <div class="page" id="verhildersum">
+  <!-- ====================================================================== -->
+  <!-- ============================ VERHILDERSUM ============================ -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_voorzijde.jpg?width=2000'), radial-gradient(120% 80% at 75% 30%, #8a9e6a 0%, #4a5a36 55%, #1f2a18 100%);">
+      <div class="hero-inner">
+        <a href="#trips" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 02 · Fahrradtour</span>
+        <h1>Borg Verhildersum — <em>ein Adelsgut wie aus dem Bilderbuch.</em></h1>
+        <p class="hero-lead">
+          Mitten im stillen Groninger Wierdenland liegt das einzige bewohnbare <em>borg</em> der
+          Region: Herrenhaus, Schaaperij, Bauernhof und historische Gärten erzählen vom
+          Leben um 1860 — umgeben von Wiesen, Schafen und endlosem Himmel.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~16 km</strong>pro Richtung</div>
+          <div><strong>Halbtag</strong>Aufenthalt</div>
+          <div><strong>14. Jh.</strong>Ursprung</div>
+          <div><strong>1</strong>bewohnte Borg</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.komoot.com/tour/2980620331?share_token=anOq1iUR1QvSsXPloeceCkayve55lyWxw3yDx3ZCaNGoNRgJ4d&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=5781661722538" target="_blank" rel="noopener">🗺 Komoot-Route öffnen</a>
+          <a class="btn ghost" href="#verhildersum-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="verhildersum-vor-ort">
+      <div class="section-head">
+        <span class="eyebrow">Sehenswürdigkeiten</span>
+        <h2>Was dich auf dem Borg-Gelände erwartet.</h2>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Museum+Borg+Verhildersum+Leens" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_voorzijde.jpg?width=640" alt="Borg Verhildersum"><span class="num">01 · Herrenhaus</span><h4>Voll möbliertes Adelshaus</h4><p>Zeigt den Lebensstil der Groninger <em>jonkers</em> im 19. Jahrhundert — vom Empfangssalon bis zur Küche, durchgehend möbliert.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Schaaperij+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Boerderij_Saaxumaborg_-_Leens_-_20129804_-_RCE.jpg?width=640" alt="Schaaperij"><span class="num">02 · Schaaperij</span><h4>Schafstall &amp; Pachthof</h4><p>Pachthof aus dem 19. Jh. mit lebenden Tieren und Living-History-Vorführungen rund ums Bauernjahr.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Tuinen+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_tuin_1.jpg?width=640" alt="Gärten Borg Verhildersum"><span class="num">03 · Gärten</span><h4>Obst, Kräuter, Bauerngarten</h4><p>Angelegt nach alten Plänen, mit alten niederländischen Obstsorten und einer Kräuter-Sammlung.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Koetshuis+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_ingang.jpg?width=640" alt="Wechselausstellung Kutscherhaus"><span class="num">04 · Kunst</span><h4>Wechselausstellungen</h4><p>Im Kutscherhaus laufen wechselnde Ausstellungen zu Kunst, Mode oder Regionalgeschichte.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Theetuin+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_tuin_4.jpg?width=640" alt="Tea Garden Verhildersum"><span class="num">05 · Genuss</span><h4>Tea Garden</h4><p>Stille Einkehr im historischen Garten — Hausgebackenes, frischer Kaffee, viel Grün.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Leens+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Kerk_van_Leens.jpg?width=640" alt="Wierden-Landschaft"><span class="num">06 · Landschaft</span><h4>Wierden-Land</h4><p>Die Anreise führt durch typisches Groninger Marschland mit alten Warften (<em>wierden</em>) und offenen Horizonten.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="verhildersum-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Route</span>
+        <h2>Von Lauwersoog nach Leens.</h2>
+        <p>Über Zoutkamp und Ulrum durchs Wierdenland. Schematische Übersicht.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.3789,6.3408" data-end-label="Borg Verhildersum" data-route="53.3955,6.2700;53.3850,6.3100"></div>
+      </div>
+      <p class="map-caption">Routenverlauf schematisch · exakte GPX-Navigation über die Komoot-Tour.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="verhildersum-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Die letzte bewohnte Borg im Groninger Land.</h2>
+          <p>Eine <strong>Borg</strong> ist ein befestigtes Adelshaus, wie es im Groninger Land typisch war. Von ursprünglich rund <strong>200 Borgen</strong> sind nur eine Handvoll erhalten — und Verhildersum ist die einzige, die noch bewohnt und vollständig möbliert ist. Ihre Ursprünge reichen bis ins frühe <strong>14. Jahrhundert</strong> zurück.</p>
+          <p>Das Museum erzählt das Leben um <strong>1860</strong>, als die Familie Tjarda van Starkenborgh hier residierte. Besucher:innen wandeln zwischen Herrenhaus, Garten, Schaaperij und Pachthof — ein Vollbild der ländlichen Gesellschaft jener Zeit.</p>
+          <p>Das umliegende Dorf <strong>Leens</strong> ist ein klassisches <em>wierdendorp</em>: Auf künstlich aufgeschütteten Erdhügeln bauten die Friesen vor 2000 Jahren ihre Höfe, um sich vor Sturmfluten zu schützen.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Distanz</span><span class="v">~16 km pro Richtung</span></li>
+            <li><span class="k">Dauer</span><span class="v">Halbtag</span></li>
+            <li><span class="k">Anreise</span><span class="v">Fahrrad via Zoutkamp/Ulrum</span></li>
+            <li><span class="k">Saison</span><span class="v">i.d.R. März – Oktober</span></li>
+            <li><span class="k">Hinweis</span><span class="v">Öffnungszeiten vorab prüfen</span></li>
+            <li><span class="k">Einkehr</span><span class="v">Tea Garden im Borg-Park</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="verhildersum-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Kleine Tipps für den Tag.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🎫</span><strong>Kombiticket</strong><p>Ein Ticket deckt Herrenhaus, Schaaperij und Gärten ab — spart Wege.</p></div>
+        <div class="tip"><span class="tip-icon">📷</span><strong>Foto-Spot</strong><p>Spiegelung des Borg-Hauses im umgebenden Wassergraben — am schönsten morgens.</p></div>
+        <div class="tip"><span class="tip-icon">🥾</span><strong>Bequeme Schuhe</strong><p>Der Borg-Park hat viele Naturwege — bei Regen schnell matschig.</p></div>
+        <div class="tip"><span class="tip-icon">🍞</span><strong>Picknick mitnehmen</strong><p>Auch außerhalb des Tea Gardens gibt es schöne Pausenplätze im Park.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="verhildersum-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Einkehr unterwegs.</h2>
+        <p>Direkt auf dem Borg-Gelände und in den Dörfern entlang der Route.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Borg+Verhildersum+Leens" target="_blank" rel="noopener"><span class="num">Vor Ort</span><h4>Tea Garden Verhildersum</h4><p>Hausgebackenes, Kaffee, leichte Lunch-Karte mitten im Borg-Park.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Zoutkamp" target="_blank" rel="noopener"><span class="num">Hafen</span><h4>Restaurants in Zoutkamp</h4><p>Auf dem Weg liegt das alte Fischerdorf Zoutkamp — gute Anlaufstelle für Lunch mit Hafenblick.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/eetcafe+restaurant+Leens" target="_blank" rel="noopener"><span class="num">Dorf</span><h4>Cafés in Leens</h4><p>Im Borg-Dorf Leens selbst finden sich kleinere Cafés und Eetcafés.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/snackbar+cafetaria+Leens+Ulrum+Zoutkamp" target="_blank" rel="noopener"><span class="num">Imbiss</span><h4>Snackbars in der Umgebung</h4><p>Friesische Klassiker wie Patat, Kibbeling &amp; Co. — gebündelte Übersicht.</p></a>
+      </div>
+    </div>
+  </section>
+
+
+  </div><!-- /.page #verhildersum -->
+
+  <div class="page" id="schiermonnikoog">
+  <!-- ====================================================================== -->
+  <!-- ========================== SCHIERMONNIKOOG =========================== -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_island_%284036567957%29.jpg?width=2000'), radial-gradient(120% 80% at 70% 25%, #3a6c8a 0%, #14305f 55%, #081a32 100%);">
+      <div class="hero-inner">
+        <a href="#trips" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 03 · Fähre &amp; Insel</span>
+        <h1>Schiermonnikoog — <em>die autofreie Wattinsel der grauen Mönche.</em></h1>
+        <p class="hero-lead">
+          Direkt vor Lauwersoog liegt die kleinste Gemeinde der Niederlande und ihr erster
+          Nationalpark: kilometerlange Strände, weite Dünen, ein leuchtend rot-weißer
+          Leuchtturm — und ein verschlafenes Inseldorf, in dem die Zeit langsamer tickt.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~45 Min.</strong>Fährfahrt</div>
+          <div><strong>16 × 4 km</strong>Insel-Größe</div>
+          <div><strong>~940</strong>Einwohner</div>
+          <div><strong>1989</strong>Nationalpark</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.wpd.nl/de/schiermonnikoog/abfahrtsuebersicht" target="_blank" rel="noopener">⛴ Fähre buchen (Wagenborg)</a>
+          <a class="btn ghost" href="https://www.komoot.com/tour/2980653379?share_token=a5IQXU5GAty0SRwwSUNaKM6MtmWYDtMVKFeFC7qMQEIvzZPdCV&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=5781661722538" target="_blank" rel="noopener">🗺 Komoot-Route</a>
+          <a class="btn ghost" href="#schiermonnikoog-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="schiermonnikoog-vor-ort">
+      <div class="section-head">
+        <span class="eyebrow">Auf der Insel</span>
+        <h2>Sechs Orte, die einen Tagestrip lohnen.</h2>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Vuurtoren+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Vuurtorenschiermonnikoog.jpg?width=640" alt="Leuchtturm Schiermonnikoog"><span class="num">01 · Leuchtturm</span><h4>Vuurtoren</h4><p>Der markante rot-weiße Leuchtturm von 1854 — bei klarer Sicht eines der schönsten Panoramen des Wattenmeers.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Het+Rif+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_-_Meeuwen_op_het_strand.jpg?width=640" alt="Strand Het Rif"><span class="num">02 · Strand</span><h4>Het Rif &amp; Nordstrand</h4><p>Einer der breitesten Strände Europas — gefühlt endlos. Perfekt für Spaziergänge, Drachen steigen lassen oder einfach Weite genießen.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Nationaal+Park+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Duinen_Schiermonnikoog.JPG?width=640" alt="Dünen Schiermonnikoog"><span class="num">03 · Natur</span><h4>Nationaal Park</h4><p>Der erste Nationalpark der Niederlande (seit 1989). Dünen, Salzwiesen, Wälder, Kobbeduinen — Vogelparadies.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Langestreek+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Overzicht_dorp_-_Schiermonnikoog_-_20197250_-_RCE.jpg?width=640" alt="Inseldorf Schiermonnikoog"><span class="num">04 · Dorf</span><h4>Inseldorf Schiermonnikoog</h4><p>Charmante Langestreek mit Cafés, Galerien und Läden — Zentrum des Insellebens.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Westerplas+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_-_Westerplas_02.jpg?width=640" alt="Vögel am Westerplas"><span class="num">05 · Vögel</span><h4>Westerplas</h4><p>Beliebter Vogelbeobachtungspunkt am westlichen Inselrand — mit etwas Glück Löffler und Säbelschnäbler.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/fietsverhuur+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Fietsen_in_de_duinen_van_Schiermonnikoog.jpg?width=640" alt="Leihfahrräder"><span class="num">06 · Mobilität</span><h4>Fahrradparadies</h4><p>Rund 5.000 Leihräder warten an der Fähre. Das Wegenetz ist flach, übersichtlich und führt zu jedem Strand.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="schiermonnikoog-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Anreise</span>
+        <h2>Fähre ab Lauwersoog.</h2>
+        <p>Die gestrichelte Linie zeigt die Wagenborg-Fährverbindung Richtung Insel.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.4811,6.1614" data-end-label="Schiermonnikoog" data-ferry="true"></div>
+      </div>
+      <p class="map-caption">Gestrichelt: Fährverbindung Wagenborg ab Hafen Lauwersoog.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="schiermonnikoog-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Insel der grauen Mönche, kleinste Gemeinde des Landes.</h2>
+          <p>Der Name <strong>Schiermonnikoog</strong> bedeutet wörtlich „Insel der grauen Mönche". Er geht zurück auf die Zisterzienser des Klosters <em>Klaarkamp</em>, die hier im Mittelalter Land besaßen — <em>schier</em> (grau) verweist auf ihre Kutten, <em>oog</em> auf „Insel".</p>
+          <p>Mit nur <strong>~940 Einwohner:innen</strong> ist Schiermonnikoog die kleinste und am dünnsten besiedelte Gemeinde der Niederlande. Touristen dürfen <strong>keine Autos mitbringen</strong>; rund 5.000 Leihfahrräder bewegen den Tagesverkehr.</p>
+          <p>Geschichtlich bemerkenswert: Die Insel war <strong>am 11. Juni 1945</strong> der letzte Boden der Niederlande, der von alliierten Truppen befreit wurde — die deutsche Garnison kapitulierte erst nach wochenlangen Verhandlungen.</p>
+          <p>Seit 1989 ist die gesamte Insel Teil des <strong>Nationaal Park Schiermonnikoog</strong> — dem ersten Nationalpark der Niederlande.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Anreise</span><span class="v">Fähre Wagenborg</span></li>
+            <li><span class="k">Fahrtdauer</span><span class="v">~45 Minuten</span></li>
+            <li><span class="k">Fahrräder</span><span class="v">Verleih an der Fähre</span></li>
+            <li><span class="k">Autos</span><span class="v">für Tourist:innen nicht erlaubt</span></li>
+            <li><span class="k">Letzte Fähre</span><span class="v">i.d.R. 19:30</span></li>
+            <li><span class="k">Tipp</span><span class="v">Tickets online vorab buchen</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="schiermonnikoog-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Was den Tag entspannt macht.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🎫</span><strong>Fähre &amp; Rad-Paket</strong><p>Wagenborg bietet Kombi-Tickets mit Fahrradverleih — spart Zeit am Anleger.</p></div>
+        <div class="tip"><span class="tip-icon">⏰</span><strong>Früh starten</strong><p>Die ersten Fähren am Morgen sind ruhiger; Tagesgäste werden ab 11 Uhr deutlich mehr.</p></div>
+        <div class="tip"><span class="tip-icon">🥾</span><strong>Wattwanderung</strong><p>Nur mit geprüften Guides — nie alleine ins Watt. Lokale Anbieter informieren vor Ort.</p></div>
+        <div class="tip"><span class="tip-icon">🌅</span><strong>Vogelschutz</strong><p>Der östliche Inselteil (Kobbeduinen) ist in der Brutsaison eingeschränkt zugänglich.</p></div>
+        <div class="tip"><span class="tip-icon">🥪</span><strong>Strandpavillons</strong><p>Direkt am Hauptstrand gibt es nette Lokale für Lunch oder Sundowner.</p></div>
+        <div class="tip"><span class="tip-icon">🧥</span><strong>Frischer Wind</strong><p>Selbst an warmen Tagen weht am Strand kräftiger Wind — eine Schicht extra mitnehmen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="schiermonnikoog-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Wo es auf der Insel schmeckt.</h2>
+        <p>Eine kleine Auswahl bewährter Adressen — von Strandpavillon bis Fine Dining.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Strandpaviljoen+Paal+3+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Strand</span><h4>Strandpaviljoen Paal 3</h4><p>Klassiker direkt am Hauptstrand — Lunch, Drinks, Sundowner mit Meerblick.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Restaurant+De+Marlijn+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Dorf</span><h4>De Marlijn</h4><p>Beliebtes Restaurant im Inseldorf mit Terrasse — regionale Küche, frischer Fisch.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Restaurant+Ambrosijn+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Fine Dining</span><h4>Restaurant Ambrosijn</h4><p>Gehoben, kreativ, mit Insel-Produkten — Reservierung empfehlenswert.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Karte</span><h4>Alle Restaurants &amp; Cafés</h4><p>Komplette Übersicht aller Gastronomie auf der Insel — inkl. Imbisse und Bistros.</p></a>
+      </div>
+    </div>
+  </section>
+
+
+  </div><!-- /.page #schiermonnikoog -->
+
+  <div class="page" id="groningen">
+  <!-- ====================================================================== -->
+  <!-- ============================ GRONINGEN =============================== -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Martini2.jpg?width=2000'), radial-gradient(120% 80% at 75% 25%, #b35a3a 0%, #6a2a1f 55%, #2a0f0a 100%);">
+      <div class="hero-inner">
+        <a href="#trips" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 04 · Stadt · Auto</span>
+        <h1>Groningen — <em>die junge alte Hansestadt im hohen Norden.</em></h1>
+        <p class="hero-lead">
+          Studentisch, fahrradverrückt, kulturell verschwenderisch: Groningen vereint mittelalterliche
+          Backsteinarchitektur mit einer der lebendigsten Museumslandschaften der Niederlande.
+          Mit dem Auto in rund einer Stunde von Lauwersoog erreichbar.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~40 km</strong>via N361</div>
+          <div><strong>~55 Min.</strong>Fahrtzeit</div>
+          <div><strong>1040</strong>erste Erwähnung</div>
+          <div><strong>~235.000</strong>Einwohner</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.google.com/maps/dir/Lauwersoog/Groningen+Centrum" target="_blank" rel="noopener">🚗 Route auf Google Maps</a>
+          <a class="btn ghost" href="#groningen-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="groningen-vor-ort">
+      <div class="section-head"><span class="eyebrow">In der Stadt</span><h2>Sechs Orte, die einen Tagestrip lohnen.</h2></div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Martinitoren+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Martini_Toren.JPG?width=640" alt="Martinitoren Groningen"><span class="num">01 · Wahrzeichen</span><h4>Martinitoren</h4><p>Der „Olle Grieze" — 97 m hoher Backsteinturm aus dem 15. Jh. Aufstieg über 260 Stufen mit Blick weit über Stadt und Provinz.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Grote+Markt+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Grote_Markt_Groningen.jpg?width=640" alt="Grote Markt Groningen"><span class="num">02 · Platz</span><h4>Grote Markt &amp; Vismarkt</h4><p>Die beiden zentralen Plätze — Cafés, Markttage, Stadtwaag und das prächtige Rathaus bilden das pulsierende Herz Groningens.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Groninger+Museum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Groningermuseum.JPG?width=640" alt="Groninger Museum"><span class="num">03 · Kunst</span><h4>Groninger Museum</h4><p>Spektakuläres Museumsgebäude in der Grachten zwischen Bahnhof und Innenstadt — Kunst, Design und Wechselausstellungen von Weltrang.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Prinsenhoftuin+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Prinsenhof_Groningen%2C_now_a_restaurant_-_panoramio.jpg?width=640" alt="Prinsenhoftuin Groningen"><span class="num">04 · Garten</span><h4>Prinsenhoftuin</h4><p>Versteckter Renaissance-Garten hinter dem Prinsenhof mit Kräuter- und Rosenbeeten und einer eigenen Teestube.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Forum+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Forum_Groningen.jpg?width=640" alt="Forum Groningen"><span class="num">05 · Wissen</span><h4>Forum Groningen</h4><p>Markantes Kulturzentrum am Grote Markt — Bibliothek, Kino, Ausstellungen und Dachterrasse mit grandiosem Stadtblick.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Noorderhaven+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Groningen_Noorderhaven_HDR.jpg?width=640" alt="Noorderhaven Groningen"><span class="num">06 · Hafen</span><h4>Noorderhaven</h4><p>Historischer Stadthafen mit Hausbooten, Werften und schönen Kneipen — abends besonders stimmungsvoll.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="groningen-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Anreise</span>
+        <h2>Von Lauwersoog nach Groningen.</h2>
+        <p>Mit dem Auto über die N361 entlang der Küstenroute via Ulrum und Winsum.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.2194,6.5665" data-end-label="Groningen" data-route="53.3934,6.3389;53.3344,6.5197"></div>
+      </div>
+      <p class="map-caption">Routenverlauf schematisch · exakte Navigation über Google Maps oder Bord-Navi.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="groningen-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Hauptstadt des Nordens mit Hanse-Vergangenheit und Studenten-Gegenwart.</h2>
+          <p>Groningen wurde erstmals <strong>1040</strong> erwähnt und stieg bis ins 16. Jahrhundert zur wichtigsten Handelsstadt zwischen Bremen und Amsterdam auf. Die Spuren der <strong>Hansezeit</strong> sind heute noch im Stadtbild präsent — Speicher, Kontore und die mächtige Martinikirche.</p>
+          <p>Die <strong>Rijksuniversiteit Groningen</strong>, 1614 gegründet, ist die zweitälteste Universität der Niederlande. Mit rund <strong>35.000 Studierenden</strong> auf gut 235.000 Einwohner:innen prägt sie den Ton der Stadt: jung, dicht, lebendig.</p>
+          <p>Groningen gilt als <strong>fahrradfreundlichste Stadt der Welt</strong> — über 60 % aller innerstädtischen Wege werden mit dem Rad zurückgelegt. Wer im Zentrum parkt, lässt das Auto am besten in einem der <em>P+R</em>-Parkhäuser am Rand stehen.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Distanz</span><span class="v">~40 km</span></li>
+            <li><span class="k">Fahrzeit</span><span class="v">~55 Min. via N361</span></li>
+            <li><span class="k">Anreise</span><span class="v">Auto / Tagestrip</span></li>
+            <li><span class="k">Parken</span><span class="v">P+R am Stadtrand empfohlen</span></li>
+            <li><span class="k">Geheimtipp</span><span class="v">Prinsenhoftuin (Eintritt frei)</span></li>
+            <li><span class="k">Saison</span><span class="v">ganzjährig</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="groningen-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Damit der Stadttag entspannt bleibt.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🅿️</span><strong>P+R nutzen</strong><p>Parken am Stadtrand (z.&nbsp;B. P+R Hoogkerk, Reitdiep, Kardinge) + Bus für 1&nbsp;€/Tag pro Person.</p></div>
+        <div class="tip"><span class="tip-icon">🚲</span><strong>Fahrräder beachten</strong><p>Im Zentrum dominiert das Rad. Beim Überqueren der Straße immer in beide Richtungen schauen.</p></div>
+        <div class="tip"><span class="tip-icon">🎨</span><strong>Museumskarte</strong><p>Mit der niederländischen Museumkaart sind Groninger Museum &amp; viele andere kostenfrei.</p></div>
+        <div class="tip"><span class="tip-icon">🕒</span><strong>Koopavond</strong><p>Donnerstag ist „Kaufabend" — Geschäfte bis 21 Uhr geöffnet, beste Stimmung in der Stadt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="groningen-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Wo es in Groningen schmeckt.</h2>
+        <p>Von der historischen Brasserie bis zum jungen Streetfood-Spot — eine kuratierte Auswahl.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Groningen+centrum" target="_blank" rel="noopener"><span class="num">Restaurants</span><h4>Restaurants im Zentrum</h4><p>Bistros, Brasserien und Fine Dining rund um Grote Markt, Vismarkt und Folkingestraat.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/cafe+lunchroom+Groningen" target="_blank" rel="noopener"><span class="num">Cafés</span><h4>Cafés &amp; Lunchrooms</h4><p>Vom Specialty-Coffee-Spot bis zum klassischen Grand Café — perfekte Pausen-Adressen.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Folkingestraat+Groningen+restaurants" target="_blank" rel="noopener"><span class="num">Quartier</span><h4>Folkingestraat</h4><p>Schönste Einkaufs- und Genussstraße der Stadt mit kleinen Restaurants und Spezialitätenläden.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/snackbar+cafetaria+Groningen" target="_blank" rel="noopener"><span class="num">Imbiss</span><h4>Cafetaria &amp; Snackbars</h4><p>Niederländische Klassiker — Kibbeling, Patat speciaal, Bitterballen, Frikandel.</p></a>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /.page #groningen -->
+
+  <div class="page" id="voegel">
+  <!-- ====================================================================== -->
+  <!-- ============================== VÖGEL ================================= -->
+  <!-- ====================================================================== -->
+  <section class="trip-section birds-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Natur · Lauwersmeer &amp; Wattenmeer</span>
+        <h2>Vögel rund um Lauwersoog.</h2>
+        <p class="section-intro">Der Nationaal Park Lauwersmeer und das angrenzende Wattenmeer zählen zu den vogelreichsten Regionen Europas. Brutvögel teilen sich den Lebensraum mit nordischen Wintergästen und Zugvögeln, die hier auf ihrer Route zwischen Sibirien und Westafrika rasten. Filtere nach Jahreszeit oder Lebensraum — oder suche direkt nach einer Art.</p>
+      </div>
+
+      <div class="birds-filter" role="region" aria-label="Vögel filtern">
+        <div class="filter-group birds-search">
+          <label for="birdSearch">Suche</label>
+          <input type="search" id="birdSearch" placeholder="z. B. Säbelschnäbler, Gans, Watvogel …" autocomplete="off">
+        </div>
+        <div class="filter-group">
+          <label>Jahreszeit</label>
+          <div class="pills" id="seasonPills">
+            <button type="button" class="pill" data-season="fruehjahr">Frühjahr</button>
+            <button type="button" class="pill" data-season="sommer">Sommer</button>
+            <button type="button" class="pill" data-season="herbst">Herbst</button>
+            <button type="button" class="pill" data-season="winter">Winter</button>
+            <button type="button" class="pill" data-season="ganzjaehrig">Ganzjährig</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Lebensraum</label>
+          <div class="pills" id="habitatPills">
+            <button type="button" class="pill" data-habitat="watt">Watt</button>
+            <button type="button" class="pill" data-habitat="schilf">Schilf</button>
+            <button type="button" class="pill" data-habitat="salzwiese">Salzwiese</button>
+            <button type="button" class="pill" data-habitat="polder">Polder &amp; Wiese</button>
+            <button type="button" class="pill" data-habitat="kueste">Küste &amp; Meer</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="birds-count"><span id="birdCount">55</span> Arten</p>
+
+      <div class="birds-grid" id="birdsGrid">
+
+        <article class="bird-card" data-name="Säbelschnäbler" data-sci="Recurvirostra avosetta" data-wiki="Säbelschnäbler" data-seasons="fruehjahr,sommer,herbst" data-habitats="watt,salzwiese" data-fallback="Recurvirostra_avosetta_2_-_Helgoland.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Säbelschnäbler</h3>
+            <p class="bird-sci">Recurvirostra avosetta</p>
+            <p class="bird-desc">Eleganter schwarz-weißer Watvogel mit aufwärts gebogenem Schnabel; brütet in den Salzwiesen am Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Salzwiese</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/S%C3%A4belschn%C3%A4bler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Löffler" data-sci="Platalea leucorodia" data-wiki="Löffler" data-seasons="fruehjahr,sommer" data-habitats="watt,salzwiese" data-fallback="Platalea_leucorodia_-_Pak_Thale.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Löffler</h3>
+            <p class="bird-sci">Platalea leucorodia</p>
+            <p class="bird-desc">Schneeweißer Schreitvogel mit löffelartigem Schnabel — das Lauwersmeer beherbergt eine der wichtigsten Kolonien Europas.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/L%C3%B6ffler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rohrweihe" data-sci="Circus aeruginosus" data-wiki="Rohrweihe" data-seasons="fruehjahr,sommer,herbst" data-habitats="schilf" data-fallback="Circus_aeruginosus_-Hortobagy_NP,_Hungary-8.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rohrweihe</h3>
+            <p class="bird-sci">Circus aeruginosus</p>
+            <p class="bird-desc">Eleganter Greifvogel mit V-förmig gehaltenen Flügeln; segelt tief über die Schilfgürtel des Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rohrweihe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Bartmeise" data-sci="Panurus biarmicus" data-wiki="Bartmeise" data-seasons="ganzjaehrig" data-habitats="schilf" data-fallback="Panurus_biarmicus_-Lithuania-8.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Bartmeise</h3>
+            <p class="bird-sci">Panurus biarmicus</p>
+            <p class="bird-desc">Zierlicher Schilfbewohner mit langem Schwanz; mit etwas Glück am Jaap-Deensgat zu hören und zu sehen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Bartmeise" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Blaukehlchen" data-sci="Luscinia svecica" data-wiki="Blaukehlchen" data-seasons="fruehjahr,sommer" data-habitats="schilf,polder" data-fallback="Luscinia_svecica_cyanecula_-_01.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Blaukehlchen</h3>
+            <p class="bird-sci">Luscinia svecica</p>
+            <p class="bird-desc">Sangesfreudiger Verwandter der Nachtigall mit leuchtend blauer Brust — Charaktervogel der Polder am Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Blaukehlchen" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rohrdommel" data-sci="Botaurus stellaris" data-wiki="Rohrdommel" data-seasons="ganzjaehrig" data-habitats="schilf" data-fallback="Botaurus_stellaris_-_01.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rohrdommel</h3>
+            <p class="bird-sci">Botaurus stellaris</p>
+            <p class="bird-desc">Heimlicher Reiher des dichten Röhrichts; sein dumpfes Brummen trägt im Frühling weit über die Schilfflächen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rohrdommel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Austernfischer" data-sci="Haematopus ostralegus" data-wiki="Austernfischer" data-seasons="ganzjaehrig" data-habitats="watt,kueste" data-fallback="Haematopus_ostralegus_-_Brittany.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Austernfischer</h3>
+            <p class="bird-sci">Haematopus ostralegus</p>
+            <p class="bird-desc">Schwarz-weißer Allgegenwärtiger des Wattenmeers, mit kräftig orangem Schnabel und auffälligem Trillerruf.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Austernfischer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Eiderente" data-sci="Somateria mollissima" data-wiki="Eiderente" data-seasons="ganzjaehrig" data-habitats="kueste" data-fallback="Somateria_mollissima_male_2_(Lukasz_Lukasik).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Eiderente</h3>
+            <p class="bird-sci">Somateria mollissima</p>
+            <p class="bird-desc">Robuste Meeresente; Männchen schwarz-weiß mit grünem Nacken, Weibchen tarnbraun. Tausende rasten im Watt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Eiderente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Brandseeschwalbe" data-sci="Thalasseus sandvicensis" data-wiki="Brandseeschwalbe" data-seasons="fruehjahr,sommer" data-habitats="kueste" data-fallback="Sandwich_Tern_-_Thalasseus_sandvicensis.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Brandseeschwalbe</h3>
+            <p class="bird-sci">Thalasseus sandvicensis</p>
+            <p class="bird-desc">Schlanke Seeschwalbe mit schwarzem Schopf und gelber Schnabelspitze; ruft kratzend „kerrick".</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Brandseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Flussseeschwalbe" data-sci="Sterna hirundo" data-wiki="Flussseeschwalbe" data-seasons="fruehjahr,sommer" data-habitats="kueste" data-fallback="Common_tern_with_fish.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Flussseeschwalbe</h3>
+            <p class="bird-sci">Sterna hirundo</p>
+            <p class="bird-desc">Eleganter Sommergast mit roter Schnabelbasis; brütet auf Sandbänken und Schillinseln im Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Flussseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kiebitz" data-sci="Vanellus vanellus" data-wiki="Kiebitz" data-seasons="fruehjahr,sommer" data-habitats="polder" data-fallback="Vanellus_vanellus_-_Lancashire,_England_-08.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kiebitz</h3>
+            <p class="bird-sci">Vanellus vanellus</p>
+            <p class="bird-desc">Akrobatischer Wiesenvogel mit langer Federhaube und gauklerischem Balzflug; ruft „kie-witt".</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kiebitz" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Uferschnepfe" data-sci="Limosa limosa" data-wiki="Uferschnepfe" data-seasons="fruehjahr,sommer" data-habitats="polder" data-fallback="Limosa_limosa_-_Texel.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Uferschnepfe</h3>
+            <p class="bird-sci">Limosa limosa</p>
+            <p class="bird-desc">Niederlands National-Vogel; lange Beine, langer Schnabel, ruft markant „gru-tto" über den Poldern.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Uferschnepfe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Seeadler" data-sci="Haliaeetus albicilla" data-wiki="Seeadler" data-seasons="ganzjaehrig" data-habitats="schilf,watt,polder" data-fallback="Haliaeetus_albicilla_(adult).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Seeadler</h3>
+            <p class="bird-sci">Haliaeetus albicilla</p>
+            <p class="bird-desc">„Fliegende Scheunentür": Europas größter Greifvogel hat das Lauwersmeer als Brutgebiet erobert.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Seeadler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Weißwangengans" data-sci="Branta leucopsis" data-wiki="Weißwangengans" data-seasons="winter,fruehjahr" data-habitats="salzwiese,polder" data-fallback="Branta_leucopsis_-_Caerlaverock.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Weißwangengans</h3>
+            <p class="bird-sci">Branta leucopsis</p>
+            <p class="bird-desc">Schwarz-weißer Wintergast in Zehntausenden — kommt aus Sibirien, Spitzbergen und Grönland.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag">Salzwiese</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wei%C3%9Fwangengans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Ringelgans" data-sci="Branta bernicla" data-wiki="Ringelgans" data-seasons="winter,fruehjahr" data-habitats="watt,salzwiese" data-fallback="Branta_bernicla_bernicla_1_(Marek_Szczepanek).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Ringelgans</h3>
+            <p class="bird-sci">Branta bernicla</p>
+            <p class="bird-desc">Kleine, dunkle Meergans mit weißem Halsring; weidet bevorzugt auf Salzwiesen und im Watt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Ringelgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Blässgans" data-sci="Anser albifrons" data-wiki="Blässgans" data-seasons="winter" data-habitats="polder" data-fallback="Anser_albifrons_1_(Marek_Szczepanek).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Blässgans</h3>
+            <p class="bird-sci">Anser albifrons</p>
+            <p class="bird-desc">Wintergast mit weißem Stirnschild und dunklen Bauchbinden; rastet zu Tausenden auf den Poldern.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Bl%C3%A4ssgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Pfeifente" data-sci="Mareca penelope" data-wiki="Pfeifente" data-seasons="herbst,winter" data-habitats="watt,polder" data-fallback="Anas_penelope_(Marek_Szczepanek).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Pfeifente</h3>
+            <p class="bird-sci">Mareca penelope</p>
+            <p class="bird-desc">Erpel mit kastanienbraunem Kopf und gelbem Scheitel; pfeifender Ruf gibt der Art ihren Namen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Pfeifente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Singschwan" data-sci="Cygnus cygnus" data-wiki="Singschwan" data-seasons="winter" data-habitats="polder" data-fallback="Cygnus_cygnus_6_(Lukasz_Lukasik).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Singschwan</h3>
+            <p class="bird-sci">Cygnus cygnus</p>
+            <p class="bird-desc">Wilder Schwan mit gelb-schwarzem Schnabel; überwintert aus Skandinavien an den Poldern um Lauwersoog.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Singschwan" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kornweihe" data-sci="Circus cyaneus" data-wiki="Kornweihe" data-seasons="winter,herbst" data-habitats="polder,salzwiese" data-fallback="Circus_cyaneus_-Scotland-8.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kornweihe</h3>
+            <p class="bird-sci">Circus cyaneus</p>
+            <p class="bird-desc">Schlanker Greif; jagt im langsamen Tiefflug über Polder und Salzwiesen nach Mäusen und Kleinvögeln.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kornweihe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Sumpfohreule" data-sci="Asio flammeus" data-wiki="Sumpfohreule" data-seasons="herbst,winter" data-habitats="polder,salzwiese" data-fallback="Asio_flammeus_qtl1.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Sumpfohreule</h3>
+            <p class="bird-sci">Asio flammeus</p>
+            <p class="bird-desc">Tagaktive Eule mit auffälligem Gesichtsschleier; jagt rüttelnd über offene Wiesen und Salzwiesen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Sumpfohreule" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Knutt" data-sci="Calidris canutus" data-wiki="Knutt" data-seasons="fruehjahr,herbst,winter" data-habitats="watt" data-fallback="Calidris_canutus_-_Heuksando.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Knutt</h3>
+            <p class="bird-sci">Calidris canutus</p>
+            <p class="bird-desc">Mittelgroßer Strandläufer; rastet in riesigen, dicht gepackten Schwärmen am Watt vor Lauwersoog.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Knutt" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Pfuhlschnepfe" data-sci="Limosa lapponica" data-wiki="Pfuhlschnepfe" data-seasons="fruehjahr,herbst" data-habitats="watt" data-fallback="Limosa_lapponica_-_New_Zealand.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Pfuhlschnepfe</h3>
+            <p class="bird-sci">Limosa lapponica</p>
+            <p class="bird-desc">Langstreckenzieher der Superlative — manche Individuen fliegen nonstop bis Neuseeland.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Pfuhlschnepfe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Alpenstrandläufer" data-sci="Calidris alpina" data-wiki="Alpenstrandläufer" data-seasons="fruehjahr,herbst,winter" data-habitats="watt" data-fallback="Calidris_alpina_-_Mickelsbukten.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Alpenstrandläufer</h3>
+            <p class="bird-sci">Calidris alpina</p>
+            <p class="bird-desc">Häufigster Strandläufer im Wattenmeer; rastet in Schwärmen, die wie Sternschnuppen am Himmel wirbeln.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Alpenstrandl%C3%A4ufer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Großer Brachvogel" data-sci="Numenius arquata" data-wiki="Großer Brachvogel" data-seasons="ganzjaehrig" data-habitats="watt,polder" data-fallback="Numenius_arquata_-_Stallingborough.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Großer Brachvogel</h3>
+            <p class="bird-sci">Numenius arquata</p>
+            <p class="bird-desc">Größter europäischer Watvogel mit lang gebogenem Schnabel; ruft melancholisch „tlüi".</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Gro%C3%9Fer_Brachvogel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Goldregenpfeifer" data-sci="Pluvialis apricaria" data-wiki="Goldregenpfeifer" data-seasons="herbst,winter" data-habitats="polder,watt" data-fallback="Pluvialis_apricaria_-_Iceland.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Goldregenpfeifer</h3>
+            <p class="bird-sci">Pluvialis apricaria</p>
+            <p class="bird-desc">Goldgesprenkelter Regenpfeifer; rastet in großen Schwärmen auf Wintersaaten und Schlickflächen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Goldregenpfeifer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Graugans" data-sci="Anser anser" data-wiki="Graugans" data-seasons="ganzjaehrig" data-habitats="polder,salzwiese">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Graugans</h3>
+            <p class="bird-sci">Anser anser</p>
+            <p class="bird-desc">Stammform der Hausgans; brütet zahlreich am Lauwersmeer und sammelt sich zu lärmenden Trupps.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Graugans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Brandgans" data-sci="Tadorna tadorna" data-wiki="Brandgans" data-seasons="ganzjaehrig" data-habitats="watt,salzwiese,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Brandgans</h3>
+            <p class="bird-sci">Tadorna tadorna</p>
+            <p class="bird-desc">Markant rot-weiß-schwarze „Halbgans"; brütet in alten Kaninchenbauten an Deich und Salzwiese.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Brandgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Saatgans" data-sci="Anser fabalis" data-wiki="Saatgans" data-seasons="winter" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Saatgans</h3>
+            <p class="bird-sci">Anser fabalis</p>
+            <p class="bird-desc">Wintergast aus der Taiga; dunkelbrauner Körper, schwarz-orange-schwarzer Schnabel.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Saatgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Spießente" data-sci="Anas acuta" data-wiki="Spießente" data-seasons="herbst,winter,fruehjahr" data-habitats="polder,watt">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Spießente</h3>
+            <p class="bird-sci">Anas acuta</p>
+            <p class="bird-desc">Elegante Schwimmente mit nadelförmig verlängerten Schwanzfedern; rastet im flachen Wasser.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Spie%C3%9Fente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Krickente" data-sci="Anas crecca" data-wiki="Krickente" data-seasons="herbst,winter,fruehjahr" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Krickente</h3>
+            <p class="bird-sci">Anas crecca</p>
+            <p class="bird-desc">Kleinste heimische Ente; Männchen mit kastanienbraunem Kopf und smaragdgrünem Augenstreif.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Krickente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Löffelente" data-sci="Spatula clypeata" data-wiki="Löffelente" data-seasons="herbst,winter,fruehjahr" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Löffelente</h3>
+            <p class="bird-sci">Spatula clypeata</p>
+            <p class="bird-desc">Auffälliger löffelförmiger Schnabel zum Seihen kleinster Wasserorganismen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/L%C3%B6ffelente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Reiherente" data-sci="Aythya fuligula" data-wiki="Reiherente" data-seasons="ganzjaehrig" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Reiherente</h3>
+            <p class="bird-sci">Aythya fuligula</p>
+            <p class="bird-desc">Schwarz-weißer Tauchgast mit charakteristischem Schopf; ganzjährig auf dem Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Reiherente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Trauerente" data-sci="Melanitta nigra" data-wiki="Trauerente" data-seasons="herbst,winter,fruehjahr" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Trauerente</h3>
+            <p class="bird-sci">Melanitta nigra</p>
+            <p class="bird-desc">Tiefschwarze Meeresente; rastet in riesigen Trupps vor der Wattenmeerküste.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Trauerente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Mittelsäger" data-sci="Mergus serrator" data-wiki="Mittelsäger" data-seasons="herbst,winter" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Mittelsäger</h3>
+            <p class="bird-sci">Mergus serrator</p>
+            <p class="bird-desc">Schlanke Säger-Ente mit zerzaustem Schopf; jagt tauchend nach kleinen Fischen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Mittels%C3%A4ger" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Höckerschwan" data-sci="Cygnus olor" data-wiki="Höckerschwan" data-seasons="ganzjaehrig" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Höckerschwan</h3>
+            <p class="bird-sci">Cygnus olor</p>
+            <p class="bird-desc">Der vertraute weiße Schwan mit schwarzem Höcker und orangem Schnabel; brütet ganzjährig.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/H%C3%B6ckerschwan" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kormoran" data-sci="Phalacrocorax carbo" data-wiki="Kormoran" data-seasons="ganzjaehrig" data-habitats="polder,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kormoran</h3>
+            <p class="bird-sci">Phalacrocorax carbo</p>
+            <p class="bird-desc">Schwarzer Fischjäger; trocknet seine Schwingen ausgebreitet auf Pfählen und Tonnen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kormoran" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Graureiher" data-sci="Ardea cinerea" data-wiki="Graureiher" data-seasons="ganzjaehrig" data-habitats="polder,schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Graureiher</h3>
+            <p class="bird-sci">Ardea cinerea</p>
+            <p class="bird-desc">Allgegenwärtiger Schreitvogel an Gräben, Polderkanten und Schilfsäumen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Graureiher" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Silberreiher" data-sci="Ardea alba" data-wiki="Silberreiher" data-seasons="ganzjaehrig" data-habitats="polder,schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Silberreiher</h3>
+            <p class="bird-sci">Ardea alba</p>
+            <p class="bird-desc">Schneeweißer Reiher; einst Wintergast, mittlerweile auch Brutvogel im Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Silberreiher" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Haubentaucher" data-sci="Podiceps cristatus" data-wiki="Haubentaucher" data-seasons="ganzjaehrig" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Haubentaucher</h3>
+            <p class="bird-sci">Podiceps cristatus</p>
+            <p class="bird-desc">Eleganter Lappentaucher mit auffälligem Federschmuck; spektakuläre „Pinguintanz"-Balz im Frühjahr.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Haubentaucher" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rotschenkel" data-sci="Tringa totanus" data-wiki="Rotschenkel" data-seasons="fruehjahr,sommer,herbst" data-habitats="salzwiese,watt">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rotschenkel</h3>
+            <p class="bird-sci">Tringa totanus</p>
+            <p class="bird-desc">„Wächter der Salzwiese": warnt früh und laut mit hellrot leuchtenden Beinen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Salzwiese</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rotschenkel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Grünschenkel" data-sci="Tringa nebularia" data-wiki="Grünschenkel" data-seasons="fruehjahr,herbst" data-habitats="watt,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Grünschenkel</h3>
+            <p class="bird-sci">Tringa nebularia</p>
+            <p class="bird-desc">Schlanker Wasserläufer mit lang aufwärts gebogenem Schnabel; markanter dreisilbiger Ruf.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Gr%C3%BCnschenkel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Sandregenpfeifer" data-sci="Charadrius hiaticula" data-wiki="Sandregenpfeifer" data-seasons="fruehjahr,sommer,herbst" data-habitats="watt,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Sandregenpfeifer</h3>
+            <p class="bird-sci">Charadrius hiaticula</p>
+            <p class="bird-desc">Niedlicher Strandvogel mit schwarzem Brustband; brütet versteckt auf Sand- und Muschelflächen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Sandregenpfeifer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Steinwälzer" data-sci="Arenaria interpres" data-wiki="Steinwälzer" data-seasons="fruehjahr,herbst,winter" data-habitats="watt,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Steinwälzer</h3>
+            <p class="bird-sci">Arenaria interpres</p>
+            <p class="bird-desc">Kräftiger Watvogel; wendet mit dem Schnabel Steine, Muscheln und Algen auf der Suche nach Beute.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Steinw%C3%A4lzer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Sanderling" data-sci="Calidris alba" data-wiki="Sanderling" data-seasons="fruehjahr,herbst,winter" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Sanderling</h3>
+            <p class="bird-sci">Calidris alba</p>
+            <p class="bird-desc">Hetzt wie ein Aufziehspielzeug am Spülsaum vor jeder anrollenden Welle her.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Sanderling" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kampfläufer" data-sci="Calidris pugnax" data-wiki="Kampfläufer" data-seasons="fruehjahr,herbst" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kampfläufer</h3>
+            <p class="bird-sci">Calidris pugnax</p>
+            <p class="bird-desc">Männchen tragen im Frühling fantastische Federkrägen in vielen Farben; rastet auf nassen Wiesen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kampfl%C3%A4ufer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Bekassine" data-sci="Gallinago gallinago" data-wiki="Bekassine" data-seasons="fruehjahr,herbst,winter" data-habitats="polder,schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Bekassine</h3>
+            <p class="bird-sci">Gallinago gallinago</p>
+            <p class="bird-desc">Tarnvirtuose mit überlangem Schnabel; im Balzflug „meckert" sie mit den Schwanzfedern.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Bekassine" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Lachmöwe" data-sci="Chroicocephalus ridibundus" data-wiki="Lachmöwe" data-seasons="ganzjaehrig" data-habitats="kueste,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Lachmöwe</h3>
+            <p class="bird-sci">Chroicocephalus ridibundus</p>
+            <p class="bird-desc">Kleine, lebhafte Möwe — im Sommerkleid mit schokobraunem „Kapuzen"-Kopf.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Lachm%C3%B6we" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Silbermöwe" data-sci="Larus argentatus" data-wiki="Silbermöwe" data-seasons="ganzjaehrig" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Silbermöwe</h3>
+            <p class="bird-sci">Larus argentatus</p>
+            <p class="bird-desc">Die klassische große „Möwe" am Hafen — kräftiger gelber Schnabel mit rotem Punkt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Silberm%C3%B6we" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Heringsmöwe" data-sci="Larus fuscus" data-wiki="Heringsmöwe" data-seasons="fruehjahr,sommer,herbst" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Heringsmöwe</h3>
+            <p class="bird-sci">Larus fuscus</p>
+            <p class="bird-desc">Dunkelflügelige Möwe mit gelben Beinen; brütet zahlreich auf den Inseln im Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Heringsm%C3%B6we" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Küstenseeschwalbe" data-sci="Sterna paradisaea" data-wiki="Küstenseeschwalbe" data-seasons="fruehjahr,sommer" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Küstenseeschwalbe</h3>
+            <p class="bird-sci">Sterna paradisaea</p>
+            <p class="bird-desc">Weltenbummlerin der Vogelwelt — zieht jährlich zwischen Arktis und Antarktis hin und zurück.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/K%C3%BCstenseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Trauerseeschwalbe" data-sci="Chlidonias niger" data-wiki="Trauerseeschwalbe" data-seasons="fruehjahr,sommer,herbst" data-habitats="schilf,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Trauerseeschwalbe</h3>
+            <p class="bird-sci">Chlidonias niger</p>
+            <p class="bird-desc">Dunkle Sommerseeschwalbe der Süßgewässer; gaukelt tief überm Lauwersmeer nach Insekten.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Trauerseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Wanderfalke" data-sci="Falco peregrinus" data-wiki="Wanderfalke" data-seasons="ganzjaehrig" data-habitats="kueste,polder,watt">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Wanderfalke</h3>
+            <p class="bird-sci">Falco peregrinus</p>
+            <p class="bird-desc">Der schnellste Vogel der Welt; jagt Watvögel in pfeilschnellen Sturzflügen über dem Watt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wanderfalke" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Fischadler" data-sci="Pandion haliaetus" data-wiki="Fischadler" data-seasons="fruehjahr,herbst" data-habitats="polder,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Fischadler</h3>
+            <p class="bird-sci">Pandion haliaetus</p>
+            <p class="bird-desc">Spektakulärer Fischjäger auf dem Zug; stürzt sich mit den Füßen voran ins Wasser.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Fischadler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Wiesenweihe" data-sci="Circus pygargus" data-wiki="Wiesenweihe" data-seasons="fruehjahr,sommer" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Wiesenweihe</h3>
+            <p class="bird-sci">Circus pygargus</p>
+            <p class="bird-desc">Schlankste der drei Weihen; brütet in Getreidefeldern rund um den Park.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wiesenweihe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Schilfrohrsänger" data-sci="Acrocephalus schoenobaenus" data-wiki="Schilfrohrsänger" data-seasons="fruehjahr,sommer" data-habitats="schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Schilfrohrsänger</h3>
+            <p class="bird-sci">Acrocephalus schoenobaenus</p>
+            <p class="bird-desc">Sänger mit weißem Überaugenstreif — singt aus dem Schilf und im kurzen Singflug.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Schilfrohrs%C3%A4nger" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rohrammer" data-sci="Emberiza schoeniclus" data-wiki="Rohrammer" data-seasons="ganzjaehrig" data-habitats="schilf,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rohrammer</h3>
+            <p class="bird-sci">Emberiza schoeniclus</p>
+            <p class="bird-desc">Der „Schilf-Spatz": Männchen mit schwarzer Kopfkappe und weißem Bartstreif.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rohrammer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Feldlerche" data-sci="Alauda arvensis" data-wiki="Feldlerche" data-seasons="fruehjahr,sommer" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Feldlerche</h3>
+            <p class="bird-sci">Alauda arvensis</p>
+            <p class="bird-desc">Trällert hoch über den Poldern fast unsichtbar im Blau — der Frühlings-Soundtrack der Marsch.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Feldlerche" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Wiesenpieper" data-sci="Anthus pratensis" data-wiki="Wiesenpieper" data-seasons="ganzjaehrig" data-habitats="polder,salzwiese">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Wiesenpieper</h3>
+            <p class="bird-sci">Anthus pratensis</p>
+            <p class="bird-desc">Unscheinbarer Singvogel der offenen Polder und Salzwiesen; auffälliger fallschirmartiger Singflug.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+              <span class="bird-tag">Salzwiese</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wiesenpieper" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Steinschmätzer" data-sci="Oenanthe oenanthe" data-wiki="Steinschmätzer" data-seasons="fruehjahr,sommer,herbst" data-habitats="kueste,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Steinschmätzer</h3>
+            <p class="bird-sci">Oenanthe oenanthe</p>
+            <p class="bird-desc">Lebhaft auf Deichen und Dünen; weißer Bürzel blitzt auffällig beim Wegfliegen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Steinschm%C3%A4tzer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="birds-empty" id="birdsEmpty">Keine Arten passen zu deiner Auswahl. Filter zurücksetzen?</p>
+    </div>
+  </section>
+  </div><!-- /.page #voegel -->
+
+</main>
+
+<footer>
+  <a class="brand" href="#trips" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="lauwer.png" alt="Lauwersoog Logo"></a>
+  <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+// Mobile-Nav: nach Link-Klick schliessen
+(function () {
+  const toggle = document.getElementById('nav-toggle');
+  if (!toggle) return;
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => { toggle.checked = false; });
+  });
+})();
+
+// SPA-Router: jeder Menupunkt rendert eine eigene Seite, nur eine sichtbar
+(function () {
+  const pages    = Array.from(document.querySelectorAll('.page'));
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+  if (!pages.length) return;
+
+  const DEFAULT = 'trips';
+  // Map-Instanzen werden vom Leaflet-Init unten registriert
+  window._lauwersoogMaps = window._lauwersoogMaps || new Map();
+
+  function resolve(hash) {
+    const raw = (hash || '').replace(/^#/, '');
+    if (!raw) return { pageId: DEFAULT, scrollEl: null };
+
+    const el = document.getElementById(raw);
+    if (!el) return { pageId: DEFAULT, scrollEl: null };
+
+    if (el.classList && el.classList.contains('page')) {
+      return { pageId: el.id, scrollEl: null };
+    }
+    const parent = el.closest && el.closest('.page');
+    if (parent) return { pageId: parent.id, scrollEl: el };
+    return { pageId: DEFAULT, scrollEl: null };
+  }
+
+  function activate(pageId, scrollEl) {
+    pages.forEach(p => p.classList.toggle('is-active', p.id === pageId));
+    navLinks.forEach(a => {
+      a.classList.toggle('is-active', a.getAttribute('href') === '#' + pageId);
+    });
+
+    // Leaflet-Karten der neu sichtbaren Seite refreshen
+    const activePage = document.getElementById(pageId);
+    if (activePage) {
+      activePage.querySelectorAll('.leaflet-map').forEach(el => {
+        const map = window._lauwersoogMaps.get(el);
+        if (!map) return;
+        requestAnimationFrame(() => {
+          map.invalidateSize();
+          if (el._fitBounds) map.fitBounds(el._fitBounds, { padding: [20, 20] });
+        });
+      });
+    }
+
+    if (scrollEl) {
+      scrollEl.scrollIntoView({ behavior: 'auto', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }
+
+  function route() {
+    const { pageId, scrollEl } = resolve(location.hash);
+    activate(pageId, scrollEl);
+  }
+
+  window.addEventListener('hashchange', route);
+  route(); // initial
+})();
+
+// Vögel: Bilder laden + Filter/Suche
+(function () {
+  const grid = document.getElementById('birdsGrid');
+  if (!grid) return;
+
+  const cards    = Array.from(grid.querySelectorAll('.bird-card'));
+  const search   = document.getElementById('birdSearch');
+  const seasons  = document.getElementById('seasonPills');
+  const habitats = document.getElementById('habitatPills');
+  const count    = document.getElementById('birdCount');
+  const empty    = document.getElementById('birdsEmpty');
+
+  // --- Bilder laden ---
+  // Strategie (mit Fallback-Kette, damit jede Karte ein Bild bekommt):
+  //   1) de.wikipedia Action-API → prop=pageimages (CORS-fähig via origin=*)
+  //   2) en.wikipedia Action-API mit wissenschaftlichem Namen
+  //   3) Commons Special:FilePath mit explizitem Dateinamen (data-fallback)
+  function setImage(card, url) {
+    const img = card.querySelector('.bird-img');
+    if (img) img.style.backgroundImage = `url("${url}")`;
+  }
+  function probe(url) {
+    return new Promise(resolve => {
+      if (!url) return resolve(false);
+      const im = new Image();
+      im.onload  = () => resolve(true);
+      im.onerror = () => resolve(false);
+      im.src = url;
+    });
+  }
+
+  function fetchWikiThumb(lang, title) {
+    const api = `https://${lang}.wikipedia.org/w/api.php`
+      + `?action=query&format=json&origin=*&redirects=1`
+      + `&prop=pageimages&piprop=thumbnail&pithumbsize=640`
+      + `&titles=${encodeURIComponent(title)}`;
+    return fetch(api)
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        const pages = data && data.query && data.query.pages;
+        if (!pages) return null;
+        for (const id in pages) {
+          const src = pages[id] && pages[id].thumbnail && pages[id].thumbnail.source;
+          if (src) return src;
+        }
+        return null;
+      })
+      .catch(() => null);
+  }
+
+  function commonsFallback(file) {
+    return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=640`;
+  }
+
+  async function loadBirdImage(card) {
+    const title = card.dataset.wiki;
+    const sci   = card.dataset.sci;
+    const file  = card.dataset.fallback;
+
+    const candidates = [];
+    if (title) candidates.push(() => fetchWikiThumb('de', title));
+    if (sci)   candidates.push(() => fetchWikiThumb('en', sci));
+    if (title) candidates.push(() => fetchWikiThumb('en', title));
+    if (file)  candidates.push(() => Promise.resolve(commonsFallback(file)));
+
+    for (const get of candidates) {
+      const url = await get();
+      if (url && await probe(url)) { setImage(card, url); return; }
+    }
+  }
+
+  cards.forEach(loadBirdImage);
+
+  // --- Filter ---
+  const state = { q: '', seasons: new Set(), habitats: new Set() };
+
+  function applyFilter() {
+    let visible = 0;
+    const q = state.q.trim().toLowerCase();
+    cards.forEach(card => {
+      const name = (card.dataset.name || '').toLowerCase();
+      const sci  = (card.dataset.sci  || '').toLowerCase();
+      const desc = (card.querySelector('.bird-desc')?.textContent || '').toLowerCase();
+      const cardSeasons  = (card.dataset.seasons  || '').split(',');
+      const cardHabitats = (card.dataset.habitats || '').split(',');
+
+      const matchesQ = !q || name.includes(q) || sci.includes(q) || desc.includes(q);
+      const matchesS = state.seasons.size  === 0 || cardSeasons.some(s  => state.seasons.has(s));
+      const matchesH = state.habitats.size === 0 || cardHabitats.some(h => state.habitats.has(h));
+
+      const show = matchesQ && matchesS && matchesH;
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    count.textContent = visible;
+    empty.classList.toggle('show', visible === 0);
+  }
+
+  function bindPills(container, key, dataAttr) {
+    if (!container) return;
+    container.addEventListener('click', e => {
+      const btn = e.target.closest('.pill');
+      if (!btn) return;
+      const value = btn.dataset[dataAttr];
+      if (!value) return;
+      btn.classList.toggle('active');
+      if (btn.classList.contains('active')) state[key].add(value);
+      else                                  state[key].delete(value);
+      applyFilter();
+    });
+  }
+  bindPills(seasons,  'seasons',  'season');
+  bindPills(habitats, 'habitats', 'habitat');
+
+  search?.addEventListener('input', e => {
+    state.q = e.target.value || '';
+    applyFilter();
+  });
+
+  // initial count
+  count.textContent = cards.length;
+})();
+
+// Leaflet initializer — initialisiert alle Elemente mit Klasse .leaflet-map
+(function () {
+  if (typeof L === 'undefined') return;
+
+  const parsePt = s => s.split(',').map(Number);
+
+  document.querySelectorAll('.leaflet-map').forEach(el => {
+    const start    = parsePt(el.dataset.start || '53.4097,6.2042');
+    const end      = parsePt(el.dataset.end);
+    const endLabel = el.dataset.endLabel || 'Ziel';
+    const isFerry  = el.dataset.ferry === 'true';
+
+    let route = [start, end];
+    if (el.dataset.route) {
+      const pts = el.dataset.route.split(';').map(parsePt);
+      route = [start, ...pts, end];
+    }
+
+    const map = L.map(el, { scrollWheelZoom: false, zoomControl: true });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+    }).addTo(map);
+
+    const makeIcon = (label, color) => L.divIcon({
+      className: 'pin-marker',
+      html: `<div style="position:relative;width:36px;height:48px;">
+               <div style="position:absolute;top:0;left:0;width:36px;height:36px;background:${color};border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 6px 14px rgba(12,30,62,.35);border:2px solid #fff;"></div>
+               <div style="position:absolute;top:7px;left:0;width:36px;text-align:center;font-size:14px;color:#fff;font-weight:600;font-family:'Space Grotesk',sans-serif;">${label}</div>
+             </div>`,
+      iconSize: [36, 48],
+      iconAnchor: [18, 48],
+    });
+
+    L.marker(start, { icon: makeIcon('A', '#0c1e3e') })
+      .addTo(map)
+      .bindPopup('<strong>Lauwersoog</strong><br>Startpunkt');
+
+    L.marker(end, { icon: makeIcon('B', '#f97357') })
+      .addTo(map)
+      .bindPopup(`<strong>${endLabel}</strong>`);
+
+    L.polyline(route, {
+      color: isFerry ? '#0c1e3e' : '#f97357',
+      weight: 4,
+      opacity: 0.9,
+      dashArray: isFerry ? '8, 10' : null,
+      lineCap: 'round',
+      lineJoin: 'round',
+    }).addTo(map);
+
+    const bounds = L.latLngBounds(route).pad(0.25);
+    map.fitBounds(bounds);
+
+    // Fuer den SPA-Router: Karte + Bounds registrieren, damit
+    // invalidateSize() nach Seitenwechsel sauber arbeitet.
+    el._fitBounds = bounds;
+    if (window._lauwersoogMaps) window._lauwersoogMaps.set(el, map);
+  });
+})();
+</script>
+</body>
+</html>
