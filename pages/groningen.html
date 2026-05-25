@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Groningen - Lauwersoog 2026</title>
+  <link rel="icon" type="image/png" href="../lauwer.png">
+  <meta name="description" content="Hansestadt Groningen: Altstadt, Museen, Hafen, Tipps.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <div class="nav-inner">
+    <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+    <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen"><span></span></label>
+    <div class="nav-links">
+      <a href="../index.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Übersicht</a>
+
+      <div class="nav-item">
+        <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><path d="M12 2 4 7v3h16V7z"/></svg>Dokkum</a>
+        <div class="submenu">
+          <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="dokkum.html#dokkum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="dokkum.html#dokkum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="dokkum.html#dokkum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="dokkum.html#dokkum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="dokkum.html#dokkum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M18 11V4h-3v3h-2V2h-2v5H9V4H6v7"/><path d="M10 22v-5h4v5"/></svg>Verhildersum</a>
+        <div class="submenu">
+          <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="verhildersum.html#verhildersum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="verhildersum.html#verhildersum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="verhildersum.html#verhildersum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="verhildersum.html#verhildersum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="verhildersum.html#verhildersum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>Schiermonnikoog</a>
+        <div class="submenu">
+          <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Auf der Insel</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a class="is-active" href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>Groningen</a>
+        <div class="submenu">
+          <a class="is-active" href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="groningen.html#groningen-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>In der Stadt</a>
+          <a href="groningen.html#groningen-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="groningen.html#groningen-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="groningen.html#groningen-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="groningen.html#groningen-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <a href="voegel.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>Vögel</a>
+
+      <a class="nav-icon-link" href="https://www.google.com/maps/search/Siblu+Camping+Lauwersoog" target="_blank" rel="noopener" title="Siblu Camping Lauwersoog auf Google Maps" aria-label="Siblu Camping Lauwersoog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M12 3 3 21"/><path d="M12 3l9 18"/><path d="M12 3v18"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page is-active" id="groningen">
+  <!-- ====================================================================== -->
+  <!-- ============================ GRONINGEN =============================== -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Martini2.jpg?width=2000'), radial-gradient(120% 80% at 75% 25%, #b35a3a 0%, #6a2a1f 55%, #2a0f0a 100%);">
+      <div class="hero-inner">
+        <a href="../index.html" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 04 · Stadt · Auto</span>
+        <h1>Groningen — <em>die junge alte Hansestadt im hohen Norden.</em></h1>
+        <p class="hero-lead">
+          Studentisch, fahrradverrückt, kulturell verschwenderisch: Groningen vereint mittelalterliche
+          Backsteinarchitektur mit einer der lebendigsten Museumslandschaften der Niederlande.
+          Mit dem Auto in rund einer Stunde von Lauwersoog erreichbar.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~40 km</strong>via N361</div>
+          <div><strong>~55 Min.</strong>Fahrtzeit</div>
+          <div><strong>1040</strong>erste Erwähnung</div>
+          <div><strong>~235.000</strong>Einwohner</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.google.com/maps/dir/Lauwersoog/Groningen+Centrum" target="_blank" rel="noopener">🚗 Route auf Google Maps</a>
+          <a class="btn ghost" href="groningen.html#groningen-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="groningen-vor-ort">
+      <div class="section-head"><span class="eyebrow">In der Stadt</span><h2>Sechs Orte, die einen Tagestrip lohnen.</h2></div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Martinitoren+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Martini_Toren.JPG?width=640" alt="Martinitoren Groningen"><span class="num">01 · Wahrzeichen</span><h4>Martinitoren</h4><p>Der „Olle Grieze" — 97 m hoher Backsteinturm aus dem 15. Jh. Aufstieg über 260 Stufen mit Blick weit über Stadt und Provinz.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Grote+Markt+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Grote_Markt_Groningen.jpg?width=640" alt="Grote Markt Groningen"><span class="num">02 · Platz</span><h4>Grote Markt &amp; Vismarkt</h4><p>Die beiden zentralen Plätze — Cafés, Markttage, Stadtwaag und das prächtige Rathaus bilden das pulsierende Herz Groningens.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Groninger+Museum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Groningermuseum.JPG?width=640" alt="Groninger Museum"><span class="num">03 · Kunst</span><h4>Groninger Museum</h4><p>Spektakuläres Museumsgebäude in der Grachten zwischen Bahnhof und Innenstadt — Kunst, Design und Wechselausstellungen von Weltrang.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Prinsenhoftuin+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Prinsenhof_Groningen%2C_now_a_restaurant_-_panoramio.jpg?width=640" alt="Prinsenhoftuin Groningen"><span class="num">04 · Garten</span><h4>Prinsenhoftuin</h4><p>Versteckter Renaissance-Garten hinter dem Prinsenhof mit Kräuter- und Rosenbeeten und einer eigenen Teestube.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Forum+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Forum_Groningen.jpg?width=640" alt="Forum Groningen"><span class="num">05 · Wissen</span><h4>Forum Groningen</h4><p>Markantes Kulturzentrum am Grote Markt — Bibliothek, Kino, Ausstellungen und Dachterrasse mit grandiosem Stadtblick.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Noorderhaven+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Groningen_Noorderhaven_HDR.jpg?width=640" alt="Noorderhaven Groningen"><span class="num">06 · Hafen</span><h4>Noorderhaven</h4><p>Historischer Stadthafen mit Hausbooten, Werften und schönen Kneipen — abends besonders stimmungsvoll.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="groningen-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Anreise</span>
+        <h2>Von Lauwersoog nach Groningen.</h2>
+        <p>Mit dem Auto über die N361 entlang der Küstenroute via Ulrum und Winsum.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.2194,6.5665" data-end-label="Groningen" data-route="53.3934,6.3389;53.3344,6.5197"></div>
+      </div>
+      <p class="map-caption">Routenverlauf schematisch · exakte Navigation über Google Maps oder Bord-Navi.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="groningen-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Hauptstadt des Nordens mit Hanse-Vergangenheit und Studenten-Gegenwart.</h2>
+          <p>Groningen wurde erstmals <strong>1040</strong> erwähnt und stieg bis ins 16. Jahrhundert zur wichtigsten Handelsstadt zwischen Bremen und Amsterdam auf. Die Spuren der <strong>Hansezeit</strong> sind heute noch im Stadtbild präsent — Speicher, Kontore und die mächtige Martinikirche.</p>
+          <p>Die <strong>Rijksuniversiteit Groningen</strong>, 1614 gegründet, ist die zweitälteste Universität der Niederlande. Mit rund <strong>35.000 Studierenden</strong> auf gut 235.000 Einwohner:innen prägt sie den Ton der Stadt: jung, dicht, lebendig.</p>
+          <p>Groningen gilt als <strong>fahrradfreundlichste Stadt der Welt</strong> — über 60 % aller innerstädtischen Wege werden mit dem Rad zurückgelegt. Wer im Zentrum parkt, lässt das Auto am besten in einem der <em>P+R</em>-Parkhäuser am Rand stehen.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Distanz</span><span class="v">~40 km</span></li>
+            <li><span class="k">Fahrzeit</span><span class="v">~55 Min. via N361</span></li>
+            <li><span class="k">Anreise</span><span class="v">Auto / Tagestrip</span></li>
+            <li><span class="k">Parken</span><span class="v">P+R am Stadtrand empfohlen</span></li>
+            <li><span class="k">Geheimtipp</span><span class="v">Prinsenhoftuin (Eintritt frei)</span></li>
+            <li><span class="k">Saison</span><span class="v">ganzjährig</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="groningen-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Damit der Stadttag entspannt bleibt.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🅿️</span><strong>P+R nutzen</strong><p>Parken am Stadtrand (z.&nbsp;B. P+R Hoogkerk, Reitdiep, Kardinge) + Bus für 1&nbsp;€/Tag pro Person.</p></div>
+        <div class="tip"><span class="tip-icon">🚲</span><strong>Fahrräder beachten</strong><p>Im Zentrum dominiert das Rad. Beim Überqueren der Straße immer in beide Richtungen schauen.</p></div>
+        <div class="tip"><span class="tip-icon">🎨</span><strong>Museumskarte</strong><p>Mit der niederländischen Museumkaart sind Groninger Museum &amp; viele andere kostenfrei.</p></div>
+        <div class="tip"><span class="tip-icon">🕒</span><strong>Koopavond</strong><p>Donnerstag ist „Kaufabend" — Geschäfte bis 21 Uhr geöffnet, beste Stimmung in der Stadt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="groningen-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Wo es in Groningen schmeckt.</h2>
+        <p>Von der historischen Brasserie bis zum jungen Streetfood-Spot — eine kuratierte Auswahl.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Groningen+centrum" target="_blank" rel="noopener"><span class="num">Restaurants</span><h4>Restaurants im Zentrum</h4><p>Bistros, Brasserien und Fine Dining rund um Grote Markt, Vismarkt und Folkingestraat.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/cafe+lunchroom+Groningen" target="_blank" rel="noopener"><span class="num">Cafés</span><h4>Cafés &amp; Lunchrooms</h4><p>Vom Specialty-Coffee-Spot bis zum klassischen Grand Café — perfekte Pausen-Adressen.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Folkingestraat+Groningen+restaurants" target="_blank" rel="noopener"><span class="num">Quartier</span><h4>Folkingestraat</h4><p>Schönste Einkaufs- und Genussstraße der Stadt mit kleinen Restaurants und Spezialitätenläden.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/snackbar+cafetaria+Groningen" target="_blank" rel="noopener"><span class="num">Imbiss</span><h4>Cafetaria &amp; Snackbars</h4><p>Niederländische Klassiker — Kibbeling, Patat speciaal, Bitterballen, Frikandel.</p></a>
+      </div>
+    </div>
+  </section>
+
+  
+  </div><!-- /.page #groningen -->
+
+</main>
+
+<footer>
+  <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+  <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../assets/main.js"></script>
+</body>
+</html>
