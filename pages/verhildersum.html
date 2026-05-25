@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Borg Verhildersum - Lauwersoog 2026</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <meta name="description" content="Das einzige bewohnbare borg der Region: Herrenhaus, Schaaperij, Bauernhof, Gaerten.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <div class="nav-inner">
+    <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+    <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen"><span></span></label>
+    <div class="nav-links">
+      <a href="../index.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Übersicht</a>
+
+      <div class="nav-item">
+        <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><path d="M12 2 4 7v3h16V7z"/></svg>Dokkum</a>
+        <div class="submenu">
+          <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="dokkum.html#dokkum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="dokkum.html#dokkum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="dokkum.html#dokkum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="dokkum.html#dokkum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="dokkum.html#dokkum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a class="is-active" href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M18 11V4h-3v3h-2V2h-2v5H9V4H6v7"/><path d="M10 22v-5h4v5"/></svg>Verhildersum</a>
+        <div class="submenu">
+          <a class="is-active" href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="verhildersum.html#verhildersum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="verhildersum.html#verhildersum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="verhildersum.html#verhildersum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="verhildersum.html#verhildersum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="verhildersum.html#verhildersum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>Schiermonnikoog</a>
+        <div class="submenu">
+          <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Auf der Insel</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>Groningen</a>
+        <div class="submenu">
+          <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="groningen.html#groningen-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>In der Stadt</a>
+          <a href="groningen.html#groningen-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="groningen.html#groningen-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="groningen.html#groningen-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="groningen.html#groningen-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <a href="voegel.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>Vögel</a>
+
+      <a class="nav-icon-link" href="https://www.google.com/maps/search/Siblu+Camping+Lauwersoog" target="_blank" rel="noopener" title="Siblu Camping Lauwersoog auf Google Maps" aria-label="Siblu Camping Lauwersoog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M12 3 3 21"/><path d="M12 3l9 18"/><path d="M12 3v18"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page is-active" id="verhildersum">
+  <!-- ====================================================================== -->
+  <!-- ============================ VERHILDERSUM ============================ -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_voorzijde.jpg?width=2000'), radial-gradient(120% 80% at 75% 30%, #8a9e6a 0%, #4a5a36 55%, #1f2a18 100%);">
+      <div class="hero-inner">
+        <a href="../index.html" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 02 · Fahrradtour</span>
+        <h1>Borg Verhildersum — <em>ein Adelsgut wie aus dem Bilderbuch.</em></h1>
+        <p class="hero-lead">
+          Mitten im stillen Groninger Wierdenland liegt das einzige bewohnbare <em>borg</em> der
+          Region: Herrenhaus, Schaaperij, Bauernhof und historische Gärten erzählen vom
+          Leben um 1860 — umgeben von Wiesen, Schafen und endlosem Himmel.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~16 km</strong>pro Richtung</div>
+          <div><strong>Halbtag</strong>Aufenthalt</div>
+          <div><strong>14. Jh.</strong>Ursprung</div>
+          <div><strong>1</strong>bewohnte Borg</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.komoot.com/tour/2980620331?share_token=anOq1iUR1QvSsXPloeceCkayve55lyWxw3yDx3ZCaNGoNRgJ4d&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=5781661722538" target="_blank" rel="noopener">🗺 Komoot-Route öffnen</a>
+          <a class="btn ghost" href="verhildersum.html#verhildersum-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="verhildersum-vor-ort">
+      <div class="section-head">
+        <span class="eyebrow">Sehenswürdigkeiten</span>
+        <h2>Was dich auf dem Borg-Gelände erwartet.</h2>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Museum+Borg+Verhildersum+Leens" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_voorzijde.jpg?width=640" alt="Borg Verhildersum"><span class="num">01 · Herrenhaus</span><h4>Voll möbliertes Adelshaus</h4><p>Zeigt den Lebensstil der Groninger <em>jonkers</em> im 19. Jahrhundert — vom Empfangssalon bis zur Küche, durchgehend möbliert.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Schaaperij+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Boerderij_Saaxumaborg_-_Leens_-_20129804_-_RCE.jpg?width=640" alt="Schaaperij"><span class="num">02 · Schaaperij</span><h4>Schafstall &amp; Pachthof</h4><p>Pachthof aus dem 19. Jh. mit lebenden Tieren und Living-History-Vorführungen rund ums Bauernjahr.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Tuinen+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_tuin_1.jpg?width=640" alt="Gärten Borg Verhildersum"><span class="num">03 · Gärten</span><h4>Obst, Kräuter, Bauerngarten</h4><p>Angelegt nach alten Plänen, mit alten niederländischen Obstsorten und einer Kräuter-Sammlung.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Koetshuis+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_ingang.jpg?width=640" alt="Wechselausstellung Kutscherhaus"><span class="num">04 · Kunst</span><h4>Wechselausstellungen</h4><p>Im Kutscherhaus laufen wechselnde Ausstellungen zu Kunst, Mode oder Regionalgeschichte.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Theetuin+Borg+Verhildersum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Verhildersum_-_tuin_4.jpg?width=640" alt="Tea Garden Verhildersum"><span class="num">05 · Genuss</span><h4>Tea Garden</h4><p>Stille Einkehr im historischen Garten — Hausgebackenes, frischer Kaffee, viel Grün.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Leens+Groningen" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Kerk_van_Leens.jpg?width=640" alt="Wierden-Landschaft"><span class="num">06 · Landschaft</span><h4>Wierden-Land</h4><p>Die Anreise führt durch typisches Groninger Marschland mit alten Warften (<em>wierden</em>) und offenen Horizonten.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="verhildersum-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Route</span>
+        <h2>Von Lauwersoog nach Leens.</h2>
+        <p>Über Zoutkamp und Ulrum durchs Wierdenland. Schematische Übersicht.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.3789,6.3408" data-end-label="Borg Verhildersum" data-route="53.3955,6.2700;53.3850,6.3100"></div>
+      </div>
+      <p class="map-caption">Routenverlauf schematisch · exakte GPX-Navigation über die Komoot-Tour.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="verhildersum-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Die letzte bewohnte Borg im Groninger Land.</h2>
+          <p>Eine <strong>Borg</strong> ist ein befestigtes Adelshaus, wie es im Groninger Land typisch war. Von ursprünglich rund <strong>200 Borgen</strong> sind nur eine Handvoll erhalten — und Verhildersum ist die einzige, die noch bewohnt und vollständig möbliert ist. Ihre Ursprünge reichen bis ins frühe <strong>14. Jahrhundert</strong> zurück.</p>
+          <p>Das Museum erzählt das Leben um <strong>1860</strong>, als die Familie Tjarda van Starkenborgh hier residierte. Besucher:innen wandeln zwischen Herrenhaus, Garten, Schaaperij und Pachthof — ein Vollbild der ländlichen Gesellschaft jener Zeit.</p>
+          <p>Das umliegende Dorf <strong>Leens</strong> ist ein klassisches <em>wierdendorp</em>: Auf künstlich aufgeschütteten Erdhügeln bauten die Friesen vor 2000 Jahren ihre Höfe, um sich vor Sturmfluten zu schützen.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Distanz</span><span class="v">~16 km pro Richtung</span></li>
+            <li><span class="k">Dauer</span><span class="v">Halbtag</span></li>
+            <li><span class="k">Anreise</span><span class="v">Fahrrad via Zoutkamp/Ulrum</span></li>
+            <li><span class="k">Saison</span><span class="v">i.d.R. März – Oktober</span></li>
+            <li><span class="k">Hinweis</span><span class="v">Öffnungszeiten vorab prüfen</span></li>
+            <li><span class="k">Einkehr</span><span class="v">Tea Garden im Borg-Park</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="verhildersum-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Kleine Tipps für den Tag.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🎫</span><strong>Kombiticket</strong><p>Ein Ticket deckt Herrenhaus, Schaaperij und Gärten ab — spart Wege.</p></div>
+        <div class="tip"><span class="tip-icon">📷</span><strong>Foto-Spot</strong><p>Spiegelung des Borg-Hauses im umgebenden Wassergraben — am schönsten morgens.</p></div>
+        <div class="tip"><span class="tip-icon">🥾</span><strong>Bequeme Schuhe</strong><p>Der Borg-Park hat viele Naturwege — bei Regen schnell matschig.</p></div>
+        <div class="tip"><span class="tip-icon">🍞</span><strong>Picknick mitnehmen</strong><p>Auch außerhalb des Tea Gardens gibt es schöne Pausenplätze im Park.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="verhildersum-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Einkehr unterwegs.</h2>
+        <p>Direkt auf dem Borg-Gelände und in den Dörfern entlang der Route.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Borg+Verhildersum+Leens" target="_blank" rel="noopener"><span class="num">Vor Ort</span><h4>Tea Garden Verhildersum</h4><p>Hausgebackenes, Kaffee, leichte Lunch-Karte mitten im Borg-Park.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Zoutkamp" target="_blank" rel="noopener"><span class="num">Hafen</span><h4>Restaurants in Zoutkamp</h4><p>Auf dem Weg liegt das alte Fischerdorf Zoutkamp — gute Anlaufstelle für Lunch mit Hafenblick.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/eetcafe+restaurant+Leens" target="_blank" rel="noopener"><span class="num">Dorf</span><h4>Cafés in Leens</h4><p>Im Borg-Dorf Leens selbst finden sich kleinere Cafés und Eetcafés.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/snackbar+cafetaria+Leens+Ulrum+Zoutkamp" target="_blank" rel="noopener"><span class="num">Imbiss</span><h4>Snackbars in der Umgebung</h4><p>Friesische Klassiker wie Patat, Kibbeling &amp; Co. — gebündelte Übersicht.</p></a>
+      </div>
+    </div>
+  </section>
+
+
+  
+  </div><!-- /.page #verhildersum -->
+
+</main>
+
+<footer>
+  <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+  <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../assets/main.js"></script>
+</body>
+</html>

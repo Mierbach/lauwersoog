@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dokkum - Lauwersoog 2026</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <meta name="description" content="Festungsstadt Dokkum: Sehenswuerdigkeiten, Karte, Tipps und Essen.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <div class="nav-inner">
+    <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+    <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen"><span></span></label>
+    <div class="nav-links">
+      <a href="../index.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Übersicht</a>
+
+      <div class="nav-item">
+        <a class="is-active" href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><path d="M12 2 4 7v3h16V7z"/></svg>Dokkum</a>
+        <div class="submenu">
+          <a class="is-active" href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="dokkum.html#dokkum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="dokkum.html#dokkum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="dokkum.html#dokkum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="dokkum.html#dokkum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="dokkum.html#dokkum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M18 11V4h-3v3h-2V2h-2v5H9V4H6v7"/><path d="M10 22v-5h4v5"/></svg>Verhildersum</a>
+        <div class="submenu">
+          <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="verhildersum.html#verhildersum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="verhildersum.html#verhildersum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="verhildersum.html#verhildersum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="verhildersum.html#verhildersum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="verhildersum.html#verhildersum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>Schiermonnikoog</a>
+        <div class="submenu">
+          <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Auf der Insel</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>Groningen</a>
+        <div class="submenu">
+          <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="groningen.html#groningen-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>In der Stadt</a>
+          <a href="groningen.html#groningen-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="groningen.html#groningen-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="groningen.html#groningen-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="groningen.html#groningen-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <a href="voegel.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>Vögel</a>
+
+      <a class="nav-icon-link" href="https://www.google.com/maps/search/Siblu+Camping+Lauwersoog" target="_blank" rel="noopener" title="Siblu Camping Lauwersoog auf Google Maps" aria-label="Siblu Camping Lauwersoog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M12 3 3 21"/><path d="M12 3l9 18"/><path d="M12 3v18"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page is-active" id="dokkum">
+  <!-- ====================================================================== -->
+  <!-- ============================== DOKKUM ================================ -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/De_Zijl_over_the_Dokkumer_Grootdiep.jpg?width=2000'), radial-gradient(120% 80% at 70% 25%, #6b3e2a 0%, #3a2a1a 60%, #1d1208 100%);">
+      <div class="hero-inner">
+        <a href="../index.html" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 01 · Fahrradtour</span>
+        <h1>Dokkum — <em>1300 Jahre Geschichte auf wenigen Quadratkilometern.</em></h1>
+        <p class="hero-lead">
+          Grachten, Bastionen, zwei Windmühlen und ein Park, in dem 754 der Missionar
+          Bonifatius sein Leben ließ. Heute ist Dokkum ein lebendiger Marktort mit
+          sternförmigen <em>bolwerken</em> und unzähligen kleinen Cafés.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~20 km</strong>pro Richtung</div>
+          <div><strong>Halb– Ganztag</strong>Aufenthalt</div>
+          <div><strong>1298</strong>Stadtrechte</div>
+          <div><strong>2</strong>Windmühlen</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.komoot.com/tour/2980560412?share_token=aSwsShJZj1IIqwHDxj3Gj42JBCvj2XiQjFqIsJtlsM45COg9CH&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=5781661722538" target="_blank" rel="noopener">🗺 Komoot-Route öffnen</a>
+          <a class="btn ghost" href="dokkum.html#dokkum-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="dokkum-vor-ort">
+      <div class="section-head">
+        <span class="eyebrow">Sehenswürdigkeiten</span>
+        <h2>Sechs Stationen, die du nicht verpassen solltest.</h2>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Bolwerken+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Bastion_IV_met_gracht%2C_Dokkum.JPG?width=640" alt="Bastionen in Dokkum"><span class="num">01 · Bolwerken</span><h4>Grachten &amp; Bastionen</h4><p>Die sternförmigen Festungswälle aus dem 16. Jh. sind nahezu vollständig erhalten — ein Spaziergang darauf gehört zum Pflichtprogramm.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Molen+Zeldenrust+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Zeldenrust_Dokkum_-_Full.jpg?width=640" alt="Mole Zeldenrust"><span class="num">02 · Mühle</span><h4>Zeldenrust</h4><p>Klassische Kappenmühle direkt am Wasser — eines der meistfotografierten Motive der Stadt. Besichtigung nach Voranmeldung möglich.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Molen+De+Hoop+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_molen_de_Hoop_foto4_2009-09-19_12.39.JPG?width=640" alt="Mühle De Hoop"><span class="num">03 · Mühle</span><h4>De Hoop</h4><p>Zweite, ebenso fotogene Kappenmühle am Stadtrand. Die Lichtstimmung am späten Nachmittag ist besonders schön.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Bonifatiuskapel+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/20200612_Bonifatiuskapel_Dokkum.jpg?width=640" alt="Bonifatiuskapelle Dokkum"><span class="num">04 · Pilgerort</span><h4>Bonifatiuskapelle &amp; Park</h4><p>Ruhige Anlage von 1923 mit Brouwersbron-Quelle, Kreuzweg und Kapelle (1934). Erinnerung an die Ermordung des Missionars 754.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Stadhuis+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_stadhuis.jpg?width=640" alt="Stadhuis Dokkum"><span class="num">05 · Architektur</span><h4>Altstadt &amp; Stadhuis</h4><p>Verwinkelte Gassen, zahllose Fußgängerbrücken, das Rathaus von 1610 und die spätgotische Sint-Martinuskerk.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Markt+Dokkum" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Dokkum%2C_Grootdiep._20-09-2021._%28actm.%29.jpg?width=640" alt="Markt und Gracht in Dokkum"><span class="num">06 · Genuss</span><h4>Markt &amp; Diepswal</h4><p>Die besten Adressen für eine entspannte Mittagspause oder <em>koffie met appeltaart</em> mit Blick auf die Gracht.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="dokkum-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Route</span>
+        <h2>Von Lauwersoog nach Dokkum.</h2>
+        <p>Eine schematische Übersicht — die exakte Navigation läuft über die Komoot-Tour.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.3269,5.9981" data-end-label="Dokkum" data-route="53.3956,6.1660;53.3742,6.0900;53.3500,6.0300"></div>
+      </div>
+      <p class="map-caption">Routenverlauf schematisch · exakte GPX-Navigation über die Komoot-Tour.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="dokkum-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Eine Stadt mit Kreuzzügen, Märtyrern und Eis­schnell­läufern.</h2>
+          <p>Dokkum erhielt bereits <strong>1298 die Stadtrechte</strong>. Berühmt wurde der Ort durch das Martyrium des Angelsachsen <strong>Bonifatius im Jahr 754</strong> — der Halbmond im Stadtwappen erinnert übrigens an die Teilnahme Dokkums am Fünften Kreuzzug 1214.</p>
+          <p>In den 1640er Jahren saß hier sogar die <em>Admiralität von Friesland</em>. Heute ist Dokkum der <strong>Wendepunkt der legendären Elfstedentocht</strong> — jenes 200-km-Eisschnelllauf-Marathons, der die elf Städte Frieslands verbindet, sofern die Grachten zufrieren.</p>
+          <p>Die beiden erhaltenen <strong>Kappenmühlen Zeldenrust und De Hoop</strong> gehören zu den besterhaltenen Mühlen der Niederlande und sind nach Voranmeldung zu besichtigen.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Distanz</span><span class="v">~20 km pro Richtung</span></li>
+            <li><span class="k">Dauer</span><span class="v">Halb- bis Ganztag</span></li>
+            <li><span class="k">Anreise</span><span class="v">Fahrrad ab Lauwersoog</span></li>
+            <li><span class="k">Stadtrechte</span><span class="v">1298</span></li>
+            <li><span class="k">Einwohner</span><span class="v">~12.700</span></li>
+            <li><span class="k">Foto-Tipp</span><span class="v">Bolwerken, tiefer Sonnenstand</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dokkum-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Kleine Tipps für den Tag.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🚲</span><strong>Fahrradschloss mit</strong><p>In der Altstadt gibt es ausgewiesene Abstellbereiche — abschließen ist Pflicht.</p></div>
+        <div class="tip"><span class="tip-icon">📅</span><strong>Markttage</strong><p>Mittwoch- und Samstagvormittag — am lebendigsten direkt am Markt.</p></div>
+        <div class="tip"><span class="tip-icon">🌬</span><strong>Mühlen-Besuch</strong><p>Zeldenrust &amp; De Hoop: vorab anfragen, ob geöffnet — die Mühlen werden ehrenamtlich betreut.</p></div>
+        <div class="tip"><span class="tip-icon">🥖</span><strong>Picknick-Idee</strong><p>Bäcker in der Altstadt, dann auf den Bolwerken Pause machen — Top-Ausblick auf die Stadt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="dokkum-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Pause in Dokkum.</h2>
+        <p>Cafés, Bistros und eine echte friesische Snackbar — alles in Laufnähe vom Markt.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Dokkum" target="_blank" rel="noopener"><span class="num">Restaurants</span><h4>Restaurants in Dokkum</h4><p>Bistros, Brasserien und Restaurants in der historischen Innenstadt — große Auswahl rund um Markt und Bolwerken.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/cafe+lunchroom+Dokkum" target="_blank" rel="noopener"><span class="num">Cafés</span><h4>Cafés &amp; Lunchrooms</h4><p>Gemütliche Adressen für Kaffee, Kuchen oder einen schnellen Lunch zwischen den Bolwerken.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/cafetaria+snackbar+Dokkum" target="_blank" rel="noopener"><span class="num">Imbiss</span><h4>Cafetaria &amp; Snackbars</h4><p>Friesische Klassiker — Frikandel, Kibbeling, Patat speciaal. Mehrere Adressen in der Innenstadt.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/visboer+vishandel+Dokkum" target="_blank" rel="noopener"><span class="num">Fisch</span><h4>Fisch &amp; Meeresfrüchte</h4><p>Frischer Hering, Kibbeling und Lekkerbekjes — friesische Fischimbisse vor Ort.</p></a>
+      </div>
+    </div>
+  </section>
+
+
+  
+  </div><!-- /.page #dokkum -->
+
+</main>
+
+<footer>
+  <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+  <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../assets/main.js"></script>
+</body>
+</html>

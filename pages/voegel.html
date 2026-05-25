@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voegel beobachten - Lauwersoog 2026</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <meta name="description" content="Vogel-Bestimmungshilfe fuer das Wattenmeer und das Lauwersmeer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <div class="nav-inner">
+    <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+    <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen"><span></span></label>
+    <div class="nav-links">
+      <a href="../index.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Übersicht</a>
+
+      <div class="nav-item">
+        <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><path d="M12 2 4 7v3h16V7z"/></svg>Dokkum</a>
+        <div class="submenu">
+          <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="dokkum.html#dokkum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="dokkum.html#dokkum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="dokkum.html#dokkum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="dokkum.html#dokkum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="dokkum.html#dokkum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M18 11V4h-3v3h-2V2h-2v5H9V4H6v7"/><path d="M10 22v-5h4v5"/></svg>Verhildersum</a>
+        <div class="submenu">
+          <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="verhildersum.html#verhildersum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="verhildersum.html#verhildersum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="verhildersum.html#verhildersum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="verhildersum.html#verhildersum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="verhildersum.html#verhildersum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>Schiermonnikoog</a>
+        <div class="submenu">
+          <a href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Auf der Insel</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>Groningen</a>
+        <div class="submenu">
+          <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="groningen.html#groningen-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>In der Stadt</a>
+          <a href="groningen.html#groningen-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="groningen.html#groningen-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="groningen.html#groningen-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="groningen.html#groningen-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <a class="is-active" href="voegel.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>Vögel</a>
+
+      <a class="nav-icon-link" href="https://www.google.com/maps/search/Siblu+Camping+Lauwersoog" target="_blank" rel="noopener" title="Siblu Camping Lauwersoog auf Google Maps" aria-label="Siblu Camping Lauwersoog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M12 3 3 21"/><path d="M12 3l9 18"/><path d="M12 3v18"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page is-active" id="voegel">
+  <!-- ====================================================================== -->
+  <!-- ============================== VÖGEL ================================= -->
+  <!-- ====================================================================== -->
+  <section class="trip-section birds-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Natur · Lauwersmeer &amp; Wattenmeer</span>
+        <h2>Vögel rund um Lauwersoog.</h2>
+        <p class="section-intro">Der Nationaal Park Lauwersmeer und das angrenzende Wattenmeer zählen zu den vogelreichsten Regionen Europas. Brutvögel teilen sich den Lebensraum mit nordischen Wintergästen und Zugvögeln, die hier auf ihrer Route zwischen Sibirien und Westafrika rasten. Filtere nach Jahreszeit oder Lebensraum — oder suche direkt nach einer Art.</p>
+      </div>
+
+      <div class="birds-filter" role="region" aria-label="Vögel filtern">
+        <div class="filter-group birds-search">
+          <label for="birdSearch">Suche</label>
+          <input type="search" id="birdSearch" placeholder="z. B. Säbelschnäbler, Gans, Watvogel …" autocomplete="off">
+        </div>
+        <div class="filter-group">
+          <label>Jahreszeit</label>
+          <div class="pills" id="seasonPills">
+            <button type="button" class="pill" data-season="fruehjahr">Frühjahr</button>
+            <button type="button" class="pill" data-season="sommer">Sommer</button>
+            <button type="button" class="pill" data-season="herbst">Herbst</button>
+            <button type="button" class="pill" data-season="winter">Winter</button>
+            <button type="button" class="pill" data-season="ganzjaehrig">Ganzjährig</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Lebensraum</label>
+          <div class="pills" id="habitatPills">
+            <button type="button" class="pill" data-habitat="watt">Watt</button>
+            <button type="button" class="pill" data-habitat="schilf">Schilf</button>
+            <button type="button" class="pill" data-habitat="salzwiese">Salzwiese</button>
+            <button type="button" class="pill" data-habitat="polder">Polder &amp; Wiese</button>
+            <button type="button" class="pill" data-habitat="kueste">Küste &amp; Meer</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="birds-count"><span id="birdCount">55</span> Arten</p>
+
+      <div class="birds-grid" id="birdsGrid">
+
+        <article class="bird-card" data-name="Säbelschnäbler" data-sci="Recurvirostra avosetta" data-wiki="Säbelschnäbler" data-seasons="fruehjahr,sommer,herbst" data-habitats="watt,salzwiese" data-fallback="Recurvirostra_avosetta_2_-_Helgoland.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Säbelschnäbler</h3>
+            <p class="bird-sci">Recurvirostra avosetta</p>
+            <p class="bird-desc">Eleganter schwarz-weißer Watvogel mit aufwärts gebogenem Schnabel; brütet in den Salzwiesen am Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Salzwiese</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/S%C3%A4belschn%C3%A4bler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Löffler" data-sci="Platalea leucorodia" data-wiki="Löffler" data-seasons="fruehjahr,sommer" data-habitats="watt,salzwiese" data-fallback="Platalea_leucorodia_-_Pak_Thale.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Löffler</h3>
+            <p class="bird-sci">Platalea leucorodia</p>
+            <p class="bird-desc">Schneeweißer Schreitvogel mit löffelartigem Schnabel — das Lauwersmeer beherbergt eine der wichtigsten Kolonien Europas.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/L%C3%B6ffler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rohrweihe" data-sci="Circus aeruginosus" data-wiki="Rohrweihe" data-seasons="fruehjahr,sommer,herbst" data-habitats="schilf" data-fallback="Circus_aeruginosus_-Hortobagy_NP,_Hungary-8.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rohrweihe</h3>
+            <p class="bird-sci">Circus aeruginosus</p>
+            <p class="bird-desc">Eleganter Greifvogel mit V-förmig gehaltenen Flügeln; segelt tief über die Schilfgürtel des Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rohrweihe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Bartmeise" data-sci="Panurus biarmicus" data-wiki="Bartmeise" data-seasons="ganzjaehrig" data-habitats="schilf" data-fallback="Panurus_biarmicus_-Lithuania-8.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Bartmeise</h3>
+            <p class="bird-sci">Panurus biarmicus</p>
+            <p class="bird-desc">Zierlicher Schilfbewohner mit langem Schwanz; mit etwas Glück am Jaap-Deensgat zu hören und zu sehen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Bartmeise" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Blaukehlchen" data-sci="Luscinia svecica" data-wiki="Blaukehlchen" data-seasons="fruehjahr,sommer" data-habitats="schilf,polder" data-fallback="Luscinia_svecica_cyanecula_-_01.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Blaukehlchen</h3>
+            <p class="bird-sci">Luscinia svecica</p>
+            <p class="bird-desc">Sangesfreudiger Verwandter der Nachtigall mit leuchtend blauer Brust — Charaktervogel der Polder am Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Blaukehlchen" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rohrdommel" data-sci="Botaurus stellaris" data-wiki="Rohrdommel" data-seasons="ganzjaehrig" data-habitats="schilf" data-fallback="Botaurus_stellaris_-_01.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rohrdommel</h3>
+            <p class="bird-sci">Botaurus stellaris</p>
+            <p class="bird-desc">Heimlicher Reiher des dichten Röhrichts; sein dumpfes Brummen trägt im Frühling weit über die Schilfflächen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rohrdommel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Austernfischer" data-sci="Haematopus ostralegus" data-wiki="Austernfischer" data-seasons="ganzjaehrig" data-habitats="watt,kueste" data-fallback="Haematopus_ostralegus_-_Brittany.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Austernfischer</h3>
+            <p class="bird-sci">Haematopus ostralegus</p>
+            <p class="bird-desc">Schwarz-weißer Allgegenwärtiger des Wattenmeers, mit kräftig orangem Schnabel und auffälligem Trillerruf.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Austernfischer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Eiderente" data-sci="Somateria mollissima" data-wiki="Eiderente" data-seasons="ganzjaehrig" data-habitats="kueste" data-fallback="Somateria_mollissima_male_2_(Lukasz_Lukasik).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Eiderente</h3>
+            <p class="bird-sci">Somateria mollissima</p>
+            <p class="bird-desc">Robuste Meeresente; Männchen schwarz-weiß mit grünem Nacken, Weibchen tarnbraun. Tausende rasten im Watt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Eiderente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Brandseeschwalbe" data-sci="Thalasseus sandvicensis" data-wiki="Brandseeschwalbe" data-seasons="fruehjahr,sommer" data-habitats="kueste" data-fallback="Sandwich_Tern_-_Thalasseus_sandvicensis.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Brandseeschwalbe</h3>
+            <p class="bird-sci">Thalasseus sandvicensis</p>
+            <p class="bird-desc">Schlanke Seeschwalbe mit schwarzem Schopf und gelber Schnabelspitze; ruft kratzend „kerrick".</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Brandseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Flussseeschwalbe" data-sci="Sterna hirundo" data-wiki="Flussseeschwalbe" data-seasons="fruehjahr,sommer" data-habitats="kueste" data-fallback="Common_tern_with_fish.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Flussseeschwalbe</h3>
+            <p class="bird-sci">Sterna hirundo</p>
+            <p class="bird-desc">Eleganter Sommergast mit roter Schnabelbasis; brütet auf Sandbänken und Schillinseln im Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Flussseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kiebitz" data-sci="Vanellus vanellus" data-wiki="Kiebitz" data-seasons="fruehjahr,sommer" data-habitats="polder" data-fallback="Vanellus_vanellus_-_Lancashire,_England_-08.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kiebitz</h3>
+            <p class="bird-sci">Vanellus vanellus</p>
+            <p class="bird-desc">Akrobatischer Wiesenvogel mit langer Federhaube und gauklerischem Balzflug; ruft „kie-witt".</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kiebitz" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Uferschnepfe" data-sci="Limosa limosa" data-wiki="Uferschnepfe" data-seasons="fruehjahr,sommer" data-habitats="polder" data-fallback="Limosa_limosa_-_Texel.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Uferschnepfe</h3>
+            <p class="bird-sci">Limosa limosa</p>
+            <p class="bird-desc">Niederlands National-Vogel; lange Beine, langer Schnabel, ruft markant „gru-tto" über den Poldern.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Uferschnepfe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Seeadler" data-sci="Haliaeetus albicilla" data-wiki="Seeadler" data-seasons="ganzjaehrig" data-habitats="schilf,watt,polder" data-fallback="Haliaeetus_albicilla_(adult).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Seeadler</h3>
+            <p class="bird-sci">Haliaeetus albicilla</p>
+            <p class="bird-desc">„Fliegende Scheunentür": Europas größter Greifvogel hat das Lauwersmeer als Brutgebiet erobert.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Seeadler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Weißwangengans" data-sci="Branta leucopsis" data-wiki="Weißwangengans" data-seasons="winter,fruehjahr" data-habitats="salzwiese,polder" data-fallback="Branta_leucopsis_-_Caerlaverock.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Weißwangengans</h3>
+            <p class="bird-sci">Branta leucopsis</p>
+            <p class="bird-desc">Schwarz-weißer Wintergast in Zehntausenden — kommt aus Sibirien, Spitzbergen und Grönland.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag">Salzwiese</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wei%C3%9Fwangengans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Ringelgans" data-sci="Branta bernicla" data-wiki="Ringelgans" data-seasons="winter,fruehjahr" data-habitats="watt,salzwiese" data-fallback="Branta_bernicla_bernicla_1_(Marek_Szczepanek).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Ringelgans</h3>
+            <p class="bird-sci">Branta bernicla</p>
+            <p class="bird-desc">Kleine, dunkle Meergans mit weißem Halsring; weidet bevorzugt auf Salzwiesen und im Watt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Ringelgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Blässgans" data-sci="Anser albifrons" data-wiki="Blässgans" data-seasons="winter" data-habitats="polder" data-fallback="Anser_albifrons_1_(Marek_Szczepanek).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Blässgans</h3>
+            <p class="bird-sci">Anser albifrons</p>
+            <p class="bird-desc">Wintergast mit weißem Stirnschild und dunklen Bauchbinden; rastet zu Tausenden auf den Poldern.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Bl%C3%A4ssgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Pfeifente" data-sci="Mareca penelope" data-wiki="Pfeifente" data-seasons="herbst,winter" data-habitats="watt,polder" data-fallback="Anas_penelope_(Marek_Szczepanek).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Pfeifente</h3>
+            <p class="bird-sci">Mareca penelope</p>
+            <p class="bird-desc">Erpel mit kastanienbraunem Kopf und gelbem Scheitel; pfeifender Ruf gibt der Art ihren Namen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Pfeifente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Singschwan" data-sci="Cygnus cygnus" data-wiki="Singschwan" data-seasons="winter" data-habitats="polder" data-fallback="Cygnus_cygnus_6_(Lukasz_Lukasik).jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Singschwan</h3>
+            <p class="bird-sci">Cygnus cygnus</p>
+            <p class="bird-desc">Wilder Schwan mit gelb-schwarzem Schnabel; überwintert aus Skandinavien an den Poldern um Lauwersoog.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Singschwan" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kornweihe" data-sci="Circus cyaneus" data-wiki="Kornweihe" data-seasons="winter,herbst" data-habitats="polder,salzwiese" data-fallback="Circus_cyaneus_-Scotland-8.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kornweihe</h3>
+            <p class="bird-sci">Circus cyaneus</p>
+            <p class="bird-desc">Schlanker Greif; jagt im langsamen Tiefflug über Polder und Salzwiesen nach Mäusen und Kleinvögeln.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kornweihe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Sumpfohreule" data-sci="Asio flammeus" data-wiki="Sumpfohreule" data-seasons="herbst,winter" data-habitats="polder,salzwiese" data-fallback="Asio_flammeus_qtl1.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Sumpfohreule</h3>
+            <p class="bird-sci">Asio flammeus</p>
+            <p class="bird-desc">Tagaktive Eule mit auffälligem Gesichtsschleier; jagt rüttelnd über offene Wiesen und Salzwiesen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Sumpfohreule" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Knutt" data-sci="Calidris canutus" data-wiki="Knutt" data-seasons="fruehjahr,herbst,winter" data-habitats="watt" data-fallback="Calidris_canutus_-_Heuksando.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Knutt</h3>
+            <p class="bird-sci">Calidris canutus</p>
+            <p class="bird-desc">Mittelgroßer Strandläufer; rastet in riesigen, dicht gepackten Schwärmen am Watt vor Lauwersoog.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Knutt" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Pfuhlschnepfe" data-sci="Limosa lapponica" data-wiki="Pfuhlschnepfe" data-seasons="fruehjahr,herbst" data-habitats="watt" data-fallback="Limosa_lapponica_-_New_Zealand.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Pfuhlschnepfe</h3>
+            <p class="bird-sci">Limosa lapponica</p>
+            <p class="bird-desc">Langstreckenzieher der Superlative — manche Individuen fliegen nonstop bis Neuseeland.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Pfuhlschnepfe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Alpenstrandläufer" data-sci="Calidris alpina" data-wiki="Alpenstrandläufer" data-seasons="fruehjahr,herbst,winter" data-habitats="watt" data-fallback="Calidris_alpina_-_Mickelsbukten.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Alpenstrandläufer</h3>
+            <p class="bird-sci">Calidris alpina</p>
+            <p class="bird-desc">Häufigster Strandläufer im Wattenmeer; rastet in Schwärmen, die wie Sternschnuppen am Himmel wirbeln.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Alpenstrandl%C3%A4ufer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Großer Brachvogel" data-sci="Numenius arquata" data-wiki="Großer Brachvogel" data-seasons="ganzjaehrig" data-habitats="watt,polder" data-fallback="Numenius_arquata_-_Stallingborough.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Großer Brachvogel</h3>
+            <p class="bird-sci">Numenius arquata</p>
+            <p class="bird-desc">Größter europäischer Watvogel mit lang gebogenem Schnabel; ruft melancholisch „tlüi".</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Gro%C3%9Fer_Brachvogel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Goldregenpfeifer" data-sci="Pluvialis apricaria" data-wiki="Goldregenpfeifer" data-seasons="herbst,winter" data-habitats="polder,watt" data-fallback="Pluvialis_apricaria_-_Iceland.jpg">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Goldregenpfeifer</h3>
+            <p class="bird-sci">Pluvialis apricaria</p>
+            <p class="bird-desc">Goldgesprenkelter Regenpfeifer; rastet in großen Schwärmen auf Wintersaaten und Schlickflächen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Goldregenpfeifer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Graugans" data-sci="Anser anser" data-wiki="Graugans" data-seasons="ganzjaehrig" data-habitats="polder,salzwiese">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Graugans</h3>
+            <p class="bird-sci">Anser anser</p>
+            <p class="bird-desc">Stammform der Hausgans; brütet zahlreich am Lauwersmeer und sammelt sich zu lärmenden Trupps.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Graugans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Brandgans" data-sci="Tadorna tadorna" data-wiki="Brandgans" data-seasons="ganzjaehrig" data-habitats="watt,salzwiese,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Brandgans</h3>
+            <p class="bird-sci">Tadorna tadorna</p>
+            <p class="bird-desc">Markant rot-weiß-schwarze „Halbgans"; brütet in alten Kaninchenbauten an Deich und Salzwiese.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Brandgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Saatgans" data-sci="Anser fabalis" data-wiki="Saatgans" data-seasons="winter" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Saatgans</h3>
+            <p class="bird-sci">Anser fabalis</p>
+            <p class="bird-desc">Wintergast aus der Taiga; dunkelbrauner Körper, schwarz-orange-schwarzer Schnabel.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Saatgans" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Spießente" data-sci="Anas acuta" data-wiki="Spießente" data-seasons="herbst,winter,fruehjahr" data-habitats="polder,watt">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Spießente</h3>
+            <p class="bird-sci">Anas acuta</p>
+            <p class="bird-desc">Elegante Schwimmente mit nadelförmig verlängerten Schwanzfedern; rastet im flachen Wasser.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Spie%C3%9Fente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Krickente" data-sci="Anas crecca" data-wiki="Krickente" data-seasons="herbst,winter,fruehjahr" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Krickente</h3>
+            <p class="bird-sci">Anas crecca</p>
+            <p class="bird-desc">Kleinste heimische Ente; Männchen mit kastanienbraunem Kopf und smaragdgrünem Augenstreif.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Krickente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Löffelente" data-sci="Spatula clypeata" data-wiki="Löffelente" data-seasons="herbst,winter,fruehjahr" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Löffelente</h3>
+            <p class="bird-sci">Spatula clypeata</p>
+            <p class="bird-desc">Auffälliger löffelförmiger Schnabel zum Seihen kleinster Wasserorganismen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/L%C3%B6ffelente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Reiherente" data-sci="Aythya fuligula" data-wiki="Reiherente" data-seasons="ganzjaehrig" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Reiherente</h3>
+            <p class="bird-sci">Aythya fuligula</p>
+            <p class="bird-desc">Schwarz-weißer Tauchgast mit charakteristischem Schopf; ganzjährig auf dem Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Reiherente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Trauerente" data-sci="Melanitta nigra" data-wiki="Trauerente" data-seasons="herbst,winter,fruehjahr" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Trauerente</h3>
+            <p class="bird-sci">Melanitta nigra</p>
+            <p class="bird-desc">Tiefschwarze Meeresente; rastet in riesigen Trupps vor der Wattenmeerküste.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Trauerente" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Mittelsäger" data-sci="Mergus serrator" data-wiki="Mittelsäger" data-seasons="herbst,winter" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Mittelsäger</h3>
+            <p class="bird-sci">Mergus serrator</p>
+            <p class="bird-desc">Schlanke Säger-Ente mit zerzaustem Schopf; jagt tauchend nach kleinen Fischen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Mittels%C3%A4ger" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Höckerschwan" data-sci="Cygnus olor" data-wiki="Höckerschwan" data-seasons="ganzjaehrig" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Höckerschwan</h3>
+            <p class="bird-sci">Cygnus olor</p>
+            <p class="bird-desc">Der vertraute weiße Schwan mit schwarzem Höcker und orangem Schnabel; brütet ganzjährig.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/H%C3%B6ckerschwan" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kormoran" data-sci="Phalacrocorax carbo" data-wiki="Kormoran" data-seasons="ganzjaehrig" data-habitats="polder,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kormoran</h3>
+            <p class="bird-sci">Phalacrocorax carbo</p>
+            <p class="bird-desc">Schwarzer Fischjäger; trocknet seine Schwingen ausgebreitet auf Pfählen und Tonnen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kormoran" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Graureiher" data-sci="Ardea cinerea" data-wiki="Graureiher" data-seasons="ganzjaehrig" data-habitats="polder,schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Graureiher</h3>
+            <p class="bird-sci">Ardea cinerea</p>
+            <p class="bird-desc">Allgegenwärtiger Schreitvogel an Gräben, Polderkanten und Schilfsäumen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Graureiher" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Silberreiher" data-sci="Ardea alba" data-wiki="Silberreiher" data-seasons="ganzjaehrig" data-habitats="polder,schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Silberreiher</h3>
+            <p class="bird-sci">Ardea alba</p>
+            <p class="bird-desc">Schneeweißer Reiher; einst Wintergast, mittlerweile auch Brutvogel im Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Silberreiher" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Haubentaucher" data-sci="Podiceps cristatus" data-wiki="Haubentaucher" data-seasons="ganzjaehrig" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Haubentaucher</h3>
+            <p class="bird-sci">Podiceps cristatus</p>
+            <p class="bird-desc">Eleganter Lappentaucher mit auffälligem Federschmuck; spektakuläre „Pinguintanz"-Balz im Frühjahr.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Haubentaucher" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rotschenkel" data-sci="Tringa totanus" data-wiki="Rotschenkel" data-seasons="fruehjahr,sommer,herbst" data-habitats="salzwiese,watt">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rotschenkel</h3>
+            <p class="bird-sci">Tringa totanus</p>
+            <p class="bird-desc">„Wächter der Salzwiese": warnt früh und laut mit hellrot leuchtenden Beinen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Salzwiese</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rotschenkel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Grünschenkel" data-sci="Tringa nebularia" data-wiki="Grünschenkel" data-seasons="fruehjahr,herbst" data-habitats="watt,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Grünschenkel</h3>
+            <p class="bird-sci">Tringa nebularia</p>
+            <p class="bird-desc">Schlanker Wasserläufer mit lang aufwärts gebogenem Schnabel; markanter dreisilbiger Ruf.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Gr%C3%BCnschenkel" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Sandregenpfeifer" data-sci="Charadrius hiaticula" data-wiki="Sandregenpfeifer" data-seasons="fruehjahr,sommer,herbst" data-habitats="watt,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Sandregenpfeifer</h3>
+            <p class="bird-sci">Charadrius hiaticula</p>
+            <p class="bird-desc">Niedlicher Strandvogel mit schwarzem Brustband; brütet versteckt auf Sand- und Muschelflächen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Sandregenpfeifer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Steinwälzer" data-sci="Arenaria interpres" data-wiki="Steinwälzer" data-seasons="fruehjahr,herbst,winter" data-habitats="watt,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Steinwälzer</h3>
+            <p class="bird-sci">Arenaria interpres</p>
+            <p class="bird-desc">Kräftiger Watvogel; wendet mit dem Schnabel Steine, Muscheln und Algen auf der Suche nach Beute.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Watt</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Steinw%C3%A4lzer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Sanderling" data-sci="Calidris alba" data-wiki="Sanderling" data-seasons="fruehjahr,herbst,winter" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Sanderling</h3>
+            <p class="bird-sci">Calidris alba</p>
+            <p class="bird-desc">Hetzt wie ein Aufziehspielzeug am Spülsaum vor jeder anrollenden Welle her.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag season-winter">Winter</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Sanderling" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Kampfläufer" data-sci="Calidris pugnax" data-wiki="Kampfläufer" data-seasons="fruehjahr,herbst" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Kampfläufer</h3>
+            <p class="bird-sci">Calidris pugnax</p>
+            <p class="bird-desc">Männchen tragen im Frühling fantastische Federkrägen in vielen Farben; rastet auf nassen Wiesen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Kampfl%C3%A4ufer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Bekassine" data-sci="Gallinago gallinago" data-wiki="Bekassine" data-seasons="fruehjahr,herbst,winter" data-habitats="polder,schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Bekassine</h3>
+            <p class="bird-sci">Gallinago gallinago</p>
+            <p class="bird-desc">Tarnvirtuose mit überlangem Schnabel; im Balzflug „meckert" sie mit den Schwanzfedern.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Bekassine" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Lachmöwe" data-sci="Chroicocephalus ridibundus" data-wiki="Lachmöwe" data-seasons="ganzjaehrig" data-habitats="kueste,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Lachmöwe</h3>
+            <p class="bird-sci">Chroicocephalus ridibundus</p>
+            <p class="bird-desc">Kleine, lebhafte Möwe — im Sommerkleid mit schokobraunem „Kapuzen"-Kopf.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Lachm%C3%B6we" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Silbermöwe" data-sci="Larus argentatus" data-wiki="Silbermöwe" data-seasons="ganzjaehrig" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Silbermöwe</h3>
+            <p class="bird-sci">Larus argentatus</p>
+            <p class="bird-desc">Die klassische große „Möwe" am Hafen — kräftiger gelber Schnabel mit rotem Punkt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Silberm%C3%B6we" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Heringsmöwe" data-sci="Larus fuscus" data-wiki="Heringsmöwe" data-seasons="fruehjahr,sommer,herbst" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Heringsmöwe</h3>
+            <p class="bird-sci">Larus fuscus</p>
+            <p class="bird-desc">Dunkelflügelige Möwe mit gelben Beinen; brütet zahlreich auf den Inseln im Lauwersmeer.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Heringsm%C3%B6we" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Küstenseeschwalbe" data-sci="Sterna paradisaea" data-wiki="Küstenseeschwalbe" data-seasons="fruehjahr,sommer" data-habitats="kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Küstenseeschwalbe</h3>
+            <p class="bird-sci">Sterna paradisaea</p>
+            <p class="bird-desc">Weltenbummlerin der Vogelwelt — zieht jährlich zwischen Arktis und Antarktis hin und zurück.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/K%C3%BCstenseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Trauerseeschwalbe" data-sci="Chlidonias niger" data-wiki="Trauerseeschwalbe" data-seasons="fruehjahr,sommer,herbst" data-habitats="schilf,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Trauerseeschwalbe</h3>
+            <p class="bird-sci">Chlidonias niger</p>
+            <p class="bird-desc">Dunkle Sommerseeschwalbe der Süßgewässer; gaukelt tief überm Lauwersmeer nach Insekten.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Trauerseeschwalbe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Wanderfalke" data-sci="Falco peregrinus" data-wiki="Wanderfalke" data-seasons="ganzjaehrig" data-habitats="kueste,polder,watt">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Wanderfalke</h3>
+            <p class="bird-sci">Falco peregrinus</p>
+            <p class="bird-desc">Der schnellste Vogel der Welt; jagt Watvögel in pfeilschnellen Sturzflügen über dem Watt.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Watt</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wanderfalke" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Fischadler" data-sci="Pandion haliaetus" data-wiki="Fischadler" data-seasons="fruehjahr,herbst" data-habitats="polder,kueste">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Fischadler</h3>
+            <p class="bird-sci">Pandion haliaetus</p>
+            <p class="bird-desc">Spektakulärer Fischjäger auf dem Zug; stürzt sich mit den Füßen voran ins Wasser.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Fischadler" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Wiesenweihe" data-sci="Circus pygargus" data-wiki="Wiesenweihe" data-seasons="fruehjahr,sommer" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Wiesenweihe</h3>
+            <p class="bird-sci">Circus pygargus</p>
+            <p class="bird-desc">Schlankste der drei Weihen; brütet in Getreidefeldern rund um den Park.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wiesenweihe" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Schilfrohrsänger" data-sci="Acrocephalus schoenobaenus" data-wiki="Schilfrohrsänger" data-seasons="fruehjahr,sommer" data-habitats="schilf">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Schilfrohrsänger</h3>
+            <p class="bird-sci">Acrocephalus schoenobaenus</p>
+            <p class="bird-desc">Sänger mit weißem Überaugenstreif — singt aus dem Schilf und im kurzen Singflug.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Schilfrohrs%C3%A4nger" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Rohrammer" data-sci="Emberiza schoeniclus" data-wiki="Rohrammer" data-seasons="ganzjaehrig" data-habitats="schilf,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Rohrammer</h3>
+            <p class="bird-sci">Emberiza schoeniclus</p>
+            <p class="bird-desc">Der „Schilf-Spatz": Männchen mit schwarzer Kopfkappe und weißem Bartstreif.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Schilf</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Rohrammer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Feldlerche" data-sci="Alauda arvensis" data-wiki="Feldlerche" data-seasons="fruehjahr,sommer" data-habitats="polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Feldlerche</h3>
+            <p class="bird-sci">Alauda arvensis</p>
+            <p class="bird-desc">Trällert hoch über den Poldern fast unsichtbar im Blau — der Frühlings-Soundtrack der Marsch.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-sommer">Sommer</span>
+              <span class="bird-tag">Polder</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Feldlerche" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Wiesenpieper" data-sci="Anthus pratensis" data-wiki="Wiesenpieper" data-seasons="ganzjaehrig" data-habitats="polder,salzwiese">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Wiesenpieper</h3>
+            <p class="bird-sci">Anthus pratensis</p>
+            <p class="bird-desc">Unscheinbarer Singvogel der offenen Polder und Salzwiesen; auffälliger fallschirmartiger Singflug.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-ganzjaehrig">Ganzjährig</span>
+              <span class="bird-tag">Polder</span>
+              <span class="bird-tag">Salzwiese</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Wiesenpieper" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+        <article class="bird-card" data-name="Steinschmätzer" data-sci="Oenanthe oenanthe" data-wiki="Steinschmätzer" data-seasons="fruehjahr,sommer,herbst" data-habitats="kueste,polder">
+          <div class="bird-img" aria-hidden="true"></div>
+          <div class="bird-body">
+            <h3>Steinschmätzer</h3>
+            <p class="bird-sci">Oenanthe oenanthe</p>
+            <p class="bird-desc">Lebhaft auf Deichen und Dünen; weißer Bürzel blitzt auffällig beim Wegfliegen.</p>
+            <div class="bird-tags">
+              <span class="bird-tag season-fruehjahr">Frühjahr</span>
+              <span class="bird-tag season-herbst">Herbst</span>
+              <span class="bird-tag">Küste</span>
+            </div>
+            <a class="bird-link" href="https://de.wikipedia.org/wiki/Steinschm%C3%A4tzer" target="_blank" rel="noopener">Mehr erfahren</a>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="birds-empty" id="birdsEmpty">Keine Arten passen zu deiner Auswahl. Filter zurücksetzen?</p>
+    </div>
+  </section>
+  
+  </div><!-- /.page #voegel -->
+
+</main>
+
+<footer>
+  <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+  <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../assets/main.js"></script>
+</body>
+</html>

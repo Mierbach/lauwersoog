@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schiermonnikoog - Lauwersoog 2026</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <meta name="description" content="Wattinsel Schiermonnikoog: Anreise mit der Faehre, Strand, Duenen, Dorf.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <div class="nav-inner">
+    <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+    <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen"><span></span></label>
+    <div class="nav-links">
+      <a href="../index.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Übersicht</a>
+
+      <div class="nav-item">
+        <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><path d="M12 2 4 7v3h16V7z"/></svg>Dokkum</a>
+        <div class="submenu">
+          <a href="dokkum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="dokkum.html#dokkum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="dokkum.html#dokkum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="dokkum.html#dokkum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="dokkum.html#dokkum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="dokkum.html#dokkum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M18 11V4h-3v3h-2V2h-2v5H9V4H6v7"/><path d="M10 22v-5h4v5"/></svg>Verhildersum</a>
+        <div class="submenu">
+          <a href="verhildersum.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="verhildersum.html#verhildersum-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Sehenswürdigkeiten</a>
+          <a href="verhildersum.html#verhildersum-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="verhildersum.html#verhildersum-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="verhildersum.html#verhildersum-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="verhildersum.html#verhildersum-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a class="is-active" href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>Schiermonnikoog</a>
+        <div class="submenu">
+          <a class="is-active" href="schiermonnikoog.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>Auf der Insel</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="schiermonnikoog.html#schiermonnikoog-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>Groningen</a>
+        <div class="submenu">
+          <a href="groningen.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Übersicht</a>
+          <a href="groningen.html#groningen-vor-ort"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>In der Stadt</a>
+          <a href="groningen.html#groningen-karte"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>Karte</a>
+          <a href="groningen.html#groningen-wissenswert"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Wissenswert</a>
+          <a href="groningen.html#groningen-praxis"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Infos / Tipps</a>
+          <a href="groningen.html#groningen-essen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Essen &amp; Trinken</a>
+        </div>
+      </div>
+
+      <a href="voegel.html"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>Vögel</a>
+
+      <a class="nav-icon-link" href="https://www.google.com/maps/search/Siblu+Camping+Lauwersoog" target="_blank" rel="noopener" title="Siblu Camping Lauwersoog auf Google Maps" aria-label="Siblu Camping Lauwersoog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M12 3 3 21"/><path d="M12 3l9 18"/><path d="M12 3v18"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page is-active" id="schiermonnikoog">
+  <!-- ====================================================================== -->
+  <!-- ========================== SCHIERMONNIKOOG =========================== -->
+  <!-- ====================================================================== -->
+  <section class="trip-section">
+    <header class="hero detail-hero" style="--hero-img: url('https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_island_%284036567957%29.jpg?width=2000'), radial-gradient(120% 80% at 70% 25%, #3a6c8a 0%, #14305f 55%, #081a32 100%);">
+      <div class="hero-inner">
+        <a href="../index.html" class="back">← zur Übersicht</a>
+        <span class="eyebrow">Ausflug 03 · Fähre &amp; Insel</span>
+        <h1>Schiermonnikoog — <em>die autofreie Wattinsel der grauen Mönche.</em></h1>
+        <p class="hero-lead">
+          Direkt vor Lauwersoog liegt die kleinste Gemeinde der Niederlande und ihr erster
+          Nationalpark: kilometerlange Strände, weite Dünen, ein leuchtend rot-weißer
+          Leuchtturm — und ein verschlafenes Inseldorf, in dem die Zeit langsamer tickt.
+        </p>
+        <div class="hero-meta">
+          <div><strong>~45 Min.</strong>Fährfahrt</div>
+          <div><strong>16 × 4 km</strong>Insel-Größe</div>
+          <div><strong>~940</strong>Einwohner</div>
+          <div><strong>1989</strong>Nationalpark</div>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href="https://www.wpd.nl/de/schiermonnikoog/abfahrtsuebersicht" target="_blank" rel="noopener">⛴ Fähre buchen (Wagenborg)</a>
+          <a class="btn ghost" href="https://www.komoot.com/tour/2980653379?share_token=a5IQXU5GAty0SRwwSUNaKM6MtmWYDtMVKFeFC7qMQEIvzZPdCV&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=5781661722538" target="_blank" rel="noopener">🗺 Komoot-Route</a>
+          <a class="btn ghost" href="schiermonnikoog.html#schiermonnikoog-karte">↓ Zur Karte</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="schiermonnikoog-vor-ort">
+      <div class="section-head">
+        <span class="eyebrow">Auf der Insel</span>
+        <h2>Sechs Orte, die einen Tagestrip lohnen.</h2>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Vuurtoren+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Vuurtorenschiermonnikoog.jpg?width=640" alt="Leuchtturm Schiermonnikoog"><span class="num">01 · Leuchtturm</span><h4>Vuurtoren</h4><p>Der markante rot-weiße Leuchtturm von 1854 — bei klarer Sicht eines der schönsten Panoramen des Wattenmeers.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Het+Rif+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_-_Meeuwen_op_het_strand.jpg?width=640" alt="Strand Het Rif"><span class="num">02 · Strand</span><h4>Het Rif &amp; Nordstrand</h4><p>Einer der breitesten Strände Europas — gefühlt endlos. Perfekt für Spaziergänge, Drachen steigen lassen oder einfach Weite genießen.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Nationaal+Park+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Duinen_Schiermonnikoog.JPG?width=640" alt="Dünen Schiermonnikoog"><span class="num">03 · Natur</span><h4>Nationaal Park</h4><p>Der erste Nationalpark der Niederlande (seit 1989). Dünen, Salzwiesen, Wälder, Kobbeduinen — Vogelparadies.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Langestreek+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Overzicht_dorp_-_Schiermonnikoog_-_20197250_-_RCE.jpg?width=640" alt="Inseldorf Schiermonnikoog"><span class="num">04 · Dorf</span><h4>Inseldorf Schiermonnikoog</h4><p>Charmante Langestreek mit Cafés, Galerien und Läden — Zentrum des Insellebens.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Westerplas+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Schiermonnikoog_-_Westerplas_02.jpg?width=640" alt="Vögel am Westerplas"><span class="num">05 · Vögel</span><h4>Westerplas</h4><p>Beliebter Vogelbeobachtungspunkt am westlichen Inselrand — mit etwas Glück Löffler und Säbelschnäbler.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/fietsverhuur+Schiermonnikoog" target="_blank" rel="noopener"><img class="card-img" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Fietsen_in_de_duinen_van_Schiermonnikoog.jpg?width=640" alt="Leihfahrräder"><span class="num">06 · Mobilität</span><h4>Fahrradparadies</h4><p>Rund 5.000 Leihräder warten an der Fähre. Das Wegenetz ist flach, übersichtlich und führt zu jedem Strand.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="schiermonnikoog-karte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Anreise</span>
+        <h2>Fähre ab Lauwersoog.</h2>
+        <p>Die gestrichelte Linie zeigt die Wagenborg-Fährverbindung Richtung Insel.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="leaflet-map" data-start="53.4097,6.2042" data-end="53.4811,6.1614" data-end-label="Schiermonnikoog" data-ferry="true"></div>
+      </div>
+      <p class="map-caption">Gestrichelt: Fährverbindung Wagenborg ab Hafen Lauwersoog.</p>
+    </div>
+  </section>
+
+  <section class="section-dark" id="schiermonnikoog-wissenswert">
+    <div class="container">
+      <div class="split">
+        <div class="prose">
+          <span class="eyebrow">Wissenswert</span>
+          <h2 style="margin-top:.6rem;">Insel der grauen Mönche, kleinste Gemeinde des Landes.</h2>
+          <p>Der Name <strong>Schiermonnikoog</strong> bedeutet wörtlich „Insel der grauen Mönche". Er geht zurück auf die Zisterzienser des Klosters <em>Klaarkamp</em>, die hier im Mittelalter Land besaßen — <em>schier</em> (grau) verweist auf ihre Kutten, <em>oog</em> auf „Insel".</p>
+          <p>Mit nur <strong>~940 Einwohner:innen</strong> ist Schiermonnikoog die kleinste und am dünnsten besiedelte Gemeinde der Niederlande. Touristen dürfen <strong>keine Autos mitbringen</strong>; rund 5.000 Leihfahrräder bewegen den Tagesverkehr.</p>
+          <p>Geschichtlich bemerkenswert: Die Insel war <strong>am 11. Juni 1945</strong> der letzte Boden der Niederlande, der von alliierten Truppen befreit wurde — die deutsche Garnison kapitulierte erst nach wochenlangen Verhandlungen.</p>
+          <p>Seit 1989 ist die gesamte Insel Teil des <strong>Nationaal Park Schiermonnikoog</strong> — dem ersten Nationalpark der Niederlande.</p>
+        </div>
+        <div class="facts">
+          <h3>Auf einen Blick</h3>
+          <ul>
+            <li><span class="k">Anreise</span><span class="v">Fähre Wagenborg</span></li>
+            <li><span class="k">Fahrtdauer</span><span class="v">~45 Minuten</span></li>
+            <li><span class="k">Fahrräder</span><span class="v">Verleih an der Fähre</span></li>
+            <li><span class="k">Autos</span><span class="v">für Tourist:innen nicht erlaubt</span></li>
+            <li><span class="k">Letzte Fähre</span><span class="v">i.d.R. 19:30</span></li>
+            <li><span class="k">Tipp</span><span class="v">Tickets online vorab buchen</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="schiermonnikoog-praxis">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Infos / Tipps</span><h2>Was den Tag entspannt macht.</h2></div>
+      <div class="tips">
+        <div class="tip"><span class="tip-icon">🎫</span><strong>Fähre &amp; Rad-Paket</strong><p>Wagenborg bietet Kombi-Tickets mit Fahrradverleih — spart Zeit am Anleger.</p></div>
+        <div class="tip"><span class="tip-icon">⏰</span><strong>Früh starten</strong><p>Die ersten Fähren am Morgen sind ruhiger; Tagesgäste werden ab 11 Uhr deutlich mehr.</p></div>
+        <div class="tip"><span class="tip-icon">🥾</span><strong>Wattwanderung</strong><p>Nur mit geprüften Guides — nie alleine ins Watt. Lokale Anbieter informieren vor Ort.</p></div>
+        <div class="tip"><span class="tip-icon">🌅</span><strong>Vogelschutz</strong><p>Der östliche Inselteil (Kobbeduinen) ist in der Brutsaison eingeschränkt zugänglich.</p></div>
+        <div class="tip"><span class="tip-icon">🥪</span><strong>Strandpavillons</strong><p>Direkt am Hauptstrand gibt es nette Lokale für Lunch oder Sundowner.</p></div>
+        <div class="tip"><span class="tip-icon">🧥</span><strong>Frischer Wind</strong><p>Selbst an warmen Tagen weht am Strand kräftiger Wind — eine Schicht extra mitnehmen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-cream" id="schiermonnikoog-essen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Essen &amp; Trinken</span>
+        <h2>Wo es auf der Insel schmeckt.</h2>
+        <p>Eine kleine Auswahl bewährter Adressen — von Strandpavillon bis Fine Dining.</p>
+      </div>
+      <div class="grid">
+        <a class="feature-card" href="https://www.google.com/maps/search/Strandpaviljoen+Paal+3+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Strand</span><h4>Strandpaviljoen Paal 3</h4><p>Klassiker direkt am Hauptstrand — Lunch, Drinks, Sundowner mit Meerblick.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Restaurant+De+Marlijn+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Dorf</span><h4>De Marlijn</h4><p>Beliebtes Restaurant im Inseldorf mit Terrasse — regionale Küche, frischer Fisch.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/Restaurant+Ambrosijn+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Fine Dining</span><h4>Restaurant Ambrosijn</h4><p>Gehoben, kreativ, mit Insel-Produkten — Reservierung empfehlenswert.</p></a>
+        <a class="feature-card" href="https://www.google.com/maps/search/restaurants+Schiermonnikoog" target="_blank" rel="noopener"><span class="num">Karte</span><h4>Alle Restaurants &amp; Cafés</h4><p>Komplette Übersicht aller Gastronomie auf der Insel — inkl. Imbisse und Bistros.</p></a>
+      </div>
+    </div>
+  </section>
+
+
+  
+  </div><!-- /.page #schiermonnikoog -->
+
+</main>
+
+<footer>
+  <a class="brand" href="../index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="../lauwer.png" alt="Lauwersoog Logo"></a>
+  <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../assets/main.js"></script>
+</body>
+</html>
