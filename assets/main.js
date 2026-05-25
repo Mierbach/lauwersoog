@@ -633,3 +633,88 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch(function () {});
   });
 }
+
+// ============================================================
+// Live Cam Modal – HLS-Stream Lauwersoog Haven
+// ============================================================
+(function () {
+  var btn     = document.getElementById('qlLiveCam');
+  var modal   = document.getElementById('camModal');
+  if (!btn || !modal) return;
+
+  var video   = document.getElementById('camVideo');
+  var loading = document.getElementById('camLoading');
+  var HLS_SRC = 'https://6162417352ffd.streamlock.net/live/lauwersoog-haven.stream/playlist.m3u8';
+  var hls     = null;
+
+  function setLoadingMsg(msg) {
+    var span = loading.querySelector('span');
+    if (span) span.textContent = msg;
+  }
+
+  function startStream() {
+    loading.style.opacity = '1';
+    loading.style.display = 'flex';
+    if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+      hls = new Hls({ enableWorker: false, liveBackBufferLength: 10 });
+      hls.loadSource(HLS_SRC);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        loading.style.opacity = '0';
+        setTimeout(function () { loading.style.display = 'none'; }, 300);
+        video.play().catch(function () {});
+      });
+      hls.on(Hls.Events.ERROR, function (e, data) {
+        if (data.fatal) {
+          loading.style.display = 'flex';
+          loading.style.opacity = '1';
+          var sp = loading.querySelector('.cam-modal__spinner');
+          if (sp) sp.style.display = 'none';
+          setLoadingMsg('Stream derzeit nicht verfügbar.');
+        }
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // Native HLS (Safari / iOS)
+      video.src = HLS_SRC;
+      video.addEventListener('loadedmetadata', function () {
+        loading.style.opacity = '0';
+        setTimeout(function () { loading.style.display = 'none'; }, 300);
+        video.play().catch(function () {});
+      }, { once: true });
+    } else {
+      setLoadingMsg('HLS-Stream wird in diesem Browser nicht unterstützt.');
+    }
+  }
+
+  function stopStream() {
+    video.pause();
+    if (hls) { hls.destroy(); hls = null; }
+    video.src = '';
+    video.load();
+    loading.style.display = 'flex';
+    loading.style.opacity = '1';
+    var sp = loading.querySelector('.cam-modal__spinner');
+    if (sp) sp.style.display = '';
+    setLoadingMsg('Stream wird geladen\u2026');
+  }
+
+  function openCam() {
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    startStream();
+    modal.querySelector('.cam-modal__close').focus();
+  }
+
+  function closeCam() {
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+    stopStream();
+  }
+
+  btn.addEventListener('click', openCam);
+  modal.querySelector('.cam-modal__backdrop').addEventListener('click', closeCam);
+  modal.querySelector('.cam-modal__close').addEventListener('click', closeCam);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeCam();
+  });
+})();
