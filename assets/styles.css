@@ -812,7 +812,7 @@ a.feature-card::after {
 /* ---------- Quick-Links Menüleiste ---------- */
 .quick-links {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: .55rem;
   margin: 0 0 3rem;
   padding: .65rem;
@@ -897,7 +897,8 @@ a.feature-card::after {
   z-index: 1;
 }
 .quick-link--dropdown:hover,
-.quick-link--dropdown:focus-within {
+.quick-link--dropdown:focus-within,
+.quick-link--dropdown.is-open {
   z-index: 10;
 }
 .quick-link--dropdown .quick-link__title::after {
@@ -912,7 +913,8 @@ a.feature-card::after {
   transition: transform .2s ease;
 }
 .quick-link--dropdown:hover .quick-link__title::after,
-.quick-link--dropdown:focus-within .quick-link__title::after {
+.quick-link--dropdown:focus-within .quick-link__title::after,
+.quick-link--dropdown.is-open .quick-link__title::after {
   transform: rotate(180deg);
 }
 .ql-dropdown {
@@ -934,7 +936,8 @@ a.feature-card::after {
   transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
 }
 .quick-link--dropdown:hover .ql-dropdown,
-.quick-link--dropdown:focus-within .ql-dropdown {
+.quick-link--dropdown:focus-within .ql-dropdown,
+.quick-link--dropdown.is-open .ql-dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -1176,4 +1179,163 @@ footer a { color: var(--sand); }
 @media (max-width: 560px) {
   .birds-filter { padding: 1.1rem; }
 }
-  
+
+/* ---------- Gezeiten-Widget ---------- */
+.tides-widget {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem 1.35rem;
+  margin-bottom: 2.8rem;
+}
+.tides-widget__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .8rem;
+}
+.tides-widget__label {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.tides-widget__icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: var(--navy);
+  opacity: .7;
+}
+.tides-widget__source {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color .2s;
+}
+.tides-widget__source:hover { color: var(--coral-deep); }
+.tides-widget__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.tide-entry {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .5rem .9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  white-space: nowrap;
+}
+.tide-entry--hw {
+  background: rgba(12, 30, 62, .06);
+  border-color: rgba(12, 30, 62, .12);
+}
+.tide-entry--nw {
+  background: rgba(107, 144, 128, .1);
+  border-color: rgba(107, 144, 128, .25);
+}
+.tide-arrow {
+  font-size: 1rem;
+  line-height: 1;
+}
+.tide-type {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: .02em;
+}
+.tide-time {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -.01em;
+}
+.tide-height {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+.tides-loading {
+  font-size: .88rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.tides-fallback {
+  font-size: .88rem;
+  color: var(--muted);
+  margin: 0;
+}
+.tides-fallback a { color: var(--navy); font-weight: 500; }
+
+/* ---------- Fährplan ---------- */
+.ferry-schedule {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 1.4rem;
+}
+@media (max-width: 660px) {
+  .ferry-schedule { grid-template-columns: 1fr; }
+}
+.ferry-direction {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.ferry-direction h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: .01em;
+  margin-bottom: 1rem;
+}
+.ferry-direction--return h3 { color: var(--coral-deep); }
+.ferry-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.ferry-times time {
+  display: inline-block;
+  padding: .32rem .75rem;
+  border-radius: 999px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  background: var(--navy);
+  color: #fff;
+}
+.ferry-direction--return .ferry-times time {
+  background: var(--coral-deep);
+}
+.ferry-note {
+  font-size: .88rem;
+  color: var(--muted);
+  background: var(--cream-2);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-sm);
+  padding: .8rem 1rem;
+  margin: 0;
+  line-height: 1.55;
+}
+.ferry-note a { color: var(--navy); font-weight: 500; }

@@ -45,6 +45,86 @@
 
 // (SPA-Router entfernt)
 
+// Quick-link Dropdown: Tap-Toggle für Touch-Geräte (iOS hover funktioniert nicht)
+(function () {
+  document.querySelectorAll('.quick-link--dropdown').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      // Klick auf einen Dropdown-Link → navigieren, nicht toggeln
+      if (e.target.closest('.ql-dropdown')) return;
+      e.stopPropagation();
+      var wasOpen = el.classList.contains('is-open');
+      // Alle anderen schließen
+      document.querySelectorAll('.quick-link--dropdown.is-open').forEach(function (o) { o.classList.remove('is-open'); });
+      el.classList.toggle('is-open', !wasOpen);
+    });
+  });
+  // Außerhalb klicken → schließen
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.quick-link--dropdown.is-open').forEach(function (o) { o.classList.remove('is-open'); });
+  });
+
+  // "Nächster Supermarkt" – Geolocation → Google Maps
+  var nearbyBtn = document.getElementById('qlNearbySupermarkt');
+  if (nearbyBtn) {
+    nearbyBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!navigator.geolocation) {
+        window.open('https://www.google.com/maps/search/Supermarkt/', '_blank');
+        return;
+      }
+      nearbyBtn.textContent = '⏳ Standort wird ermittelt…';
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          nearbyBtn.textContent = '📍 Nächster Supermarkt';
+          var lat = pos.coords.latitude.toFixed(6);
+          var lng = pos.coords.longitude.toFixed(6);
+          window.open(
+            'https://www.google.com/maps/search/Supermarkt/@' + lat + ',' + lng + ',14z',
+            '_blank'
+          );
+        },
+        function () {
+          nearbyBtn.textContent = '📍 Nächster Supermarkt';
+          // Fallback ohne Koordinaten
+          window.open('https://www.google.com/maps/search/Supermarkt/', '_blank');
+        },
+        { timeout: 8000, maximumAge: 60000 }
+      );
+    });
+  }
+
+  // "Ladestation in der Nähe" – Geolocation → Google Maps
+  var nearbyEbike = document.getElementById('qlNearbyEbike');
+  if (nearbyEbike) {
+    nearbyEbike.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!navigator.geolocation) {
+        window.open('https://www.google.com/maps/search/E-Bike+Ladestation/', '_blank');
+        return;
+      }
+      nearbyEbike.textContent = '⏳ Standort wird ermittelt…';
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          nearbyEbike.textContent = '📍 Ladestation in der Nähe';
+          var lat = pos.coords.latitude.toFixed(6);
+          var lng = pos.coords.longitude.toFixed(6);
+          window.open(
+            'https://www.google.com/maps/search/E-Bike+Ladestation/@' + lat + ',' + lng + ',14z',
+            '_blank'
+          );
+        },
+        function () {
+          nearbyEbike.textContent = '📍 Ladestation in der Nähe';
+          window.open('https://www.google.com/maps/search/E-Bike+Ladestation/', '_blank');
+        },
+        { timeout: 8000, maximumAge: 60000 }
+      );
+    });
+  }
+})();
+
 // Vögel: Bilder laden + Filter/Suche
 (function () {
   const grid = document.getElementById('birdsGrid');
@@ -225,3 +305,173 @@
     map.fitBounds(bounds);
   });
 })();
+
+// ============================================================
+// Wetter-Kurzinfo — Open-Meteo API (kein API-Key erforderlich)
+// ============================================================
+(function () {
+  var title  = document.getElementById('qlWetterTitle');
+  var kicker = document.getElementById('qlWetterKicker');
+  if (!title) return;
+
+  var WMO_EMOJI = {
+    0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
+    45: '🌫️', 48: '🌫️',
+    51: '🌦️', 53: '🌦️', 55: '🌧️',
+    61: '🌧️', 63: '🌧️', 65: '🌧️',
+    71: '🌨️', 73: '❄️', 75: '❄️',
+    80: '🌦️', 81: '🌧️', 82: '⛈️',
+    95: '⛈️', 96: '⛈️', 99: '⛈️'
+  };
+  var WMO_TEXT = {
+    0: 'Klar', 1: 'Überwiegend klar', 2: 'Teils bewölkt', 3: 'Bewölkt',
+    45: 'Nebel', 48: 'Nebel',
+    51: 'Leichter Nieselregen', 53: 'Nieselregen', 55: 'Starker Nieselregen',
+    61: 'Leichter Regen', 63: 'Regen', 65: 'Starker Regen',
+    71: 'Leichter Schneefall', 73: 'Schneefall', 75: 'Starker Schneefall',
+    80: 'Regenschauer', 81: 'Starke Schauer', 82: 'Heftige Schauer',
+    95: 'Gewitter', 96: 'Gewitter mit Hagel', 99: 'Heftiges Gewitter'
+  };
+
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=53.41&longitude=6.21&current=temperature_2m,weather_code,wind_speed_10m&wind_speed_unit=kmh&timezone=Europe%2FAmsterdam')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (data) {
+      var c    = data.current;
+      var code = c.weather_code;
+      var temp = Math.round(c.temperature_2m);
+      var wind = Math.round(c.wind_speed_10m);
+      var emoji = WMO_EMOJI[code] || '🌡️';
+      var text  = WMO_TEXT[code]  || '';
+      kicker.textContent = text || 'Wetter · Lauwersoog';
+      title.textContent  = emoji + ' ' + temp + '° · Wind ' + wind + ' km/h';
+    })
+    .catch(function () {
+      title.textContent = '–';
+    });
+})();
+
+// ============================================================
+// Gezeiten-Widget — Rijkswaterstaat waterinfo.rws.nl
+// Station LWOO (Lauwersoog), Parameter WATHTE (Wasserstand NAP)
+// ============================================================
+(function () {
+  var body   = document.getElementById('tidesBody');
+  var dateEl = document.getElementById('tidesDate');
+  if (!body) return;
+
+  var TZ = 'Europe/Amsterdam';
+  var now = new Date();
+
+  // Datum anzeigen
+  if (dateEl) {
+    dateEl.textContent = now.toLocaleDateString('de-DE', {
+      weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ
+    });
+  }
+
+  // YYYY-MM-DD in Amsterdam-Zeit
+  function localDateStr(d) {
+    return d.toLocaleDateString('sv', { timeZone: TZ }); // 'sv' = ISO-Format YYYY-MM-DD
+  }
+
+  // Lokale Maxima/Minima mit Fensterbreite W finden
+  function findTideEvents(series) {
+    var W = 4;
+    var events = [];
+    for (var i = W; i < series.length - W; i++) {
+      var curr = series[i].v;
+      var win  = series.slice(i - W, i + W + 1).map(function (p) { return p.v; });
+      var max  = Math.max.apply(null, win);
+      var min  = Math.min.apply(null, win);
+      if (curr === max && series[i - 1].v < curr && series[i + 1].v < curr) {
+        events.push({ type: 'HW', t: series[i].t, v: curr });
+      } else if (curr === min && series[i - 1].v > curr && series[i + 1].v > curr) {
+        events.push({ type: 'NW', t: series[i].t, v: curr });
+      }
+    }
+    return events;
+  }
+
+  function fmtTime(t) {
+    return new Date(t).toLocaleTimeString('de-DE', {
+      hour: '2-digit', minute: '2-digit', timeZone: TZ
+    });
+  }
+
+  function renderTides(events) {
+    if (!events.length) {
+      body.innerHTML = '<span class="tides-loading">Keine Gezeitendaten für heute gefunden.</span>';
+      return;
+    }
+    body.innerHTML = events.map(function (e) {
+      var sign = e.v >= 0 ? '+' + Math.round(e.v) : Math.round(e.v);
+      return '<div class="tide-entry tide-entry--' + e.type.toLowerCase() + '">'
+        + '<span class="tide-arrow">' + (e.type === 'HW' ? '↑' : '↓') + '</span>'
+        + '<span class="tide-type">' + (e.type === 'HW' ? 'Hochwasser' : 'Niedrigwasser') + '</span>'
+        + '<span class="tide-time">' + fmtTime(e.t) + '</span>'
+        + '<span class="tide-height">' + sign + '&thinsp;cm</span>'
+        + '</div>';
+    }).join('');
+  }
+
+  function showFallback() {
+    body.innerHTML = '<p class="tides-fallback">Tideninfo derzeit nicht verfügbar. '
+      + '<a href="https://waterinfo.rws.nl/#!/details/publiek/waterhoogte-t-o-v-nap/LWOO/WNS945" '
+      + 'target="_blank" rel="noopener">Rijkswaterstaat →</a></p>';
+  }
+
+  // Start der lokalen Tageszeit = Mitternacht Amsterdam
+  var todayStr = localDateStr(now);
+  var startDate = todayStr + 'T00:00:00+02:00'; // Amsterdam MESZ (Sommer)
+  var endDate   = todayStr + 'T23:59:59+02:00';
+
+  var url = 'https://waterinfo.rws.nl/api/chart/get'
+    + '?locationCodes=LWOO'
+    + '&parameterIds=WATHTE_NAP'
+    + '&tz=Europe%2FAmsterdam'
+    + '&startDate=' + encodeURIComponent(startDate)
+    + '&endDate='   + encodeURIComponent(endDate);
+
+  fetch(url)
+    .then(function (r) { return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
+    .then(function (data) {
+      // Mögliche Antwortformate abdecken
+      var raw = [];
+      if (Array.isArray(data)) {
+        raw = data;
+      } else if (data && Array.isArray(data.Data)) {
+        raw = data.Data;
+      } else if (data && Array.isArray(data.data)) {
+        raw = data.data;
+      }
+
+      var todaySeries = raw
+        .filter(function (p) {
+          var tStr = localDateStr(new Date(p.Tijdstip || p.t || p.timestamp));
+          return tStr === todayStr;
+        })
+        .map(function (p) {
+          return {
+            t: new Date(p.Tijdstip || p.t || p.timestamp),
+            v: parseFloat(p.Waarde !== undefined ? p.Waarde : (p.v !== undefined ? p.v : p.value))
+          };
+        })
+        .filter(function (p) { return !isNaN(p.v); })
+        .sort(function (a, b) { return a.t - b.t; });
+
+      if (!todaySeries.length) throw new Error('keine Daten');
+
+      var events = findTideEvents(todaySeries);
+      renderTides(events);
+    })
+    .catch(showFallback);
+})();
+
+// ============================================================
+// Service Worker registrieren (PWA / Offline-Modus)
+// ============================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/sw.js').catch(function () {});
+  });
+}
