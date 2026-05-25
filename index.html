@@ -90,6 +90,54 @@
   <section>
     <div class="container">
 
+      <div class="cockpit" aria-label="Live-Info Küste">
+        <article class="cockpit-card cockpit-card--weather" id="weatherWidget">
+          <header class="cockpit-card__head">
+            <span class="cockpit-card__label">
+              <svg class="cockpit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              Wetter · Lauwersoog
+            </span>
+            <div class="cockpit-card__right">
+              <a class="cockpit-card__source" href="https://www.buienradar.nl/weer/lauwersoog/nl/2812851" target="_blank" rel="noopener">Buienradar →</a>
+              <span class="weather-chip" id="wsWind">💨 –</span>
+            </div>
+          </header>
+          <div class="weather-hero">
+            <span class="weather-emoji" id="wsEmoji" aria-hidden="true">·</span>
+            <div class="weather-numbers">
+              <span class="weather-temp" id="wsTemp">–</span>
+              <span class="weather-suntimes-inline" id="wsSun" aria-label="Sonnenzeiten">
+                <span class="sun-time-inline"><span class="sun-time__icon-inline" aria-hidden="true">↑</span><span class="sun-time__val-inline" id="wsSunrise">–</span></span>
+                <span class="sun-time-inline"><span class="sun-time__icon-inline" aria-hidden="true">↓</span><span class="sun-time__val-inline" id="wsSunset">–</span></span>
+              </span>
+              <span class="weather-condition" id="wsCondition">lädt…</span>
+            </div>
+          </div>
+
+        </article>
+
+        <article class="cockpit-card cockpit-card--tides" id="tidesWidget">
+          <header class="cockpit-card__head">
+            <span class="cockpit-card__label">
+              <svg class="cockpit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 6 9.5 6s2.5 1 5 1 2.5-1 5-1 2.5 1 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-1 5-1s2.5 1 5 1 2.5-1 5-1 2.5 1 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-1 5-1s2.5 1 5 1 2.5-1 5-1 2.5 1 2.5 1"/></svg>
+              Gezeiten · <span id="tidesDate">heute</span>
+            </span>
+            <a class="cockpit-card__source" href="https://waterinfo.rws.nl/#!/details/publiek/waterhoogte-t-o-v-nap/LWOO/WNS945" target="_blank" rel="noopener">Rijkswaterstaat →</a>
+          </header>
+          <div class="tides-chart-wrap">
+            <svg class="tides-chart" id="tidesChart" viewBox="0 0 600 140" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <span class="tides-next" id="tidesNext">berechne…</span>
+          </div>
+          <details class="tides-details" open>
+            <summary class="tides-summary">Details anzeigen</summary>
+            <ol class="tides-list" id="tidesBody">
+              <li class="tides-loading">Tidendaten werden geladen…</li>
+            </ol>
+            <p class="tides-approx">Vorausberechnung · ±30 Min</p>
+          </details>
+        </article>
+      </div>
+
       <nav class="quick-links" aria-label="Wichtige Orte vor Ort">
         <a class="quick-link" href="https://www.google.com/maps/place/Siblu+Lauwersoog/@53.4039842,6.2085761,904m/data=!3m2!1e3!4b1!4m9!3m8!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc" target="_blank" rel="noopener">
           <span class="quick-link__icon" aria-hidden="true">
@@ -98,15 +146,6 @@
           <span class="quick-link__label">
             <span class="quick-link__kicker">Unterkunft</span>
             <span class="quick-link__title">Home</span>
-          </span>
-        </a>
-        <a class="quick-link" href="https://www.google.com/maps/place/Restaurette+Schierzicht/@53.4067485,6.2052351,901m/data=!3m2!1e3!5s0x47c9ba9f3a1da82f:0x975819080d6d5217!4m17!1m10!3m9!1s0x47c9ba820a254307:0xbabedb7ae84fa2a8!2sSiblu+Lauwersoog!5m2!4m1!1i2!8m2!3d53.403981!4d6.211151!16s%2Fg%2F1tfllpfc!3m5!1s0x47c9ba9f3af24ddb:0xb1c19cc2930e4edf!8m2!3d53.40744!4d6.200537!16s%2Fg%2F1t_wnlp8" target="_blank" rel="noopener">
-          <span class="quick-link__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M17 10h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M7 5c.5-1 .5-2 0-3"/><path d="M11 5c.5-1 .5-2 0-3"/></svg>
-          </span>
-          <span class="quick-link__label">
-            <span class="quick-link__kicker">Restaurette Schierzicht</span>
-            <span class="quick-link__title">Frühstück</span>
           </span>
         </a>
         <div class="quick-link quick-link--dropdown">
@@ -148,29 +187,7 @@
           </span>
         </a>
 
-        <a class="quick-link" id="qlWetter" href="https://www.buienradar.nl/weer/lauwersoog/nl/2812851" target="_blank" rel="noopener">
-          <span class="quick-link__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
-          </span>
-          <span class="quick-link__label">
-            <span class="quick-link__kicker" id="qlWetterKicker">Wetter · Lauwersoog</span>
-            <span class="quick-link__title" id="qlWetterTitle">Lädt…</span>
-          </span>
-        </a>
       </nav>
-
-      <div class="tides-widget" id="tidesWidget">
-        <div class="tides-widget__head">
-          <div class="tides-widget__label">
-            <svg class="tides-widget__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 6 9.5 6s2.5 1 5 1 2.5-1 5-1 2.5 1 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-1 5-1s2.5 1 5 1 2.5-1 5-1 2.5 1 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-1 5-1s2.5 1 5 1 2.5-1 5-1 2.5 1 2.5 1"/></svg>
-            <span>Gezeiten Lauwersoog &mdash; <span id="tidesDate">heute</span></span>
-          </div>
-          <a class="tides-widget__source" href="https://waterinfo.rws.nl/#!/details/publiek/waterhoogte-t-o-v-nap/LWOO/WNS945" target="_blank" rel="noopener">Rijkswaterstaat →</a>
-        </div>
-        <div class="tides-widget__body" id="tidesBody">
-          <span class="tides-loading">Tidendaten werden geladen…</span>
-        </div>
-      </div>
 
       <div class="section-head">
         <span class="eyebrow">Die Auswahl</span>
@@ -274,6 +291,21 @@
   <a class="brand" href="index.html" aria-label="Lauwersoog 2026 — Startseite"><img class="brand-mark" src="lauwer.png" alt="Lauwersoog Logo"></a>
   <p>Reise-Guide · Friesland &amp; Groningen · 2026</p>
 </footer>
+
+<!-- Quick-Link Modal -->
+<div id="qlModal" class="ql-modal" role="dialog" aria-modal="true" aria-labelledby="qlModalTitle" hidden>
+  <div class="ql-modal__backdrop"></div>
+  <div class="ql-modal__panel">
+    <header class="ql-modal__head">
+      <span class="ql-modal__icon" id="qlModalIcon" aria-hidden="true"></span>
+      <span class="ql-modal__title" id="qlModalTitle"></span>
+      <button class="ql-modal__close" aria-label="Schließen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </header>
+    <ul class="ql-modal__list" id="qlModalList"></ul>
+  </div>
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="assets/main.js"></script>

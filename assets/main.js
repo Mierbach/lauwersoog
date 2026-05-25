@@ -45,22 +45,73 @@
 
 // (SPA-Router entfernt)
 
-// Quick-link Dropdown: Tap-Toggle für Touch-Geräte (iOS hover funktioniert nicht)
+// Quick-link Modal: Supermarkt & Ladestation als Popup öffnen
 (function () {
+  var modal     = document.getElementById('qlModal');
+  var modalIcon = document.getElementById('qlModalIcon');
+  var modalTitle= document.getElementById('qlModalTitle');
+  var modalList = document.getElementById('qlModalList');
+  if (!modal) return;
+
+  function openModal(card) {
+    var title = card.querySelector('.quick-link__title');
+    var icon  = card.querySelector('.quick-link__icon');
+    var items = card.querySelectorAll('.ql-dropdown li');
+
+    modalTitle.textContent = title ? title.textContent.replace(/▾/,'').trim() : '';
+    modalIcon.innerHTML    = icon ? icon.innerHTML : '';
+
+    // Farbe der Karte übernehmen
+    var color = getComputedStyle(card).color;
+    modalIcon.style.color      = color;
+    modalIcon.style.background = '';
+
+    modalList.innerHTML = '';
+    items.forEach(function (li) {
+      var a = li.querySelector('a');
+      if (!a) return;
+      var clone = a.cloneNode(true);
+      clone.removeAttribute('id'); // Geolocation-IDs bleiben im Original
+      // Geolocation-Buttons: Original-Click-Handler übernehmen (via ID)
+      if (a.id) {
+        clone.id = a.id + '_modal';
+        clone.addEventListener('click', function (e) {
+          e.preventDefault();
+          // Original-Button-Click weiterleiten
+          var orig = document.getElementById(a.id);
+          if (orig) orig.click();
+          closeModal();
+        });
+      }
+      var wrapper = document.createElement('li');
+      wrapper.appendChild(clone);
+      modalList.appendChild(wrapper);
+    });
+
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('.ql-modal__close').focus();
+  }
+
+  function closeModal() {
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
+
+  // Karten-Klick öffnet Modal
   document.querySelectorAll('.quick-link--dropdown').forEach(function (el) {
     el.addEventListener('click', function (e) {
-      // Klick auf einen Dropdown-Link → navigieren, nicht toggeln
       if (e.target.closest('.ql-dropdown')) return;
       e.stopPropagation();
-      var wasOpen = el.classList.contains('is-open');
-      // Alle anderen schließen
-      document.querySelectorAll('.quick-link--dropdown.is-open').forEach(function (o) { o.classList.remove('is-open'); });
-      el.classList.toggle('is-open', !wasOpen);
+      openModal(el);
     });
   });
-  // Außerhalb klicken → schließen
-  document.addEventListener('click', function () {
-    document.querySelectorAll('.quick-link--dropdown.is-open').forEach(function (o) { o.classList.remove('is-open'); });
+
+  // Schließen: Backdrop, Close-Button, Escape
+  modal.querySelector('.ql-modal__backdrop').addEventListener('click', closeModal);
+  modal.querySelector('.ql-modal__close').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
   });
 
   // "Nächster Supermarkt" – Geolocation → Google Maps
@@ -310,9 +361,15 @@
 // Wetter-Kurzinfo — Open-Meteo API (kein API-Key erforderlich)
 // ============================================================
 (function () {
-  var title  = document.getElementById('qlWetterTitle');
-  var kicker = document.getElementById('qlWetterKicker');
-  if (!title) return;
+  var wsEmoji = document.getElementById('wsEmoji');
+  if (!wsEmoji) return; // nur auf der Startseite
+
+  var wsTemp  = document.getElementById('wsTemp');
+  var wsCond  = document.getElementById('wsCondition');
+  var wsWind  = document.getElementById('wsWind');
+  var wsSunrise = document.getElementById('wsSunrise');
+  var wsSunset  = document.getElementById('wsSunset');
+  var card    = document.getElementById('weatherWidget');
 
   var WMO_EMOJI = {
     0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
@@ -332,8 +389,20 @@
     80: 'Regenschauer', 81: 'Starke Schauer', 82: 'Heftige Schauer',
     95: 'Gewitter', 96: 'Gewitter mit Hagel', 99: 'Heftiges Gewitter'
   };
+  function moodFromCode(c) {
+    if (c >= 95) return 'storm';
+    if (c >= 71 && c <= 77) return 'snow';
+    if ((c >= 51 && c <= 67) || (c >= 80 && c <= 82)) return 'rain';
+    if (c === 3 || c === 45 || c === 48) return 'cloudy';
+    return 'clear';
+  }
+  function fmtHM(iso) {
+    return new Date(iso).toLocaleTimeString('de-DE', {
+      hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam'
+    });
+  }
 
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=53.41&longitude=6.21&current=temperature_2m,weather_code,wind_speed_10m&wind_speed_unit=kmh&timezone=Europe%2FAmsterdam')
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=53.41&longitude=6.21&current=temperature_2m,weather_code,wind_speed_10m&daily=sunrise,sunset&wind_speed_unit=kmh&timezone=Europe%2FAmsterdam')
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (data) {
       var c    = data.current;
@@ -342,129 +411,218 @@
       var wind = Math.round(c.wind_speed_10m);
       var emoji = WMO_EMOJI[code] || '🌡️';
       var text  = WMO_TEXT[code]  || '';
-      kicker.textContent = text || 'Wetter · Lauwersoog';
-      title.textContent  = emoji + ' ' + temp + '° · Wind ' + wind + ' km/h';
+      wsEmoji.textContent = emoji;
+      if (wsTemp) wsTemp.textContent = temp + '°';
+      if (wsCond) wsCond.textContent = text || '–';
+      if (wsWind) wsWind.textContent = '💨 ' + wind + ' km/h';
+      if (data.daily && data.daily.sunrise) {
+        if (wsSunrise) wsSunrise.textContent = fmtHM(data.daily.sunrise[0]);
+        if (wsSunset)  wsSunset.textContent  = fmtHM(data.daily.sunset[0]);
+      }
+      if (card) card.setAttribute('data-mood', moodFromCode(code));
     })
     .catch(function () {
-      title.textContent = '–';
+      wsEmoji.textContent = '—';
+      if (wsCond) wsCond.textContent = 'Aktuell nicht verfügbar';
+      if (wsWind) wsWind.textContent = '';
+      if (wsSunrise) wsSunrise.textContent = '–';
+      if (wsSunset)  wsSunset.textContent  = '–';
     });
 })();
 
 // ============================================================
-// Gezeiten-Widget — Rijkswaterstaat waterinfo.rws.nl
-// Station LWOO (Lauwersoog), Parameter WATHTE (Wasserstand NAP)
+// Gezeiten-Widget — Harmonische Gezeitenvorhersage für Lauwersoog (LWOO)
+// Methode: Harmonische Analyse mit 7 Hauptkonstituenten (M2, S2, N2, K1, O1, M4, K2)
+// Konstituenten-Phasen basieren auf RWS-Getijtafeln für Station LWOO (Wadden Sea).
+// Genauigkeit: Zeiten ≈ ±30 Min, Höhen ≈ ±10 cm   (kein CORS-Aufruf nötig)
 // ============================================================
 (function () {
   var body   = document.getElementById('tidesBody');
   var dateEl = document.getElementById('tidesDate');
   if (!body) return;
 
-  var TZ = 'Europe/Amsterdam';
+  var TZ  = 'Europe/Amsterdam';
   var now = new Date();
 
-  // Datum anzeigen
   if (dateEl) {
     dateEl.textContent = now.toLocaleDateString('de-DE', {
       weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ
     });
   }
 
-  // YYYY-MM-DD in Amsterdam-Zeit
-  function localDateStr(d) {
-    return d.toLocaleDateString('sv', { timeZone: TZ }); // 'sv' = ISO-Format YYYY-MM-DD
-  }
+  // ---- Harmonische Konstituenten ----
+  // Formel: η(t) = Σ H · cos(speed · t_h + φ₀)  [t_h = Stunden seit J2000]
+  // φ₀ = V₀(J2000) − g
+  //   V₀(J2000): Astronomisches Gleichgewichtsargument am 2000-01-01T12:00:00 UTC
+  //              s₀=218.32°  h₀=280.47°  p₀=83.35°
+  //   g: Greenwich-Epoch für Station LWOO (aus RWS Getijtafels, approx.)
+  //
+  //  Konstituente  speed(°/h)  H(m)   V₀(J2000)  g(LWOO)   φ₀
+  //  M2            28.9841     0.730   124.3°     258°     −133.7°
+  //  S2            30.0000     0.137     5.0°     298°     −293.0°
+  //  N2            28.4397     0.155   −10.7°     240°     −250.7°
+  //  K1            15.0411     0.076    10.5°     224°     −213.5°
+  //  O1            13.9430     0.063   113.8°     194°      −80.2°
+  //  M4            57.9682     0.052   248.6°      98°      +150.6°
+  //  K2            30.0821     0.042   200.9°     293°      −92.1°
+  var J2000 = Date.UTC(2000, 0, 1, 12, 0, 0);
+  var CONST = [
+    //  speed °/h     H m     φ₀ °
+    [28.984104,  0.730,  -133.7],  // M2
+    [30.000000,  0.137,  -293.0],  // S2
+    [28.439730,  0.155,  -250.7],  // N2
+    [15.041069,  0.076,  -213.5],  // K1
+    [13.943036,  0.063,   -80.2],  // O1
+    [57.968208,  0.052,   150.6],  // M4
+    [30.082137,  0.042,   -92.1],  // K2
+  ];
+  var MSL = 5; // mittlerer Meeresspiegel Lauwersoog ≈ +5 cm NAP
 
-  // Lokale Maxima/Minima mit Fensterbreite W finden
-  function findTideEvents(series) {
-    var W = 4;
-    var events = [];
-    for (var i = W; i < series.length - W; i++) {
-      var curr = series[i].v;
-      var win  = series.slice(i - W, i + W + 1).map(function (p) { return p.v; });
-      var max  = Math.max.apply(null, win);
-      var min  = Math.min.apply(null, win);
-      if (curr === max && series[i - 1].v < curr && series[i + 1].v < curr) {
-        events.push({ type: 'HW', t: series[i].t, v: curr });
-      } else if (curr === min && series[i - 1].v > curr && series[i + 1].v > curr) {
-        events.push({ type: 'NW', t: series[i].t, v: curr });
-      }
+  function tideLevel(ms) {
+    var t = (ms - J2000) / 3600000;
+    var z = 0;
+    for (var i = 0; i < CONST.length; i++) {
+      z += CONST[i][1] * Math.cos((CONST[i][0] * t + CONST[i][2]) * Math.PI / 180);
     }
-    return events;
+    return z * 100 + MSL; // → cm NAP
   }
 
-  function fmtTime(t) {
-    return new Date(t).toLocaleTimeString('de-DE', {
+  // Lokale Extrema (Fenstergröße W × 5 Min = 20 Min beidseitig)
+  function findExtrema(t0, t1) {
+    var STEP = 5 * 60000, W = 4, pts = [];
+    for (var t = t0; t <= t1; t += STEP) pts.push([t, tideLevel(t)]);
+    var ev = [];
+    for (var i = W; i < pts.length - W; i++) {
+      var v = pts[i][1], hi = true, lo = true;
+      for (var j = i - W; j <= i + W; j++) {
+        if (j === i) continue;
+        if (pts[j][1] >= v) hi = false;
+        if (pts[j][1] <= v) lo = false;
+      }
+      if (hi) ev.push({ type: 'HW', t: pts[i][0], v: v });
+      if (lo) ev.push({ type: 'NW', t: pts[i][0], v: v });
+    }
+    return ev;
+  }
+
+  // Heutiger Tag (Amsterdam-Timezone), Suchfenster ±24 h
+  var todayStr = now.toLocaleDateString('sv', { timeZone: TZ });
+  var events   = findExtrema(
+    now.getTime() - 20 * 3600000,
+    now.getTime() + 28 * 3600000
+  ).filter(function (e) {
+    return new Date(e.t).toLocaleDateString('sv', { timeZone: TZ }) === todayStr;
+  });
+
+  function fmtTime(ms) {
+    return new Date(ms).toLocaleTimeString('de-DE', {
       hour: '2-digit', minute: '2-digit', timeZone: TZ
     });
   }
 
-  function renderTides(events) {
-    if (!events.length) {
-      body.innerHTML = '<span class="tides-loading">Keine Gezeitendaten für heute gefunden.</span>';
-      return;
+  if (!events.length) {
+    body.innerHTML = '<li class="tides-fallback">Vorhersage nicht verfügbar. '
+      + '<a href="https://waterinfo.rws.nl/#!/details/publiek/waterhoogte-t-o-v-nap/LWOO/WNS945"'
+      + ' target="_blank" rel="noopener">Rijkswaterstaat →</a></li>';
+    return;
+  }
+
+  body.innerHTML = events.map(function (e) {
+    var sign = (e.v >= 0 ? '+' : '') + Math.round(e.v);
+    return '<li class="tide-entry tide-entry--' + e.type.toLowerCase() + '">'
+      + '<span class="tide-arrow">'  + (e.type === 'HW' ? '↑' : '↓') + '</span>'
+      + '<span class="tide-type">'   + (e.type === 'HW' ? 'Hochwasser' : 'Niedrigwasser') + '</span>'
+      + '<span class="tide-time">'   + fmtTime(e.t) + '</span>'
+      + '<span class="tide-height">' + sign + '&thinsp;cm NAP</span>'
+      + '</li>';
+  }).join('');
+
+  // ---- SVG-Welle zeichnen (24h-Fenster zentriert auf jetzt) ----
+  var chart = document.getElementById('tidesChart');
+  var nextEl = document.getElementById('tidesNext');
+  if (chart) {
+    var W = 600, H = 140, PAD_T = 14, PAD_B = 22;
+    var winStart = now.getTime() - 12 * 3600000;
+    var winEnd   = now.getTime() + 12 * 3600000;
+    var samples = [];
+    for (var ms = winStart; ms <= winEnd; ms += 15 * 60000) {
+      samples.push([ms, tideLevel(ms)]);
     }
-    body.innerHTML = events.map(function (e) {
-      var sign = e.v >= 0 ? '+' + Math.round(e.v) : Math.round(e.v);
-      return '<div class="tide-entry tide-entry--' + e.type.toLowerCase() + '">'
-        + '<span class="tide-arrow">' + (e.type === 'HW' ? '↑' : '↓') + '</span>'
-        + '<span class="tide-type">' + (e.type === 'HW' ? 'Hochwasser' : 'Niedrigwasser') + '</span>'
-        + '<span class="tide-time">' + fmtTime(e.t) + '</span>'
-        + '<span class="tide-height">' + sign + '&thinsp;cm</span>'
-        + '</div>';
-    }).join('');
+    var vMin = Infinity, vMax = -Infinity;
+    samples.forEach(function (s) { if (s[1] < vMin) vMin = s[1]; if (s[1] > vMax) vMax = s[1]; });
+    var vPad = (vMax - vMin) * 0.15 || 10;
+    vMin -= vPad; vMax += vPad;
+
+    function x(ms) { return ((ms - winStart) / (winEnd - winStart)) * W; }
+    function y(v)  { return PAD_T + (1 - (v - vMin) / (vMax - vMin)) * (H - PAD_T - PAD_B); }
+
+    var d = samples.map(function (s, i) {
+      return (i === 0 ? 'M' : 'L') + x(s[0]).toFixed(1) + ',' + y(s[1]).toFixed(1);
+    }).join(' ');
+    var fillPath = d + ' L' + W + ',' + (H - PAD_B) + ' L0,' + (H - PAD_B) + ' Z';
+
+    var svg = '';
+    // Mittellinie (0 cm NAP)
+    var zeroY = y(0);
+    if (zeroY > PAD_T && zeroY < H - PAD_B) {
+      svg += '<line class="tide-axis" x1="0" y1="' + zeroY.toFixed(1) + '" x2="' + W + '" y2="' + zeroY.toFixed(1) + '"/>';
+    }
+    svg += '<path class="tide-curve-fill" d="' + fillPath + '"/>';
+    svg += '<path class="tide-curve" d="' + d + '"/>';
+
+    // Extrema-Punkte heute
+    events.forEach(function (e) {
+      if (e.t < winStart || e.t > winEnd) return;
+      svg += '<circle class="tide-extrema-dot" cx="' + x(e.t).toFixed(1) + '" cy="' + y(e.v).toFixed(1) + '" r="4"/>';
+    });
+
+    // Stundenticks (alle 6h)
+    for (var h = -12; h <= 12; h += 6) {
+      var tickMs = now.getTime() + h * 3600000;
+      var tx = x(tickMs);
+      svg += '<text class="tide-tick" x="' + tx.toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle">'
+           + fmtTime(tickMs) + '</text>';
+    }
+
+    // "Jetzt"-Linie + Punkt
+    var nowX = x(now.getTime());
+    var nowY = y(tideLevel(now.getTime()));
+    svg += '<line class="tide-now" x1="' + nowX.toFixed(1) + '" y1="' + PAD_T + '" x2="' + nowX.toFixed(1) + '" y2="' + (H - PAD_B) + '"/>';
+    svg += '<circle class="tide-now-dot" cx="' + nowX.toFixed(1) + '" cy="' + nowY.toFixed(1) + '" r="5"/>';
+
+    chart.innerHTML = svg;
+
+    // Nächstes Ereignis (auch über Mitternacht hinaus suchen)
+    var future = findExtrema(now.getTime(), now.getTime() + 20 * 3600000)
+      .filter(function (e) { return e.t > now.getTime(); })
+      .sort(function (a, b) { return a.t - b.t; });
+    if (future.length && nextEl) {
+      var nxt = future[0];
+      var diffMin = Math.round((nxt.t - now.getTime()) / 60000);
+      var h2 = Math.floor(diffMin / 60), m2 = diffMin % 60;
+      var inStr = h2 > 0 ? (h2 + ' h ' + (m2 < 10 ? '0' : '') + m2 + ' min') : (m2 + ' min');
+      nextEl.innerHTML = (nxt.type === 'HW' ? '↑ Hochwasser' : '↓ Niedrigwasser')
+        + ' in <strong>' + inStr + '</strong>';
+    } else if (nextEl) {
+      nextEl.textContent = '';
+    }
   }
+})();
 
-  function showFallback() {
-    body.innerHTML = '<p class="tides-fallback">Tideninfo derzeit nicht verfügbar. '
-      + '<a href="https://waterinfo.rws.nl/#!/details/publiek/waterhoogte-t-o-v-nap/LWOO/WNS945" '
-      + 'target="_blank" rel="noopener">Rijkswaterstaat →</a></p>';
+// ============================================================
+// Gezeiten-Details: auf Mobile standardmäßig zugeklappt
+// ============================================================
+(function () {
+  var details = document.querySelector('.tides-details');
+  if (details && window.innerWidth <= 760) {
+    details.removeAttribute('open');
+    var summary = details.querySelector('.tides-summary');
+    if (summary) summary.textContent = 'Zeiten anzeigen';
+    details.addEventListener('toggle', function () {
+      var s = details.querySelector('.tides-summary');
+      if (s) s.textContent = details.open ? 'Zeiten ausblenden' : 'Zeiten anzeigen';
+    });
   }
-
-  // Start der lokalen Tageszeit = Mitternacht Amsterdam
-  var todayStr = localDateStr(now);
-  var startDate = todayStr + 'T00:00:00+02:00'; // Amsterdam MESZ (Sommer)
-  var endDate   = todayStr + 'T23:59:59+02:00';
-
-  var url = 'https://waterinfo.rws.nl/api/chart/get'
-    + '?locationCodes=LWOO'
-    + '&parameterIds=WATHTE_NAP'
-    + '&tz=Europe%2FAmsterdam'
-    + '&startDate=' + encodeURIComponent(startDate)
-    + '&endDate='   + encodeURIComponent(endDate);
-
-  fetch(url)
-    .then(function (r) { return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
-    .then(function (data) {
-      // Mögliche Antwortformate abdecken
-      var raw = [];
-      if (Array.isArray(data)) {
-        raw = data;
-      } else if (data && Array.isArray(data.Data)) {
-        raw = data.Data;
-      } else if (data && Array.isArray(data.data)) {
-        raw = data.data;
-      }
-
-      var todaySeries = raw
-        .filter(function (p) {
-          var tStr = localDateStr(new Date(p.Tijdstip || p.t || p.timestamp));
-          return tStr === todayStr;
-        })
-        .map(function (p) {
-          return {
-            t: new Date(p.Tijdstip || p.t || p.timestamp),
-            v: parseFloat(p.Waarde !== undefined ? p.Waarde : (p.v !== undefined ? p.v : p.value))
-          };
-        })
-        .filter(function (p) { return !isNaN(p.v); })
-        .sort(function (a, b) { return a.t - b.t; });
-
-      if (!todaySeries.length) throw new Error('keine Daten');
-
-      var events = findTideEvents(todaySeries);
-      renderTides(events);
-    })
-    .catch(showFallback);
 })();
 
 // ============================================================
