@@ -402,6 +402,23 @@
     });
   }
 
+  // Wassertemperatur: Open-Meteo Marine API
+  var wsWaterTemp = document.getElementById('wsWaterTemp');
+  if (wsWaterTemp) {
+    fetch('https://marine-api.open-meteo.com/v1/marine?latitude=53.41&longitude=6.21&current=sea_surface_temperature&timezone=Europe%2FAmsterdam')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (data) {
+        var t = data.current && data.current.sea_surface_temperature;
+        if (t != null) {
+          var svg = wsWaterTemp.querySelector('svg');
+          wsWaterTemp.textContent = '';
+          if (svg) wsWaterTemp.appendChild(svg);
+          wsWaterTemp.appendChild(document.createTextNode(' ' + Math.round(t) + '°'));
+        }
+      })
+      .catch(function () { /* lautlos ignorieren */ });
+  }
+
   fetch('https://api.open-meteo.com/v1/forecast?latitude=53.41&longitude=6.21&current=temperature_2m,weather_code,wind_speed_10m&daily=sunrise,sunset&wind_speed_unit=kmh&timezone=Europe%2FAmsterdam')
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (data) {

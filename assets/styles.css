@@ -1245,6 +1245,14 @@ footer {
   text-align: center;
 }
 footer .brand { color: #fff; margin-bottom: 1.5rem; }
+footer .brand-mark {
+  height: 88px;
+  width: 88px;
+  border-radius: 24px;
+  object-fit: cover;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 2px 16px rgba(0,0,0,.25);
+}
 footer p { color: rgba(255,255,255,.6); font-size: .92rem; margin: .3rem 0; }
 footer a { color: var(--sand); }
 
