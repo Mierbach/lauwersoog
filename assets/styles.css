@@ -457,6 +457,8 @@ body.nav-open .nav { position: fixed; top: 0; left: 0; right: 0; }
 
 /* ---------- Sections ---------- */
 section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
+main > .page > section:first-of-type,
+main > section:first-of-type { padding-top: 1.5rem; }
 .section-head { max-width: 720px; margin-bottom: 3rem; }
 .section-head .eyebrow { margin-bottom: 1rem; }
 .section-head h2 { margin-bottom: .4rem; }
